@@ -1,29 +1,26 @@
-# README #
+# Slack Messenger Project #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+A modular messaging with slack integratrion project
 
-### What is this repository for? ###
+## Configurations ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+env configs here
 
-### How do I get set up? ###
+## Development ##
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+```bash
+npm run hot
+```
 
-### Contribution guidelines ###
+## Resources ##
 
-* Writing tests
-* Code review
-* Other guidelines
+* Slack RTM API: https://api.slack.com/rtm
+* Websocket
+* ExpressJS
+* OAuth Authentication
 
-### Who do I talk to? ###
+---
 
-* Repo owner or admin
-* Other community or team contact
+If you have any concerns and questions, please contact the development team
+
+Read our Developer Guidelines [here](https://docs.google.com/document/d/1CrRmbC_h1-Mj3hAIxGKVUUoG6kRUFgR4s2Ivn-LIo9A/edit)

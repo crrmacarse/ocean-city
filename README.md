@@ -1,6 +1,9 @@
 # Slack Messenger Project #
 
-A modular messaging with slack integratrion project
+[![Documentation](https://img.shields.io/badge/Read-Documentation-green)](https://docs.google.com/document/d/1-bZ1B2zxUaglfIZTu-lmOQZIX9BGpJKoBpFvX8IszTM/edit?usp=sharing)
+[![XO](https://img.shields.io/badge/Powered%20by-XtendOPS%20DEV%20Team-blue)](http://dev-wiki.xtendops.com/)
+
+A modular messaging with slack integration project
 
 ## Configurations ##
 
@@ -18,6 +21,17 @@ npm run hot
 * Websocket
 * ExpressJS
 * OAuth Authentication
+
+Used events from Slack RTM API:
+
+* hello
+* goodbye
+* message.channels
+* message.groups
+* message.im
+* message.mpim
+* presence_sub
+* user_typing
 
 ---
 

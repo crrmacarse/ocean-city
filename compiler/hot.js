@@ -47,8 +47,8 @@ export default {
   plugins: [
     ...plugins,
     new HtmlWebpackPlugin({
-      template: join(process.cwd(), '/compiler/template.html'),
-      filename: join(process.cwd(), '/build/public/index.html'),
+      template: join(process.cwd(), '/frontend/index.html'),
+      filename: join(process.cwd(), '/build/index.html'),
       inject: 'body',
       favicon: join(process.cwd(), '/public/assets/logo.png'),
     }),
@@ -57,7 +57,7 @@ export default {
   devServer: {
     open: true,
     hot: true,
-    contentBase: join(process.cwd(), '/build/public/'),
+    contentBase: join(process.cwd(), 'build'),
     writeToDisk: true,
     historyApiFallback: true,
     compress: true,

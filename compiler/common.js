@@ -1,7 +1,7 @@
 import { join } from 'path'
 import DotEnv from 'dotenv-webpack'
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-import LoadablePlugin from '@loadable/webpack-plugin'
+// import LoadablePlugin from '@loadable/webpack-plugin'
 
 export const entry = join(process.cwd(), '/resources/react/index.tsx')
 
@@ -88,7 +88,7 @@ export const rules = [
 export const plugins = [
   new DotEnv(),
   new CleanWebpackPlugin(),
-  new LoadablePlugin(),
+  // new LoadablePlugin(),
 ]
 
 export const optimization = {

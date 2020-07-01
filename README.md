@@ -20,7 +20,7 @@ npm run hot
 * Slack RTM API: https://api.slack.com/rtm
 * Websocket
 * ExpressJS
-* OAuth Authentication
+* OAuth Authentication https://api.slack.com/docs/sign-in-with-slack
 
 Used events from Slack RTM API:
 

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "frontend",
     "target": "es2017",
     "module": "esnext",
     "sourceMap": true,
@@ -20,5 +20,5 @@
     "noFallthroughCasesInSwitch": true,
     "declaration": true,
   },
-  "include": ["frontend/**"]
+  "include": ["frontend"]
 }

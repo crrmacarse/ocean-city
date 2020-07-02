@@ -1,11 +1,11 @@
-import { join } from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { join } from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import {
   entry, output, moduleResolver,
   rules, plugins, optimization,
-} from './common'
+} from './common';
 
-export default {
+const hotConfig = {
   mode: 'development',
   devtool: 'source-map',
   entry,
@@ -48,7 +48,7 @@ export default {
     ...plugins,
     new HtmlWebpackPlugin({
       template: join(process.cwd(), '/frontend/index.html'),
-      filename: join(process.cwd(), '/build/index.html'),
+      filename: join(process.cwd(), '/dist/index.html'),
       inject: 'body',
       favicon: join(process.cwd(), '/public/assets/logo.png'),
     }),
@@ -57,7 +57,7 @@ export default {
   devServer: {
     open: true,
     hot: true,
-    contentBase: join(process.cwd(), 'build'),
+    contentBase: join(process.cwd(), 'dist'),
     writeToDisk: true,
     historyApiFallback: true,
     compress: true,
@@ -66,4 +66,6 @@ export default {
       warnings: true,
     },
   },
-}
+};
+
+export default hotConfig;

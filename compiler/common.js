@@ -1,24 +1,23 @@
-import { join } from 'path'
-import DotEnv from 'dotenv-webpack'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-// import LoadablePlugin from '@loadable/webpack-plugin'
+import { join } from 'path';
+import DotEnv from 'dotenv-webpack';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-export const entry = join(process.cwd(), '/resources/react/index.tsx')
+export const entry = join(process.cwd(), '/frontend/index.tsx');
 
 export const output = {
-  path: join(process.cwd(), '/build/public/dist'),
+  path: join(process.cwd(), '/dist/'),
   filename: 'main.bundle.js',
   chunkFilename: '[name].[contenthash].bundle.js',
   publicPath: '/dist/',
-}
+};
 
 export const moduleResolver = {
   modules: [
     'node_modules',
-    join(process.cwd(), '/resources/react/'),
+    join(process.cwd(), '/frontend/'),
   ],
   extensions: ['.ts', '.tsx', '.js'],
-}
+};
 
 export const rules = [
   {
@@ -41,7 +40,7 @@ export const rules = [
           limit: 8192,
           name: '[contentHash].[hash].[ext]',
           outputPath: 'assets',
-          publicPath: '/dist/assets',
+          publicPath: '/build/assets',
         },
       },
       {
@@ -83,13 +82,13 @@ export const rules = [
     test: /\.mp4$/,
     loader: 'file-loader',
   },
-]
+];
 
 export const plugins = [
   new DotEnv(),
   new CleanWebpackPlugin(),
   // new LoadablePlugin(),
-]
+];
 
 export const optimization = {
   moduleIds: 'hashed',
@@ -103,4 +102,4 @@ export const optimization = {
       },
     },
   },
-}
+};

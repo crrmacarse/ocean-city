@@ -28,7 +28,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": ["resources/react/"],
+        "paths": ["frontend/"],
         "extensions": [".js", ".ts", ".tsx"]
       }
     }

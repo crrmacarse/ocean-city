@@ -5,7 +5,7 @@ coverage
 .DS_STORE
 .env
 tmp
+dist
 
-/resources/views/layouts/*
 !.gitkeep
 compilation-stats.json

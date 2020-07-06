@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Panel = () => (
-  <h1>Panel</h1>
+  <div className="side__panel" />
 );
 
 export default Panel;

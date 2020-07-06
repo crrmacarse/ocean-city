@@ -60,7 +60,6 @@
     "postcss-loader": "^3.0.0",
     "raf": "^3.4.1",
     "redux-logger": "^3.0.6",
-    "sagas": "0.0.1",
     "sass-loader": "^9.0.0",
     "source-map-loader": "^1.0.1",
     "style-loader": "^1.2.1",

@@ -21,6 +21,7 @@ npm run hot
 * Websocket
 * ExpressJS
 * OAuth Authentication https://api.slack.com/docs/sign-in-with-slack
+* https://medium.com/free-code-camp/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a
 
 Used events from Slack RTM API:
 

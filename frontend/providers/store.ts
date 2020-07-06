@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
 import rootReducer from 'reducers';
-// import rootSagas from 'sagas';
+import rootSagas from 'sagas';
 
 /* eslint-disable no-underscore-dangle */
 const initialState = window && (window as any).__PRELOADED_STATE__;
@@ -28,7 +28,7 @@ const store = (preloadState: any) => {
     composeEnhancers(applyMiddleware(...middleware)),
   );
 
-  // sagasMiddleware.run(rootSagas);
+  sagasMiddleware.run(rootSagas);
 
   return Store;
 };

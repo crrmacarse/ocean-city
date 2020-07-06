@@ -1,0 +1,88 @@
+$text-grey: #808080;
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+main {
+  display: flex;
+  height: 80vh;
+  border-color: #e8e8e8;
+  border-style: solid;
+  border-width: thin;
+}
+
+.side__panel {
+  width: 15vw;
+  background-color: #dadada;
+}
+
+.inbox {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+// Message
+.message {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+
+  * {
+    margin: 0;
+  }
+
+  .message_user {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .message_text {
+    font-size: small;
+  }
+
+  .message_time {
+    color: $text-grey;
+  }
+}
+
+.input {
+
+  .user_typing {
+    color: $text-grey;
+    font-size: small;
+    margin: 5px;
+  }
+
+  >div {
+    display: flex;
+    border: 1px solid #666;
+    padding: 2px;
+
+    input {
+      width: 100%;
+      padding: 1px 2px;
+      outline: none;
+      border: none;
+    }
+
+    button {
+      background: none;
+      padding: 0.5rem 1rem;
+      border: 0;
+      margin-left: 1rem;
+      box-shadow: none;
+      border-radius: 0px;
+    }
+  }
+}

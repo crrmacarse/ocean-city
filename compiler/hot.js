@@ -48,7 +48,7 @@ const hotConfig = {
     ...plugins,
     new HtmlWebpackPlugin({
       template: join(process.cwd(), '/frontend/index.html'),
-      filename: join(process.cwd(), '/dist/index.html'),
+      filename: join(process.cwd(), '/public/index.html'),
       inject: 'body',
       favicon: join(process.cwd(), '/public/assets/logo.png'),
     }),
@@ -57,7 +57,7 @@ const hotConfig = {
   devServer: {
     open: true,
     hot: true,
-    contentBase: join(process.cwd(), 'dist'),
+    contentBase: join(process.cwd(), 'public'),
     writeToDisk: true,
     historyApiFallback: true,
     compress: true,

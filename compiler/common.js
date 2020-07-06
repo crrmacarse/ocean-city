@@ -5,7 +5,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 export const entry = join(process.cwd(), '/frontend/index.tsx');
 
 export const output = {
-  path: join(process.cwd(), '/dist/'),
+  path: join(process.cwd(), '/public/dist/'),
   filename: 'main.bundle.js',
   chunkFilename: '[name].[contenthash].bundle.js',
   publicPath: '/dist/',
@@ -40,7 +40,7 @@ export const rules = [
           limit: 8192,
           name: '[contentHash].[hash].[ext]',
           outputPath: 'assets',
-          publicPath: '/build/assets',
+          publicPath: '/dist/assets',
         },
       },
       {

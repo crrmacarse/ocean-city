@@ -1,6 +1,7 @@
 import { join } from 'path';
 import DotEnv from 'dotenv-webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export const entry = join(process.cwd(), '/frontend/index.tsx');
 
@@ -87,6 +88,12 @@ export const rules = [
 export const plugins = [
   new DotEnv(),
   new CleanWebpackPlugin(),
+  new HtmlWebpackPlugin({
+    template: join(process.cwd(), '/frontend/index.html'),
+    filename: join(process.cwd(), '/public/index.html'),
+    inject: 'body',
+    favicon: join(process.cwd(), '/public/assets/logo.png'),
+  }),
   // new LoadablePlugin(),
 ];
 

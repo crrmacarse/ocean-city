@@ -1,5 +1,4 @@
 import { join } from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import {
   entry, output, moduleResolver,
   rules, plugins, optimization,
@@ -44,15 +43,7 @@ const hotConfig = {
       },
     ],
   },
-  plugins: [
-    ...plugins,
-    new HtmlWebpackPlugin({
-      template: join(process.cwd(), '/frontend/index.html'),
-      filename: join(process.cwd(), '/public/index.html'),
-      inject: 'body',
-      favicon: join(process.cwd(), '/public/assets/logo.png'),
-    }),
-  ],
+  plugins,
   optimization,
   devServer: {
     open: true,

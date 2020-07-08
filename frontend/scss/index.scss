@@ -11,16 +11,9 @@ header {
 }
 
 main {
-  display: flex;
-  height: 80vh;
   border-color: #e8e8e8;
   border-style: solid;
   border-width: thin;
-}
-
-.side__panel {
-  width: 15vw;
-  background-color: #dadada;
 }
 
 .inbox {
@@ -83,6 +76,75 @@ main {
       margin-left: 1rem;
       box-shadow: none;
       border-radius: 0px;
+    }
+  }
+}
+
+.side__panel {
+  overflow: auto;
+  margin: 0 auto;
+}
+
+// New
+
+.bottom__panel {
+  display: flex;
+  height: 2.5vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #dadada;
+  padding: 5px;
+
+  button {
+    background: none;
+    height: 100%;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0px;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.bottom__panel__container {
+  margin-left: auto;
+  display: flex;
+}
+
+.bottom__panel__toggle {
+  button {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.channel__list {
+  position: absolute;
+  min-width: 18vw;
+  width: 18vw;
+  background-color: #dadada;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  padding: 1.5rem;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  ul {
+    max-height: 40vh;
+    overflow: auto;
+    padding: 0;
+    // margin: 1.5rem;
+    list-style: none;
+
+    li {
+      cursor: pointer;
     }
   }
 }

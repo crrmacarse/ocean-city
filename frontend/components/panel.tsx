@@ -3,9 +3,9 @@ import React from 'react';
 const Panel = ({
   list,
 }: { list: any[] }) => (
-  <div className="side__panel">
-    {list.map((l) => <p>{l.name}</p>)}
-  </div>
+  <ul className="side__panel">
+    {list.map((l) => <li>{l.name}</li>)}
+  </ul>
 );
 
 export default Panel;

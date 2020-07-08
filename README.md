@@ -26,6 +26,7 @@ npm run hot
 * https://api.slack.com/legacy/oauth-scopes
 * https://api.slack.com/legacy/oauth
 * https://api.slack.com/methods/rtm.connect
+* https://api.slack.com/scopes
 
 Used events from Slack RTM API:
 

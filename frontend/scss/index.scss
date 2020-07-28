@@ -10,12 +10,6 @@ header {
   }
 }
 
-main {
-  border-color: #e8e8e8;
-  border-style: solid;
-  border-width: thin;
-}
-
 .inbox {
   display: flex;
   flex-direction: column;
@@ -78,11 +72,6 @@ main {
       border-radius: 0px;
     }
   }
-}
-
-.side__panel {
-  overflow: auto;
-  margin: 0 auto;
 }
 
 // New

@@ -9,13 +9,23 @@ pipelines:
               - node
           script:
               - npm install
-              - npm run lint
-              - npm run test
               - npm run build
   branches:
     master:
       - step:
-          name: Deploy to production
+          name: Preparing for deployment
           deployment: production
           script:
-            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/fbzhjzwipk.git HEAD:master
+              - npm install
+              - npm run build
+              - tar czfv application.tgz dist static.json
+          artifacts:
+            - application.tgz
+      - step:
+          name: Deploy to production
+          script:
+            - pipe: atlassian/heroku-deploy:0.1.1
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: fbzhjzwipk
+                ZIP_FILE: "application.tgz"

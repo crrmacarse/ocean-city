@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import { fetchChannels } from 'actions/channels/actions';
 import Header from 'components/header';
 import Authenticate from 'components/authenticate';
 import Bottom from 'components/bottom';
+import truncate from 'lodash/truncate';
 
 const mapStateToProps = ({ channel }: RootState) => ({
   ...channel,
@@ -17,7 +18,7 @@ const mapDispatchToProps = {
 export type AppProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const App = ({
-  // channels,
+  openChannels,
   handleFetchChannels,
 }: AppProps) => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const App = ({
   }, []);
 
   return (
-    <div>
+    <Fragment>
       <Header>
         <Authenticate />
       </Header>
@@ -37,10 +38,12 @@ const App = ({
         <p>Setting up of backend authentication has been skipped. You could easily make one</p>
         <h3>Resources</h3>
         <Bottom>
-          <button className="active__chat" type="button">Christian Ryan Macarse</button>
+          {openChannels.map((openChannel) => (
+            <button className="active__chat" type="button" key={openChannel.id}>{truncate(openChannel.name, { length: 50 })}</button>
+          ))}
         </Bottom>
       </main>
-    </div>
+    </Fragment>
   );
 };
 

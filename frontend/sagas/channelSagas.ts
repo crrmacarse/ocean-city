@@ -14,6 +14,7 @@ export function* getChannels() {
       params: {
         token: process.env.TEST_TOKEN,
         types: 'public_channel,private_channel,mpim,im',
+        user: process.env.TEST_CHANNEL_ID,
       },
     });
 

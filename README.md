@@ -1,5 +1,6 @@
 # Slack Messenger Project #
 
+[![Staging Website](https://img.shields.io/website?label=Staging&url=https://fbzhjzwipk.herokuapp.com/)](https://fbzhjzwipk.herokuapp.com/)
 [![Documentation](https://img.shields.io/badge/Read-Documentation-green)](https://docs.google.com/document/d/1-bZ1B2zxUaglfIZTu-lmOQZIX9BGpJKoBpFvX8IszTM/edit?usp=sharing)
 [![XO](https://img.shields.io/badge/Powered%20by-XtendOPS%20DEV%20Team-blue)](http://dev-wiki.xtendops.com/)
 

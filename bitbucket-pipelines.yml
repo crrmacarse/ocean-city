@@ -18,7 +18,7 @@ pipelines:
           script:
               - npm install
               - npm run build
-              - tar czfv application.tgz dist static.json
+              - tar czfv application.tgz public static.json
           artifacts:
             - application.tgz
       - step:

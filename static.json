@@ -1,5 +1,5 @@
 {
-  "root": "dist/",
+  "root": "public/",
   "https_only": true,
   "routes": {
     "/assets/*": "/assets/",

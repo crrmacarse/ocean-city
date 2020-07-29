@@ -19,11 +19,6 @@ const prodConfig = {
         test: /\.(ts|js)x?$/,
         use: [{
           loader: 'babel-loader',
-          options: {
-            plugins: [
-              ['react-remove-properties', { properties: ['data-test'] }],
-            ],
-          },
         }],
         exclude: /node_modules/,
       },

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "hot": "webpack-dev-server --hot --profile --progress --colors --config=webpack.config.babel.js --env=hot",
-    "build": "webpack --profile --progress --config=webpack.config.babel.js --env=production",
+    "build": "webpack --profile --progress --config=webpack.config.babel.js --env=prod",
     "start": "serve -s public"
   },
   "repository": {

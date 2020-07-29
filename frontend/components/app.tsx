@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import { fetchChannels } from 'actions/channels/actions';
+import * as channelActions from 'actions/channels/actions';
 import Header from 'components/header';
 import Authenticate from 'components/authenticate';
 import Bottom from 'components/bottom';
@@ -12,17 +12,18 @@ const mapStateToProps = ({ channel }: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  handleFetchChannels: fetchChannels,
+  ...channelActions,
 };
 
 export type AppProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const App = ({
   openChannels,
-  handleFetchChannels,
+  fetchChannels,
+  setCloseChannel,
 }: AppProps) => {
   useEffect(() => {
-    handleFetchChannels();
+    fetchChannels();
   }, []);
 
   return (
@@ -39,7 +40,7 @@ const App = ({
         <h3>Resources</h3>
         <Bottom>
           {openChannels.map((openChannel) => (
-            <button className="active__chat" type="button" key={openChannel.id}>{truncate(openChannel.name, { length: 50 })}</button>
+            <button onClick={setCloseChannel} className="active__chat" type="button" key={openChannel.id}>{truncate(openChannel.name, { length: 50 })}</button>
           ))}
         </Bottom>
       </main>

@@ -4,7 +4,9 @@
   "description": "A modular messaging with slack integratrion project",
   "main": "index.js",
   "scripts": {
-    "hot": "webpack-dev-server --hot --profile --progress --colors --config=webpack.config.babel.js --env=hot"
+    "hot": "webpack-dev-server --hot --profile --progress --colors --config=webpack.config.babel.js --env=hot",
+    "build": "webpack --profile --progress --config=webpack.config.babel.js --env=production",
+    "start": "serve -s public"
   },
   "repository": {
     "type": "git",

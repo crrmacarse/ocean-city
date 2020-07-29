@@ -4,8 +4,9 @@ import { RootState } from 'reducers';
 import { setOpenChannel, setActiveChannel, channelType } from 'actions/channels/actions';
 import truncate from 'lodash/truncate';
 
-const mapStateToProps = ({ channel }: RootState) => ({
+const mapStateToProps = ({ channel }: RootState, ownProps: { onClose: () => void }) => ({
   ...channel,
+  ...ownProps,
 });
 
 const mapDispatchToProps = {
@@ -19,10 +20,12 @@ const ChannelList = ({
   channels: { list },
   handleSetOpenChannel,
   handleSetActiveChannel,
+  onClose,
 }: ChannelListProps) => {
   const handleSelectChannel = (channel: channelType) => {
     handleSetActiveChannel(channel.id);
     handleSetOpenChannel(channel);
+    onClose();
   };
 
   return (

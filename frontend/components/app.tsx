@@ -6,6 +6,7 @@ import Header from 'components/header';
 import Authenticate from 'components/authenticate';
 import Bottom from 'components/bottom';
 import truncate from 'lodash/truncate';
+import Socket from './socket';
 
 const mapStateToProps = ({ channel }: RootState) => ({
   ...channel,
@@ -28,6 +29,7 @@ const App = ({
 
   return (
     <Fragment>
+      <Socket />
       <Header>
         <Authenticate />
       </Header>

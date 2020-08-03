@@ -38,16 +38,12 @@ const App = ({
         <ul>
           <li>
             Setting up of backend authentication had been skipped.
-            Test tokens is embeded in the config.
+            Test tokens is embeded in the config(No need to click on the Sign in with Slack button).
           </li>
           <li>
-            Postman collection: https://www.getpostman.com/collections/a2e825d3d3c60d33437a
+            Websocket connectivity could be checked by visiting the console. Currently working on
+            structuring on how to handle message feeding
           </li>
-          <li>
-            There seems to be limitation on fetching user details. Could
-            only get the names of public channels. Users only has Ids with them.
-          </li>
-          <li>Currently researching how to handle websockets</li>
         </ul>
         <small>Read the README.MD in the root folder for more details</small>
         <Bottom>

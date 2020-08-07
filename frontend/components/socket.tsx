@@ -1,11 +1,21 @@
 import React, { useEffect, Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import * as channelActions from 'actions/channels/actions';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 import api from 'utils/api';
 
 const SLACK_RTM_URL = 'https://slack.com/api/rtm.connect';
 const SLACK_TOKEN = process.env.TEST_TOKEN;
 
-const SocketComponent = () => {
+const mapDispatchToProps = {
+  ...channelActions,
+};
+
+export type SocketComponent = typeof mapDispatchToProps;
+
+const SocketComponent = ({
+  pushMessage,
+}: SocketComponent) => {
   const [socket, setSocket] = useState({ url: '' });
 
   useEffect(() => {
@@ -34,12 +44,18 @@ const SocketComponent = () => {
     client.onopen = () => {
       console.error('WebSocket Client Connected');
     };
-    client.onmessage = (message) => {
-      console.error(message);
+
+    client.onmessage = ({ data }) => {
+      const response = JSON.parse(data);
+
+      if (response.type === 'message') {
+        console.error('message', response);
+        pushMessage(response.channel, response);
+      }
     };
   }, [socket]);
 
   return <Fragment />;
 };
 
-export default SocketComponent;
+export default connect(null, mapDispatchToProps)(SocketComponent);

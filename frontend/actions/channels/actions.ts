@@ -11,11 +11,11 @@ import * as TYPES from './types';
  */
 
 export type messageType = {
-  clientMessageId: string,
+  clientMsgId: string,
   text: string,
-  user: string,
-  team: string,
-  timestamp: string,
+  channel: string,
+  suppressNotification: string,
+  ts: string, // timestamp
 }
 
 export type channelType = {
@@ -27,7 +27,7 @@ export type channelType = {
 
 export type ChannelProps = DeepReadonly<{
   channels: {
-    list: channelType[],
+    list: {},
     fetching: boolean,
   },
   activeChannels: string[],
@@ -56,25 +56,21 @@ export const addToActiveChannel = (channel: channelType) => action(
 );
 
 /**
- * This is an initial load of messages
- *
- * @param channelId
- */
-export const loadMessages = (channelId: string) => action(TYPES.FETCH_MESSAGES_REQUEST, channelId);
-
-/**
  * Pushes a message to the channel object. This is what the websocket will utilize
  *
  * @param message
  * */
-export const addMessage = (message: messageType) => action(TYPES.ADD_MESSAGE, message);
+export const pushMessage = (channelId: string, message: messageType) => action(
+  TYPES.PUSH_MESSAGE,
+  { channelId, message },
+);
 
 /**
  * Send a message to slack api using chat.postMessage
  *
  * @param message
  */
-export const sendMEssage = (message: string) => action(TYPES.SEND_MESSAGE_REQUEST, message);
+export const sendMessage = (message: string) => action(TYPES.SEND_MESSAGE_REQUEST, message);
 
 export const fetchChannels = () => action(TYPES.FETCH_CHANNELS_REQUEST);
 
@@ -83,3 +79,16 @@ export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_SUCCESS,
   TYPES.FETCH_CHANNELS_FAILED,
 )<void, any, Error>();
+
+/**
+ * This is an initial load of messages
+ *
+ * @param channelId
+ */
+export const fetchMessages = (channelId: string) => action(TYPES.FETCH_MESSAGES_REQUEST, channelId);
+
+export const handleFetchMessagesAsync = createAsyncAction(
+  TYPES.FETCH_MESSAGES_REQUEST,
+  TYPES.FETCH_MESSAGES_SUCCESS,
+  TYPES.FETCH_MESSAGES_FAILED,
+)<{ channelId: string }, any, Error>();

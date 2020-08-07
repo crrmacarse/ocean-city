@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import { setOpenedChannel, loadMessages, channelType } from 'actions/channels/actions';
+import { setOpenedChannel, fetchMessages, channelType } from 'actions/channels/actions';
 import truncate from 'lodash/truncate';
 
 const mapStateToProps = ({ channel }: RootState, ownProps: { onClose: () => void }) => ({
@@ -11,7 +11,7 @@ const mapStateToProps = ({ channel }: RootState, ownProps: { onClose: () => void
 
 const mapDispatchToProps = {
   handleSetOpenedChannel: setOpenedChannel,
-  handleLoadMessages: loadMessages,
+  handleFetchMessages: fetchMessages,
 };
 
 export type ChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -19,12 +19,12 @@ export type ChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDi
 const ChannelList = ({
   channels: { list },
   handleSetOpenedChannel,
-  handleLoadMessages,
+  handleFetchMessages,
   onClose,
 }: ChannelListProps) => {
   const handleSelectChannel = (channel: channelType) => {
     handleSetOpenedChannel(channel.id);
-    handleLoadMessages(channel.id);
+    handleFetchMessages(channel.id);
     onClose();
   };
 

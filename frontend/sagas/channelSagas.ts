@@ -5,7 +5,7 @@ import {
 } from 'redux-saga/effects';
 import api from 'utils/api';
 import {
-  handleFetchChannelsAsync,
+  handleFetchChannelsAsync, handleFetchMessagesAsync,
 } from 'actions/channels/actions';
 
 export function* getChannels() {
@@ -40,7 +40,7 @@ export function* getChannels() {
       ...groupChannels.channels.reduce((acc, curr) => {
         acc[curr.id] = {
           ...curr,
-          name: curr.name,
+          channelName: curr.name,
           isOpenedChannel: false,
           messages: [],
         };
@@ -74,6 +74,22 @@ export function* getChannels() {
   }
 }
 
+export function* getMessages({ payload: channelId }: any) {
+  try {
+    const { data: response } = yield call(api.get, '/conversations.history', {
+      params: {
+        token: process.env.TEST_TOKEN,
+        channel: channelId,
+      },
+    });
+
+    yield put(handleFetchMessagesAsync.success({ channelId, messages: response.messages }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
+  yield takeLatest(handleFetchMessagesAsync.request, getMessages);
 }

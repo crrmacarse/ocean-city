@@ -48,7 +48,17 @@ const App = ({
           {Object.values(list)
             .filter((activeChannel) => activeChannel.isOpenedChannel)
             .map((activeChannel) => (
-              <button onClick={closeChannel} className="active__chat" type="button" key={activeChannel.id}>{truncate(activeChannel.channelName, { length: 50 })}</button>
+              <button
+                onClick={() => {
+                  closeChannel(activeChannel.id);
+                  console.error('messages:', activeChannel.messages);
+                }}
+                className="active__chat"
+                type="button"
+                key={activeChannel.id}
+              >
+                {truncate(activeChannel.channelName, { length: 50 })}
+              </button>
             ))}
         </Bottom>
       </main>

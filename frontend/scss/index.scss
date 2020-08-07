@@ -1,139 +1,160 @@
 $text-grey: #808080;
+$background-color: #f5f5f5;
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+// martin design:
 
-  h1 {
-    margin-bottom: 0;
-  }
+body {
+  margin: 0;
 }
 
-.inbox {
+main {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.main__right {
   height: 100%;
-  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-
-// Message
-.message {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem;
-
-  * {
-    margin: 0;
-  }
-
-  .message_user {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  .message_text {
-    font-size: small;
-  }
-
-  .message_time {
-    color: $text-grey;
-  }
-}
-
-.input {
-
-  .user_typing {
-    color: $text-grey;
-    font-size: small;
-    margin: 5px;
-  }
-
-  >div {
-    display: flex;
-    border: 1px solid #666;
-    padding: 2px;
-
-    input {
-      width: 100%;
-      padding: 1px 2px;
-      outline: none;
-      border: none;
-    }
-
-    button {
-      background: none;
-      padding: 0.5rem 1rem;
-      border: 0;
-      margin-left: 1rem;
-      box-shadow: none;
-      border-radius: 0px;
-    }
-  }
-}
-
-// New
-
-.bottom__panel {
-  display: flex;
-  height: 2.5vh;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: #dadada;
-  padding: 5px;
-
-  button {
-    background: none;
-    height: 100%;
-    border: 0;
-    box-shadow: none;
-    border-radius: 0px;
-    outline: none;
-    cursor: pointer;
-  }
-}
-
-.bottom__panel__container {
-  margin-left: auto;
-  display: flex;
-}
-
-.bottom__panel__toggle {
-  button {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-.channel__list {
-  position: absolute;
+.channel {
   min-width: 18vw;
   width: 18vw;
-  background-color: #dadada;
-  bottom: 0;
-  right: 0;
-  margin-bottom: 2rem;
-  border-radius: 5px;
-  padding: 1.5rem;
-
-  h3 {
-    margin-top: 0;
-  }
+  background: $background-color;
+  padding: 1rem;
 
   ul {
-    max-height: 40vh;
     overflow: auto;
-    padding: 0;
-    // margin: 1.5rem;
+    height: 35vh;
     list-style: none;
+    padding: 0;
 
     li {
       cursor: pointer;
     }
   }
+}
+
+.channel__user__details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.channel__user__details--info {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 3rem;
+  }
+}
+
+.channel__user__details--actions {
+  display: flex;
+}
+
+// .message {
+//   display: flex;
+//   justify-content: space-between;
+//   margin: 1rem;
+
+//   * {
+//     margin: 0;
+//   }
+
+//   .message_user {
+//     font-weight: bold;
+//     margin-bottom: 5px;
+//   }
+
+//   .message_text {
+//     font-size: small;
+//   }
+
+//   .message_time {
+//     color: $text-grey;
+//   }
+// }
+
+// .input {
+
+//   .user_typing {
+//     color: $text-grey;
+//     font-size: small;
+//     margin: 5px;
+//   }
+
+//   >div {
+//     display: flex;
+//     border: 1px solid #666;
+//     padding: 2px;
+
+//     input {
+//       width: 100%;
+//       padding: 1px 2px;
+//       outline: none;
+//       border: none;
+//     }
+
+//     button {
+//       background: none;
+//       padding: 0.5rem 1rem;
+//       border: 0;
+//       margin-left: 1rem;
+//       box-shadow: none;
+//       border-radius: 0px;
+//     }
+//   }
+// }
+
+.bottom__panel {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 2.5vh;
+  width: 100%;
+  bottom: 0;
+}
+
+.chat {
+  display: flex;
+  align-items: center;
+  background: $background-color;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0px;
+  outline: none;
+  cursor: pointer;
+
+  img {
+    width: 1.5rem;
+  }
+
+  small {
+    margin-left: 0.5rem;
+  }
+}
+
+.chat__wrapper {
+  position: relative;
+}
+
+.chat__head {
+  position: absolute;
+  min-width: 100%;
+  width: 100%;
+  background: $background-color;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+  padding: 1.5rem;
+  height: 30vh;
+  overflow: auto;
 }

@@ -1,23 +1,39 @@
-import React, { ReactNode, useState } from 'react';
-import ChannelList from 'components/channel-list';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { RootState } from 'reducers';
+import * as channelActions from 'actions/channels/actions';
+import Chat from 'components/chat';
 
-// @TODO: Toggle chatbox here
-const Bottom = ({ children }: { children: ReactNode }) => {
-  const [open, setOpen] = useState(false);
+const mapStateToProps = ({ channel }: RootState) => ({
+  ...channel,
+});
+
+const mapDispatchToProps = {
+  ...channelActions,
+};
+
+export type BottomProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const Bottom = ({
+  channels: { list },
+  fetchChannels,
+}: BottomProps) => {
+  useEffect(() => { fetchChannels(); }, []);
 
   return (
     <div className="bottom__panel">
-      <div className="bottom__panel__container">
-        {children}
-        <div className="bottom__panel__toggle">
-          {open && <ChannelList onClose={() => setOpen(false)} />}
-          <button type="button" onClick={() => setOpen(!open)}>
-            Channels
-          </button>
-        </div>
-      </div>
+      {Object.values(list)
+        .filter((c) => c.isOpenedChannel)
+        .map((c) => (
+          <Chat
+            key={c.id}
+            channelId={c.id}
+            channelName={c.channelName}
+            messages={c.messages}
+          />
+        ))}
     </div>
   );
 };
 
-export default Bottom;
+export default connect(mapStateToProps, mapDispatchToProps)(Bottom);

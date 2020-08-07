@@ -92,4 +92,18 @@ export default createReducer(INITIAL_STATE, {
           },
         },
       },
+    }))
+  .handleType(channelTypes.CLOSE_CHANNEL,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {
+          ...state.channels.list,
+          [payload]: {
+            ...state.channels.list[payload],
+            isOpenedChannel: false,
+          },
+        },
+      },
     }));

@@ -42,6 +42,9 @@ const App = ({
             Websocket connectivity could be checked by visiting the console. Currently working on
             structuring on how to handle message feeding
           </li>
+          <li>
+            You could check the working functionality in the console log :)
+          </li>
         </ul>
         <small>Read the README.MD in the root folder for more details</small>
         <Bottom>

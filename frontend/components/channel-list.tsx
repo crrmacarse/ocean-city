@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import { setOpenChannel, setActiveChannel, channelType } from 'actions/channels/actions';
+import { setOpenedChannel, loadMessages, channelType } from 'actions/channels/actions';
 import truncate from 'lodash/truncate';
 
 const mapStateToProps = ({ channel }: RootState, ownProps: { onClose: () => void }) => ({
@@ -10,21 +10,21 @@ const mapStateToProps = ({ channel }: RootState, ownProps: { onClose: () => void
 });
 
 const mapDispatchToProps = {
-  handleSetOpenChannel: setOpenChannel,
-  handleSetActiveChannel: setActiveChannel,
+  handleSetOpenedChannel: setOpenedChannel,
+  handleLoadMessages: loadMessages,
 };
 
 export type ChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const ChannelList = ({
   channels: { list },
-  handleSetOpenChannel,
-  handleSetActiveChannel,
+  handleSetOpenedChannel,
+  handleLoadMessages,
   onClose,
 }: ChannelListProps) => {
   const handleSelectChannel = (channel: channelType) => {
-    handleSetActiveChannel(channel.id);
-    handleSetOpenChannel(channel);
+    handleSetOpenedChannel(channel.id);
+    handleLoadMessages(channel.id);
     onClose();
   };
 
@@ -32,17 +32,18 @@ const ChannelList = ({
     <div className="channel__list">
       <h3>Channels</h3>
       <ul>
-        {list.map((channel) => (
-          <li
-            title={channel.name}
-            role="presentation"
-            onClick={() => handleSelectChannel(channel)}
-            onKeyDown={() => handleSelectChannel(channel)}
-          >
-            <small><b>{`[${channel.id}] `}</b></small>
-            {truncate(channel.name, { length: 24 })}
-          </li>
-        ))}
+        {Object.values(list)
+          .map((channel) => (
+            <li
+              key={channel.id}
+              title={channel.channelName}
+              role="presentation"
+              onClick={() => handleSelectChannel(channel)}
+              onKeyDown={() => handleSelectChannel(channel)}
+            >
+              {truncate(channel.channelName, { length: 24 })}
+            </li>
+          ))}
       </ul>
     </div>
   );

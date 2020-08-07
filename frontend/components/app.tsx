@@ -19,13 +19,11 @@ const mapDispatchToProps = {
 export type AppProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const App = ({
-  openChannels,
+  channels: { list },
   fetchChannels,
-  setCloseChannel,
+  closeChannel,
 }: AppProps) => {
-  useEffect(() => {
-    fetchChannels();
-  }, []);
+  useEffect(() => { fetchChannels(); }, []);
 
   return (
     <Fragment>
@@ -47,9 +45,11 @@ const App = ({
         </ul>
         <small>Read the README.MD in the root folder for more details</small>
         <Bottom>
-          {openChannels.map((openChannel) => (
-            <button onClick={setCloseChannel} className="active__chat" type="button" key={openChannel.id}>{truncate(openChannel.name, { length: 50 })}</button>
-          ))}
+          {Object.values(list)
+            .filter((activeChannel) => activeChannel.isOpenedChannel)
+            .map((activeChannel) => (
+              <button onClick={closeChannel} className="active__chat" type="button" key={activeChannel.id}>{truncate(activeChannel.channelName, { length: 50 })}</button>
+            ))}
         </Bottom>
       </main>
     </Fragment>

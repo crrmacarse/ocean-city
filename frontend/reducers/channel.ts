@@ -1,18 +1,17 @@
 import { createReducer } from 'typesafe-actions';
-import { handleFetchChannelList, ChannelProps } from 'actions/channels/actions';
-import * as channelTypes from 'actions/channels/types';
+import { handleFetchChannelsAsync, ChannelProps } from 'actions/channels/actions';
+// import * as channelTypes from 'actions/channels/types';
 
 const INITIAL_STATE: ChannelProps = {
   channels: {
     list: [],
     fetching: false,
   },
-  openChannels: [],
-  activeChannel: null,
+  activeChannels: [],
 };
 
 const fetchChannelHandler = createReducer(INITIAL_STATE)
-  .handleAction(handleFetchChannelList.request,
+  .handleAction(handleFetchChannelsAsync.request,
     (state) => ({
       ...state,
       channels: {
@@ -21,7 +20,7 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
         fetching: true,
       },
     }))
-  .handleAction(handleFetchChannelList.success,
+  .handleAction(handleFetchChannelsAsync.success,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -30,7 +29,7 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
         fetching: false,
       },
     }))
-  .handleAction(handleFetchChannelList.failure,
+  .handleAction(handleFetchChannelsAsync.failure,
     (state) => ({
       ...state,
       channels: {
@@ -42,11 +41,4 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
 
 export default createReducer(INITIAL_STATE, {
   ...fetchChannelHandler.handlers,
-}).handleType(channelTypes.SET_ACTIVE_CHANNEL,
-  (state, { payload }) => ({ ...state, activeChannel: payload }))
-  .handleType(channelTypes.SET_OPEN_CHANNEL,
-    (state, { payload }) => ({ ...state, openChannels: [...state.openChannels, payload] }))
-  .handleType(channelTypes.SET_CLOSE_CHANNEL,
-    (state, { payload }) => (
-      { ...state, openChannels: state.openChannels.filter((oC) => oC.id === payload) }
-    ));
+});

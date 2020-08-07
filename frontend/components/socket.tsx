@@ -49,7 +49,7 @@ const SocketComponent = ({
       const response = JSON.parse(data);
 
       if (response.type === 'message') {
-        console.error('message', response);
+        console.error('new message', response);
         pushMessage(response.channel, response);
       }
     };

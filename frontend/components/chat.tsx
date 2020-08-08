@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import * as channelActions from 'actions/channels/actions';
 import ChatWrapper from 'components/chat-wrapper';
+import ChatInput from 'components/chat-input';
 import truncate from 'lodash/truncate';
 
 export interface ownProps {
@@ -27,12 +28,7 @@ const Chat = ({
   closeChannel,
 }: ChatProps) => {
   const [open, setOpen] = useState(false);
-
-  const renderChatHead = (
-    <ul className="chat__head">
-      {messages.reverse().map((m, i) => (<li key={i}>{m.text}</li>))}
-    </ul>
-  );
+  const trimmedName = truncate(channelName, { length: 25 });
 
   const handleOpen = () => {
     if (open) {
@@ -45,16 +41,41 @@ const Chat = ({
     setOpen(false);
   };
 
-  return (
-    <ChatWrapper>
-      {open && renderChatHead}
-      <div
-        className="chat"
-      >
-        <img src="/assets/logo.png" alt="avatar" />
-        <button type="button" onClick={handleOpen}>{truncate(channelName, { length: 25 })}</button>
+  const renderChatMaximized = (
+    <div className="chat__head">
+      <div className="chat__head__top">
+        <button type="button" onClick={() => setOpen(false)} title={channelName}>{trimmedName}</button>
         <button type="button" onClick={handleClose}>X</button>
       </div>
+      <ul>
+        {messages.reverse().map((m, i) => (
+          <li
+            className={m.user === process.env.TEST_CHANNEL_ID ? 'sent' : 'received'}
+            key={i}
+          >
+            {m.text}
+          </li>
+        ))}
+      </ul>
+      <ChatInput channelId={channelId} />
+    </div>
+  );
+
+  const renderChatMinimized = (
+    <div
+      className="chat"
+    >
+      <div onClick={handleOpen} onKeyDown={handleOpen} role="presentation">
+        <img src="/assets/logo.png" alt="avatar" />
+        <button type="button">{trimmedName}</button>
+      </div>
+      <button type="button" onClick={handleClose}>X</button>
+    </div>
+  );
+
+  return (
+    <ChatWrapper>
+      {open ? renderChatMaximized : renderChatMinimized}
     </ChatWrapper>
   );
 };

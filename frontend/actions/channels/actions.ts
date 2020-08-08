@@ -70,7 +70,16 @@ export const pushMessage = (channelId: string, message: messageType) => action(
  *
  * @param message
  */
-export const sendMessage = (message: string) => action(TYPES.SEND_MESSAGE_REQUEST, message);
+export const sendMessage = (channelId: string, message: string) => action(
+  TYPES.SEND_MESSAGE_REQUEST,
+  { channelId, message },
+);
+
+export const handleSendMessageAsync = createAsyncAction(
+  TYPES.SEND_MESSAGE_REQUEST,
+  TYPES.SEND_MESSAGE_SUCCESS,
+  TYPES.SEND_MESSAGE_FAILED,
+)<{ channelId: string, message: string}, void, Error>();
 
 export const fetchChannels = () => action(TYPES.FETCH_CHANNELS_REQUEST);
 

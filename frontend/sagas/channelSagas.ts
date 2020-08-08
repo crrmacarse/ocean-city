@@ -6,6 +6,7 @@ import {
 import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
+  handleSendMessageAsync,
 } from 'actions/channels/actions';
 
 export function* getChannels() {
@@ -48,7 +49,7 @@ export function* getChannels() {
         return acc;
       }, {}),
       ...userChannels.channels.reduce((acc, curr) => {
-        let user = { name: '' };
+        let user = { real_name: '' };
 
         if (curr.is_im) {
           const [extractedUser] = userList.members.filter((u) => u.id === curr.user);
@@ -58,7 +59,7 @@ export function* getChannels() {
 
         acc[curr.id] = {
           ...curr,
-          channelName: user.name || curr.name,
+          channelName: user.real_name || curr.name,
           isOpenedChannel: false,
           messages: [],
           user,
@@ -89,7 +90,25 @@ export function* getMessages({ payload: channelId }: any) {
   }
 }
 
+export function* sendMessage({ payload: { channelId, message } }: any) {
+  try {
+    yield call(api.get, '/chat.postMessage', {
+      params: {
+        token: process.env.TEST_TOKEN,
+        channel: channelId,
+        text: message,
+        as_user: true,
+      },
+    });
+
+    yield put(handleSendMessageAsync.success());
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
+  yield takeLatest(handleSendMessageAsync.request, sendMessage);
 }

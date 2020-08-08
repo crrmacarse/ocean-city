@@ -1,7 +1,8 @@
 $text-grey: #808080;
 $background-color: #f5f5f5;
-
-// martin design:
+$primary-color: #eaeaea;
+$message-receive-color: #0084ff;
+$message-sent-color: #eaeaea;
 
 body {
   margin: 0;
@@ -14,11 +15,8 @@ main {
 }
 
 .main__right {
-  height: 100%;
-  display: flex;
   flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
 }
 
 .channel {
@@ -58,78 +56,28 @@ main {
   display: flex;
 }
 
-// .message {
-//   display: flex;
-//   justify-content: space-between;
-//   margin: 1rem;
-
-//   * {
-//     margin: 0;
-//   }
-
-//   .message_user {
-//     font-weight: bold;
-//     margin-bottom: 5px;
-//   }
-
-//   .message_text {
-//     font-size: small;
-//   }
-
-//   .message_time {
-//     color: $text-grey;
-//   }
-// }
-
-// .input {
-
-//   .user_typing {
-//     color: $text-grey;
-//     font-size: small;
-//     margin: 5px;
-//   }
-
-//   >div {
-//     display: flex;
-//     border: 1px solid #666;
-//     padding: 2px;
-
-//     input {
-//       width: 100%;
-//       padding: 1px 2px;
-//       outline: none;
-//       border: none;
-//     }
-
-//     button {
-//       background: none;
-//       padding: 0.5rem 1rem;
-//       border: 0;
-//       margin-left: 1rem;
-//       box-shadow: none;
-//       border-radius: 0px;
-//     }
-//   }
-// }
-
 .bottom__panel {
+  position: absolute;
   display: flex;
   flex-direction: row-reverse;
-  height: 2.5vh;
   width: 100%;
   bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.chat__wrapper {
+  position: relative;
+  width: 12vw;
+  background: $background-color;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .chat {
   display: flex;
   align-items: center;
-  background: $background-color;
-  padding: 1rem;
-  margin: 0 0.5rem;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0px;
-  outline: none;
+  justify-content: space-between;
   cursor: pointer;
 
   img {
@@ -139,22 +87,100 @@ main {
   small {
     margin-left: 0.5rem;
   }
-}
 
-.chat__wrapper {
-  position: relative;
+  div:first-child {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    border-radius: 0px;
+    border: 0;
+    background: none;
+    outline: none;
+  }
 }
 
 .chat__head {
   position: absolute;
-  min-width: 100%;
-  width: 100%;
+  max-width: 100%;
   background: $background-color;
   bottom: 0;
   right: 0;
-  margin-bottom: 2rem;
   border-radius: 5px;
-  padding: 1.5rem;
-  height: 30vh;
-  overflow: auto;
+
+  ul {
+    overflow-y: auto;
+    height: 30vh;
+    margin: 0;
+    padding: 1rem;
+    list-style: none;
+    flex-direction: column-reverse;
+    display: flex;
+
+    li {
+      border-radius: 1rem;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      font-size: small;
+    }
+
+    li.sent {
+      background-color: $message-sent-color;
+    }
+
+    li.received {
+      color: white;
+      background-color: $message-receive-color;
+    }
+  }
+}
+
+.chat__head__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  background: $primary-color;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 0.5rem;
+
+  button {
+    border-radius: 0px;
+    border: 0;
+    background: none;
+    outline: none;
+  }
+
+  button:first-child {
+    flex-grow: 1;
+    text-align: left;
+  }
+}
+
+.chat__input {
+  display: flex;
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: $background-color;
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    outline: none;
+    border: none;
+    border-radius: 1rem;
+    background: $primary-color;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
 }

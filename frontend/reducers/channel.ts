@@ -1,5 +1,7 @@
 import { createReducer } from 'typesafe-actions';
-import { handleFetchChannelsAsync, handleFetchMessagesAsync, ChannelProps } from 'actions/channels/actions';
+import {
+  handleFetchChannelsAsync, handleFetchMessagesAsync, ChannelProps, handleSendMessageAsync,
+} from 'actions/channels/actions';
 import * as channelTypes from 'actions/channels/types';
 
 const INITIAL_STATE: ChannelProps = {
@@ -10,6 +12,7 @@ const INITIAL_STATE: ChannelProps = {
   activeChannels: [],
 };
 
+// @TODO: isOpen should be in reducer
 const fetchChannelHandler = createReducer(INITIAL_STATE)
   .handleAction(handleFetchChannelsAsync.request,
     (state) => ({
@@ -59,9 +62,15 @@ const fetchMessagesHandler = createReducer(INITIAL_STATE)
   .handleAction(handleFetchMessagesAsync.failure,
     (state) => state);
 
+const sendMessageHandler = createReducer(INITIAL_STATE)
+  .handleAction(handleSendMessageAsync.request, (state) => state)
+  .handleAction(handleSendMessageAsync.success, (state) => state)
+  .handleAction(handleSendMessageAsync.failure, (state) => state);
+
 export default createReducer(INITIAL_STATE, {
   ...fetchChannelHandler.handlers,
   ...fetchMessagesHandler.handlers,
+  ...sendMessageHandler.handlers,
 }).handleType(channelTypes.PUSH_MESSAGE,
   (state, { payload }) => ({
     ...state,

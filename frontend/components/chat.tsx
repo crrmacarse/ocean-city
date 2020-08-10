@@ -27,7 +27,7 @@ const Chat = ({
   messages,
   closeChannel,
 }: ChatProps) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const trimmedName = truncate(channelName, { length: 25 });
 
   const handleOpen = () => {

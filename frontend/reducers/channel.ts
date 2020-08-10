@@ -81,8 +81,8 @@ export default createReducer(INITIAL_STATE, {
         [payload.channelId]: {
           ...state.channels.list[payload.channelId],
           messages: [
-            ...state.channels.list[payload.channelId].messages,
             payload.message,
+            ...state.channels.list[payload.channelId].messages,
           ],
         },
       },

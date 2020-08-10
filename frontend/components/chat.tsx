@@ -48,7 +48,7 @@ const Chat = ({
         <button type="button" onClick={handleClose}>X</button>
       </div>
       <ul>
-        {messages.reverse().map((m, i) => (
+        {messages.map((m, i) => (
           <li
             className={m.user === process.env.TEST_CHANNEL_ID ? 'sent' : 'received'}
             key={i}

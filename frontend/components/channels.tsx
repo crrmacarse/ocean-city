@@ -31,7 +31,7 @@ const ChannelList = ({
       <Auth />
       <h3>Channels</h3>
       <ul className="channel__groups">
-        {Object.values(list).filter((v) => v.is_channel || v.is_group)
+        {Object.values(list).filter((v) => (v.is_channel || v.is_group) && !v.isOpenedChannel)
           .map((channel) => (
             <li
               key={channel.id}
@@ -46,7 +46,7 @@ const ChannelList = ({
       </ul>
       <h3>Recent</h3>
       <ul className="channel__users">
-        {Object.values(list).filter((v) => v.is_im)
+        {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
           .map((channel) => (
             <li
               key={channel.id}

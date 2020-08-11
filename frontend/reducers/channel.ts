@@ -6,20 +6,19 @@ import * as channelTypes from 'actions/channels/types';
 
 const INITIAL_STATE: ChannelProps = {
   channels: {
-    list: [],
+    list: {},
     fetching: false,
   },
-  activeChannels: [],
+  users: {},
 };
 
-// @TODO: isOpen should be in reducer
 const fetchChannelHandler = createReducer(INITIAL_STATE)
   .handleAction(handleFetchChannelsAsync.request,
     (state) => ({
       ...state,
       channels: {
         ...state.channels,
-        list: [],
+        list: {},
         fetching: true,
       },
     }))
@@ -37,7 +36,7 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
       ...state,
       channels: {
         ...state.channels,
-        list: [],
+        list: {},
         fetching: false,
       },
     }));
@@ -131,4 +130,9 @@ export default createReducer(INITIAL_STATE, {
           },
         },
       },
+    }))
+  .handleType(channelTypes.SET_USER_LIST,
+    (state, { payload }) => ({
+      ...state,
+      users: payload,
     }));

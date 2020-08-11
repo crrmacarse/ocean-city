@@ -2,11 +2,12 @@ import {
   takeLatest,
   call,
   put,
+  all,
 } from 'redux-saga/effects';
 import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  handleSendMessageAsync,
+  handleSendMessageAsync, setUserList,
 } from 'actions/channels/actions';
 
 export function* getChannels() {
@@ -36,7 +37,18 @@ export function* getChannels() {
       },
     });
 
-    // format channel
+    const users = userList.members.reduce((acc, curr) => {
+      acc[curr.id] = curr;
+
+      return acc;
+    }, {});
+
+    /**
+     * Format channel
+     *
+     * I could group this to minimize the re-render and just flatten
+     * it if used as a whole
+     */
     const channels: {} = {
       ...groupChannels.channels.reduce((acc, curr) => {
         acc[curr.id] = {
@@ -52,9 +64,7 @@ export function* getChannels() {
         let user = { real_name: '' };
 
         if (curr.is_im) {
-          const [extractedUser] = userList.members.filter((u) => u.id === curr.user);
-
-          user = extractedUser;
+          user = users[curr.user];
         }
 
         acc[curr.id] = {
@@ -69,7 +79,10 @@ export function* getChannels() {
       }, {}),
     };
 
-    yield put(handleFetchChannelsAsync.success(channels));
+    yield all([
+      put(handleFetchChannelsAsync.success(channels)),
+      put(setUserList(users)),
+    ]);
   } catch (error) {
     console.error(error);
   }

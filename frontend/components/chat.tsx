@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import ChatWrapper from 'components/chat-wrapper';
 import ChatInput from 'components/chat-input';
@@ -12,7 +13,8 @@ export interface ownProps {
   hasNewMessage: boolean,
 }
 
-const mapStateToProps = (s, ownState: ownProps) => ({
+const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
+  ...channel,
   ...ownState,
 });
 
@@ -23,6 +25,7 @@ const mapDispatchToProps = {
 export type ChatProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Chat = ({
+  users,
   channelId,
   channelName,
   messages,
@@ -48,6 +51,32 @@ const Chat = ({
     setOpen(false);
   };
 
+  type messageType = {
+    id: string,
+    text: string,
+    files: { title:string, permalink: string }[],
+  }
+
+  const renderMessage = (user: string, message: messageType) => {
+    let profile = { name: '', real_name: '' };
+    const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
+    const { id, text, files } = message;
+
+    if (!isCurrentUser) {
+      profile = users[user];
+    }
+
+    return (
+      <li key={id} title="Time Sent:">
+        <small title={profile.real_name}>{profile.name}</small>
+        <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
+          {text}
+          {files && files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}
+        </div>
+      </li>
+    );
+  };
+
   const renderChatMaximized = (
     <div className="chat__head">
       <div className="chat__head__top">
@@ -55,15 +84,7 @@ const Chat = ({
         <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
-        {messages.map((m, i) => (
-          <li
-            className={m.user === process.env.TEST_CHANNEL_ID ? 'sent' : 'received'}
-            key={i}
-          >
-            {m.text}
-            {m.files && m.files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}
-          </li>
-        ))}
+        {messages.map((m) => renderMessage(m.user, m))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

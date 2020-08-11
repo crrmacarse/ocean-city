@@ -66,6 +66,16 @@ export const pushMessage = (channelId: string, message: messageType) => action(
 );
 
 /**
+ * Set message as read
+ *
+ * @param channelId
+ */
+export const setReadMessage = (channelId: string) => action(
+  TYPES.SET_READ_MESSAGE,
+  channelId,
+);
+
+/**
  * Send a message to slack api using chat.postMessage
  *
  * @param message

@@ -41,6 +41,7 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 40 })}
+              {channel.hasNewMessage && <span />}
             </li>
           ))}
       </ul>
@@ -56,6 +57,7 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 24 })}
+              {channel.hasNewMessage && <span />}
             </li>
           ))}
       </ul>

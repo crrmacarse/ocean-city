@@ -84,6 +84,20 @@ export default createReducer(INITIAL_STATE, {
             payload.message,
             ...state.channels.list[payload.channelId].messages,
           ],
+          hasNewMessage: true,
+        },
+      },
+    },
+  })).handleType(channelTypes.SET_READ_MESSAGE,
+  (state, { payload }) => ({
+    ...state,
+    channels: {
+      ...state.channels,
+      list: {
+        ...state.channels.list,
+        [payload]: {
+          ...state.channels.list[payload],
+          hasNewMessage: false,
         },
       },
     },
@@ -98,6 +112,7 @@ export default createReducer(INITIAL_STATE, {
           [payload]: {
             ...state.channels.list[payload],
             isOpenedChannel: true,
+            hasNewMessage: false,
           },
         },
       },
@@ -112,6 +127,7 @@ export default createReducer(INITIAL_STATE, {
           [payload]: {
             ...state.channels.list[payload],
             isOpenedChannel: false,
+            hasNewMessage: false,
           },
         },
       },

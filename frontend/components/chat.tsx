@@ -58,11 +58,11 @@ const Chat = ({
   }
 
   const renderMessage = (user: string, message: messageType) => {
-    let profile = { name: '', real_name: '' };
+    let profile: any = {};
     const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
     const { id, text, files } = message;
 
-    if (!isCurrentUser) {
+    if (!isCurrentUser && users[user]) {
       profile = users[user];
     }
 

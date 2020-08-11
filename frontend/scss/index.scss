@@ -62,13 +62,23 @@ main {
   display: flex;
   align-items: center;
 
+  p {
+    font-weight: bold;
+  }
+
   img {
-    width: 3rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    margin-right: 5px;
   }
 }
 
 .channel__user__details--actions {
   display: flex;
+
+  img {
+    width: 1rem;
+  }
 }
 
 .bottom__panel {
@@ -83,7 +93,7 @@ main {
 
 .chat__wrapper {
   position: relative;
-  width: 12vw;
+  width: 13vw;
   background: $background-color;
   margin: 0 0.5rem;
 }
@@ -116,6 +126,10 @@ main {
     background: none;
     outline: none;
     cursor: pointer;
+
+    img {
+      width: 0.75rem;
+    }
   }
 }
 
@@ -140,7 +154,7 @@ main {
     overflow-wrap: break-word;
     height: 30vh;
     margin: 0;
-    padding: 1rem;
+    padding: 0.8rem;
     list-style: none;
     flex-direction: column-reverse;
     display: flex;
@@ -195,6 +209,10 @@ main {
     flex-grow: 1;
     text-align: left;
   }
+
+  img {
+    width: 0.75rem;
+  }
 }
 
 .chat__input {
@@ -216,8 +234,14 @@ main {
   }
 
   button {
+    cursor: pointer;
+    outline: none;
     background: none;
     border: 0;
     box-shadow: none;
+  }
+
+  img {
+    width: 1rem;
   }
 }

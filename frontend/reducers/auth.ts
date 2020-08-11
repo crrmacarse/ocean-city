@@ -6,6 +6,7 @@ const INITIAL_STATE: AuthProps = {
   user: {
     email: '',
     name: '',
+    avatar: '',
     fetching: false,
   },
 };
@@ -18,6 +19,7 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
         ...state.user,
         email: '',
         name: '',
+        avatar: '',
         fetching: true,
       },
     }))
@@ -37,6 +39,7 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
         ...state.user,
         email: '',
         name: '',
+        avatar: '',
         fetching: false,
       },
     }));

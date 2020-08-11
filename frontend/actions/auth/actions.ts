@@ -7,6 +7,7 @@ export type AuthProps = DeepReadonly<{
   user: {
     name: string,
     email: string,
+    avatar: string,
     fetching: boolean,
   },
 }>

@@ -52,7 +52,7 @@ const Chat = ({
     <div className="chat__head">
       <div className="chat__head__top">
         <button type="button" onClick={handleMaximizedClose} title={channelName}>{trimmedName}</button>
-        <button type="button" onClick={handleClose}>X</button>
+        <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
         {messages.map((m, i) => (
@@ -61,7 +61,7 @@ const Chat = ({
             key={i}
           >
             {m.text}
-            {m.files && m.files.map((f) => (<a href={f.permalink}>{`File: ${f.title}`}</a>))}
+            {m.files && m.files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}
           </li>
         ))}
       </ul>
@@ -74,10 +74,9 @@ const Chat = ({
       className={`chat ${hasNewMessage && !open && 'has__new__message'}`}
     >
       <div onClick={handleMinimizedOpen} onKeyDown={handleMinimizedOpen} role="presentation">
-        <img src="/assets/logo.png" alt="avatar" />
         <button type="button">{trimmedName}</button>
       </div>
-      <button type="button" onClick={handleClose}>X</button>
+      <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
     </div>
   );
 

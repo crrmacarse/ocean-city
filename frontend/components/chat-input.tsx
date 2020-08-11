@@ -38,7 +38,7 @@ const Input = ({
           }
         }}
       />
-      <button type="submit" onClick={handleSendMessage}>SEND</button>
+      <button type="submit" onClick={handleSendMessage}><img src="/assets/icons/send.png" alt="send" /></button>
     </div>
   );
 };

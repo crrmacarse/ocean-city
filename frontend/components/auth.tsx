@@ -21,17 +21,16 @@ const Auth = ({
     fetchUserIdentity();
   }, []);
 
-  const { name } = user;
+  const { name, avatar } = user;
 
   return (
     <div className="channel__user__details">
       <div className="channel__user__details--info">
-        <img src="/assets/logo.png" alt="avatar" />
+        <img src={avatar} alt="avatar" />
         <p>{name}</p>
       </div>
       <div className="channel__user__details--actions">
-        <div>N</div>
-        <div>M</div>
+        <img src="/assets/icons/more.png" alt="close" />
       </div>
     </div>
   );

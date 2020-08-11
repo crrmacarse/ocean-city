@@ -14,11 +14,12 @@ export function* getUserIdentity() {
       },
     });
 
-    const { display_name: name, email } = response.profile;
+    const { display_name: name, email, image_192: avatar } = response.profile;
 
     yield put(handleFetchUserIdentityAsync.success({
       name,
       email,
+      avatar,
     }));
   } catch (error) {
     console.error(error);

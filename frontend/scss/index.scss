@@ -50,6 +50,10 @@ main {
         display: inline-block;
       }
     }
+
+    li.hasNewMessage {
+      font-weight: bold;
+    }
   }
 }
 
@@ -96,7 +100,7 @@ main {
   position: relative;
   min-width: 13vw;
   background: $background-color;
-  margin: 0 0.5rem;
+  margin-right: .5rem;
 }
 
 .chat {

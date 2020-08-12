@@ -37,6 +37,7 @@ const ChannelList = ({
               key={channel.id}
               title={channel.channelName}
               role="presentation"
+              className={`${channel.hasNewMessage && 'hasNewMessage'}`}
               onClick={() => handleSelectChannel(channel)}
               onKeyDown={() => handleSelectChannel(channel)}
             >

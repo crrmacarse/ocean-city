@@ -4,8 +4,9 @@ $primary-color: #eaeaea;
 $message-sent-color: #0084ff;
 $message-receive-color: #eaeaea;
 
-body {
+body, html {
   margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 main {

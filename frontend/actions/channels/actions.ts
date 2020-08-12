@@ -32,6 +32,7 @@ export type userType = {
   [id: string]: {
     id: string,
     name: string,
+    display: string,
   }
 }
 

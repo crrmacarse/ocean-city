@@ -57,6 +57,22 @@ const Chat = ({
     files: { title:string, permalink: string }[],
   }
 
+  const searchUserValue = (match: string, found: string) => {
+    if (users[found]) {
+      return `@${users[found].display}`;
+    }
+
+    return `@${found}`;
+  };
+
+  const formatText = (text: string) => {
+    const regex = /<[@|!]([a-z\d_]+)>/ig;
+
+    if (!regex.test(text)) { return text; }
+
+    return text.replace(regex, searchUserValue);
+  };
+
   const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
     const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
@@ -70,7 +86,7 @@ const Chat = ({
       <li key={id} title="Time Sent:">
         <small title={profile.real_name}>{profile.name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
-          {text}
+          {formatText(text)}
           {files && files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}
         </div>
       </li>

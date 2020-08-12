@@ -38,7 +38,10 @@ export function* getChannels() {
     });
 
     const users = userList.members.reduce((acc, curr) => {
-      acc[curr.id] = curr;
+      acc[curr.id] = {
+        display: curr.real_name,
+        ...curr,
+      };
 
       return acc;
     }, {});

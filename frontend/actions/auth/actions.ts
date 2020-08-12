@@ -2,6 +2,7 @@ import { action, createAsyncAction } from 'typesafe-actions';
 import { DeepReadonly } from 'utility-types';
 import * as TYPES from './types';
 
+// @TODO auth login / logout
 export type AuthProps = DeepReadonly<{
   token: string,
   user: {

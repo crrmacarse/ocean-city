@@ -93,7 +93,7 @@ main {
 
 .chat__wrapper {
   position: relative;
-  width: 13vw;
+  min-width: 13vw;
   background: $background-color;
   margin: 0 0.5rem;
 }
@@ -143,7 +143,7 @@ main {
 
 .chat__head {
   position: absolute;
-  max-width: 100%;
+  width: 100%;
   background: $background-color;
   bottom: 0;
   right: 0;
@@ -160,7 +160,7 @@ main {
     display: flex;
 
     li {
-      margin-bottom: .4rem;
+      margin-bottom: .5rem;
 
       small {
         font-size: x-small;
@@ -226,20 +226,46 @@ main {
 
 .chat__input {
   display: flex;
+  align-items: center;
   position: sticky;
   bottom: 0;
   right: 0;
   left: 0;
   background: $background-color;
+  margin: 0.5rem;
+
+  // Trying to target the react-mention
+  >div:first-child {
+    width: 100%;
+
+    > div:nth-child(1) {
+
+      div {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        background-color: $primary-color !important;
+      }
+    }
+
+    > div:nth-child(2) {
+      top: auto !important;
+      bottom: 0;
+      background-color: $background-color !important;
+      min-width: 10vw !important;
+      border-color: gray;
+
+      ul {
+        padding: 0.75rem !important;
+      }
+    }
+  }
+
 
   input {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0.5rem;
+    padding: 0 0.5rem;
     outline: none;
+    height: 100%;
     border: none;
-    border-radius: 1rem;
-    background: $primary-color;
   }
 
   button {

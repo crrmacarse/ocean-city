@@ -30,6 +30,7 @@ const Bottom = ({
             channelId={c.id}
             channelName={c.channelName}
             messages={c.messages}
+            hasNewMessage={c.hasNewMessage}
           />
         ))}
     </div>

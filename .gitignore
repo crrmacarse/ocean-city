@@ -5,8 +5,9 @@ coverage
 .DS_STORE
 .env
 tmp
-public
-!public/assets
+public/dist/*
+public/index.html
+
 
 !.gitkeep
 compilation-stats.json

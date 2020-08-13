@@ -47,7 +47,7 @@ Used Slack API(https://api.slack.com/methods):
 * oauth/authorize - To get autorization code to be used in oauth.access
 * oauth.access - To get a token to be used for authentication
 * rtm.connect - Initialize Websocket Connection
-* users.identity - Fetch Identity of the authenticated user
+* users.profile.get - Fetch Identity of the authenticated user
 * users.info - Fetch identity of user via id
 * users.conversations - Fetch all conversations history of the user
 * users.lists - Fetch all users in the channel to be used to identify(users.conversation limit itself on ids only. This is where it'll be matched)

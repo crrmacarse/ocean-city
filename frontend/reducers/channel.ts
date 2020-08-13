@@ -6,20 +6,19 @@ import * as channelTypes from 'actions/channels/types';
 
 const INITIAL_STATE: ChannelProps = {
   channels: {
-    list: [],
+    list: {},
     fetching: false,
   },
-  activeChannels: [],
+  users: {},
 };
 
-// @TODO: isOpen should be in reducer
 const fetchChannelHandler = createReducer(INITIAL_STATE)
   .handleAction(handleFetchChannelsAsync.request,
     (state) => ({
       ...state,
       channels: {
         ...state.channels,
-        list: [],
+        list: {},
         fetching: true,
       },
     }))
@@ -37,7 +36,7 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
       ...state,
       channels: {
         ...state.channels,
-        list: [],
+        list: {},
         fetching: false,
       },
     }));
@@ -81,9 +80,23 @@ export default createReducer(INITIAL_STATE, {
         [payload.channelId]: {
           ...state.channels.list[payload.channelId],
           messages: [
-            ...state.channels.list[payload.channelId].messages,
             payload.message,
+            ...state.channels.list[payload.channelId].messages,
           ],
+          hasNewMessage: true,
+        },
+      },
+    },
+  })).handleType(channelTypes.SET_READ_MESSAGE,
+  (state, { payload }) => ({
+    ...state,
+    channels: {
+      ...state.channels,
+      list: {
+        ...state.channels.list,
+        [payload]: {
+          ...state.channels.list[payload],
+          hasNewMessage: false,
         },
       },
     },
@@ -98,6 +111,7 @@ export default createReducer(INITIAL_STATE, {
           [payload]: {
             ...state.channels.list[payload],
             isOpenedChannel: true,
+            hasNewMessage: false,
           },
         },
       },
@@ -112,7 +126,13 @@ export default createReducer(INITIAL_STATE, {
           [payload]: {
             ...state.channels.list[payload],
             isOpenedChannel: false,
+            hasNewMessage: false,
           },
         },
       },
+    }))
+  .handleType(channelTypes.SET_USER_LIST,
+    (state, { payload }) => ({
+      ...state,
+      users: payload,
     }));

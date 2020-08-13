@@ -19,18 +19,29 @@ export type messageType = {
 }
 
 export type channelType = {
-  id: string,
-  channelName: string,
-  isOpenedChannel: boolean, // first load must all be false
-  messages: messageType[],
+  [id: string]: {
+    id: string,
+    channelName: string,
+    messages: messageType[],
+    isOpenedChannel: boolean, // first load must all be false
+    hasNewMessage: boolean,
+  }
+}
+
+export type userType = {
+  [id: string]: {
+    id: string,
+    name: string,
+    display: string,
+  }
 }
 
 export type ChannelProps = DeepReadonly<{
   channels: {
-    list: {},
+    list: channelType,
     fetching: boolean,
   },
-  activeChannels: string[],
+  users: userType,
 }>
 
 /**
@@ -63,6 +74,16 @@ export const addToActiveChannel = (channel: channelType) => action(
 export const pushMessage = (channelId: string, message: messageType) => action(
   TYPES.PUSH_MESSAGE,
   { channelId, message },
+);
+
+/**
+ * Set message as read
+ *
+ * @param channelId
+ */
+export const setReadMessage = (channelId: string) => action(
+  TYPES.SET_READ_MESSAGE,
+  channelId,
 );
 
 /**
@@ -101,3 +122,10 @@ export const handleFetchMessagesAsync = createAsyncAction(
   TYPES.FETCH_MESSAGES_SUCCESS,
   TYPES.FETCH_MESSAGES_FAILED,
 )<{ channelId: string }, any, Error>();
+
+/**
+ * Set user list to reducer
+ *
+ * @param list
+ */
+export const setUserList = (list: userType) => action(TYPES.SET_USER_LIST, list);

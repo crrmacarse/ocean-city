@@ -242,6 +242,7 @@ main {
   // Trying to target the react-mention
   >div:first-child {
     width: 100%;
+    overflow: auto;
 
     > div:nth-child(1) {
 

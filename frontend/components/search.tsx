@@ -11,6 +11,7 @@ export interface ownProps {
 
 const customStyles = {
   content: {
+    maxHeight: '50%',
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -78,7 +79,7 @@ const Search = ({
           {searchTerm === '' ? Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel)
             .map((channel) => (
               <li
-                style={{ display: 'flex', alignItems: 'center' }}
+                style={{ display: 'flex', alignItems: 'center', margin: 5 }}
                 key={channel.id}
                 title={channel.channelName}
                 role="presentation"

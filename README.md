@@ -41,6 +41,7 @@ npm run prod
 * Slack Available APIs: https://api.slack.com/methods
 * https://medium.com/free-code-camp/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a
 * https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/
+* https://api.slack.com/docs/presence-and-status#subcriptions
 
 Used Slack API(https://api.slack.com/methods):
 
@@ -53,6 +54,7 @@ Used Slack API(https://api.slack.com/methods):
 * users.lists - Fetch all users in the channel to be used to identify(users.conversation limit itself on ids only. This is where it'll be matched)
 * conversations.history - Fetch Conversation with a particular user or channel
 * chat.postMessage - Send a Message
+* user.getPresence - get user status
 
 ---
 

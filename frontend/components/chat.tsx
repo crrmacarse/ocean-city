@@ -61,6 +61,7 @@ const Chat = ({
   };
 
   type messageType = {
+    ts: number,
     text: string,
     files: { title:string, permalink: string }[],
   }
@@ -81,17 +82,18 @@ const Chat = ({
     return text.replace(regex, searchUserValue);
   };
 
-  const renderMessage = (user: string, message: messageType, i: number) => {
+  const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
     const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
-    const { text, files } = message;
+    const { text, files, ts } = message;
+    const timestamp = new Date(ts * 1000).toLocaleString();
 
     if (!isCurrentUser && users[user]) {
       profile = users[user];
     }
 
     return (
-      <li key={i} title="Time Sent:">
+      <li key={ts} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
@@ -108,7 +110,7 @@ const Chat = ({
         <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
-        {messages.map((m, i) => renderMessage(m.user, m, i))}
+        {messages.map((m) => renderMessage(m.user, m))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

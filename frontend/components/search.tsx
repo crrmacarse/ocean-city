@@ -41,7 +41,7 @@ const Search = ({
 
   useEffect(() => {
     // eslint-disable-next-line max-len
-    const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => (v.channelName !== undefined ? v.channelName.toLowerCase().includes(searchTerm) : false));
+    const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => (v.channelName && v.channelName.toLowerCase().includes(searchTerm)));
     setSearchResults(results);
   }, [searchTerm]);
 

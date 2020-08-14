@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import { setOpenedChannel, fetchMessages, channelType } from 'actions/channels/actions';
 import Auth from 'components/auth';
 import truncate from 'lodash/truncate';
+import Search from 'components/search';
 
 const mapStateToProps = ({ channel }: RootState) => ({
   ...channel,
@@ -26,8 +27,25 @@ const ChannelList = ({
     handleFetchMessages(channel.id);
   };
 
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const handleShowSearch = () => {
+    setIsOpen(true);
+  };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div className="channel">
+      <Search
+        closeModal={closeModal}
+        openModal={handleShowSearch}
+        modalIsOpen={modalIsOpen}
+        users={list}
+        handleSelectChannel={handleSelectChannel}
+      />
       <Auth />
       <h3>Channels</h3>
       <ul className="channel__groups">
@@ -46,7 +64,14 @@ const ChannelList = ({
             </li>
           ))}
       </ul>
-      <h3>Recent</h3>
+      <div className="channel__user__details">
+        <div className="channel__user__details--info">
+          <h3>Recent</h3>
+        </div>
+        <div className="channel__user__details--actions" onClick={() => handleShowSearch()} onKeyDown={() => handleShowSearch()} role="presentation">
+          <img src="/assets/icons/plus.png" alt="search" />
+        </div>
+      </div>
       <ul className="channel__users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
           .map((channel) => (

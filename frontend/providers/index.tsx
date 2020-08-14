@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from 'routes';
-import WebSocket from './webSocket';
+import WebSocket from './web-socket';
 
 const Providers = () => (
   <Fragment>

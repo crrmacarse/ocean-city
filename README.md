@@ -13,6 +13,8 @@ NODE_ENV=
 SLACK_TOKEN=
 SLACK_CLIENT_ID=
 SLACK_CLIENT_SECRET=
+TEST_CHANNEL_ID=
+TEST_TOKEN=
 ```
 
 ## Development ##
@@ -53,6 +55,7 @@ Used Slack API(https://api.slack.com/methods):
 * users.conversations - Fetch all conversations history of the user
 * users.lists - Fetch all users in the channel to be used to identify(users.conversation limit itself on ids only. This is where it'll be matched)
 * conversations.history - Fetch Conversation with a particular user or channel
+* conversation.list - List all conversations
 * chat.postMessage - Send a Message
 * user.getPresence - get user status
 

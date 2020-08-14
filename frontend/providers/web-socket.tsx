@@ -20,6 +20,7 @@ const SocketComponent = ({
   useEffect(() => {
     const initializeSocket = async () => {
       try {
+        // @TODO: Could get the USER ID HERE
         const { data } = await api.get(SLACK_RTM_URL, {
           params: {
             token: SLACK_TOKEN,

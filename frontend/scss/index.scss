@@ -26,7 +26,7 @@ main {
 
 .channel {
   min-width: 15vw;
-  background: $background-color;
+  border-left: #d8d8d8 solid 1px;
   padding: 1rem;
 
   ul {
@@ -53,6 +53,10 @@ main {
 
     li.hasNewMessage {
       font-weight: bold;
+    }
+
+    li:hover {
+      color: gray;
     }
   }
 }

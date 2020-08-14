@@ -30,8 +30,13 @@ const ChannelList = ({
     <div className="channel">
       <Auth />
       <h3>Channels</h3>
+      <hr />
       <ul className="channel__groups">
         {Object.values(list).filter((v) => (v.is_channel || v.is_group) && !v.isOpenedChannel)
+          .sort((a, b) => (
+            // eslint-disable-next-line no-nested-ternary
+            (a.channelName > b.channelName) ? 1 : ((b.channelName > a.channelName) ? -1 : 0)
+          ))
           .map((channel) => (
             <li
               key={channel.id}
@@ -47,8 +52,14 @@ const ChannelList = ({
           ))}
       </ul>
       <h3>Recent</h3>
+      <hr />
       <ul className="channel__users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
+          // .slice(0, 20) // There should be a better alternative
+          .sort((a, b) => (
+            // eslint-disable-next-line no-nested-ternary
+            (a.channelName > b.channelName) ? 1 : ((b.channelName > a.channelName) ? -1 : 0)
+          ))
           .map((channel) => (
             <li
               key={channel.id}

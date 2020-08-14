@@ -13,6 +13,15 @@ export interface ownProps {
   hasNewMessage: boolean,
 }
 
+/**
+ * @TODO
+ * -we need to display user status bubbles
+ * -in channels, we need to format the group messages to reflect
+ * how they display in the official Slack app
+ * -when tagging, will need to display user name in text box rather than user id.
+ * -reduce the number of recents that are displayed.
+ * -how would I start a convo with someone not on my recents list?
+ */
 const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
   ...channel,
   ...ownState,
@@ -84,7 +93,7 @@ const Chat = ({
 
     return (
       <li key={id} title="Time Sent:">
-        <small title={profile.real_name}>{profile.name}</small>
+        <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
           {files && files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}

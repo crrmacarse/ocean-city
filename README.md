@@ -32,7 +32,7 @@ npm run prod
 ## Resources ##
 
 * Slack RTM API: https://api.slack.com/rtm
-* Websocket: https://github.com/theturtle32/WebSocket-Node/blob/HEAD/docs/index.md
+* Websocket: https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API
 * Postman collection: https://www.getpostman.com/collections/a2e825d3d3c60d33437a
 * Slack OAuth Authentication: https://api.slack.com/docs/sign-in-with-slack
 * Slack OAuth Scopes: https://api.slack.com/scopes

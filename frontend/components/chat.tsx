@@ -61,7 +61,6 @@ const Chat = ({
   };
 
   type messageType = {
-    id: string,
     text: string,
     files: { title:string, permalink: string }[],
   }
@@ -82,17 +81,17 @@ const Chat = ({
     return text.replace(regex, searchUserValue);
   };
 
-  const renderMessage = (user: string, message: messageType) => {
+  const renderMessage = (user: string, message: messageType, i: number) => {
     let profile: any = {};
     const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
-    const { id, text, files } = message;
+    const { text, files } = message;
 
     if (!isCurrentUser && users[user]) {
       profile = users[user];
     }
 
     return (
-      <li key={id} title="Time Sent:">
+      <li key={i} title="Time Sent:">
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
@@ -109,7 +108,7 @@ const Chat = ({
         <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
-        {messages.map((m) => renderMessage(m.user, m))}
+        {messages.map((m, i) => renderMessage(m.user, m, i))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

@@ -11,6 +11,7 @@ export interface ownProps {
 
 const customStyles = {
   content: {
+    minWidth: '30rem',
     maxHeight: '50%',
     top: '50%',
     left: '50%',
@@ -40,9 +41,33 @@ const Search = ({
 
   useEffect(() => {
     // eslint-disable-next-line max-len
-    const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => v.channelName.toLowerCase().includes(searchTerm));
+    const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => (v.channelName !== undefined ? v.channelName.toLowerCase().includes(searchTerm) : false));
     setSearchResults(results);
   }, [searchTerm]);
+
+  const renderSearchResult = (searchResults.length !== 0 ? searchResults.map((channel) => (
+    <div>
+      <li
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          margin: 5,
+          overflow: 'auto',
+        }}
+        key={channel.id}
+        title={channel.channelName}
+        role="presentation"
+        onClick={() => handleSelectUser(channel)}
+        onKeyDown={() => handleSelectUser(channel)}
+      >
+        <img src={channel.user.profile.image_48} alt="avatar" style={{ marginRight: 5 }} />
+        {truncate(channel.channelName, { length: 24 })}
+        {channel.hasNewMessage && <span />}
+      </li>
+    </div>
+
+  )) : <p style={{ textAlign: 'center' }}>No result</p>);
+
   return (
     <div>
       <Modal
@@ -60,7 +85,7 @@ const Search = ({
           onKeyDown={closeModal}
           role="presentation"
         >
-          <img src="/assets/icons/close.png" alt="close" />
+          <img src="/assets/icons/close.png" style={{ width: '1rem' }} alt="close" />
         </div>
         <div>
           <h2>Direct Messages</h2>
@@ -74,12 +99,17 @@ const Search = ({
           value={searchTerm}
           onChange={handleChange}
         />
-        Recent
+        <h4>Recent</h4>
         <ul style={{ padding: 0 }}>
           {searchTerm === '' ? Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel)
             .map((channel) => (
               <li
-                style={{ display: 'flex', alignItems: 'center', margin: 5 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin: 5,
+                  overflow: 'auto',
+                }}
                 key={channel.id}
                 title={channel.channelName}
                 role="presentation"
@@ -90,23 +120,7 @@ const Search = ({
                 {truncate(channel.channelName, { length: 24 })}
                 {channel.hasNewMessage && <span />}
               </li>
-            )) : searchResults.map((channel) => (
-              <div>
-                <li
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  key={channel.id}
-                  title={channel.channelName}
-                  role="presentation"
-                  onClick={() => handleSelectUser(channel)}
-                  onKeyDown={() => handleSelectUser(channel)}
-                >
-                  <img src={channel.user.profile.image_48} alt="avatar" />
-                  {truncate(channel.channelName, { length: 24 })}
-                  {channel.hasNewMessage && <span />}
-                </li>
-              </div>
-
-          ))}
+            )) : renderSearchResult}
         </ul>
       </Modal>
     </div>

@@ -77,6 +77,7 @@ const ChannelList = ({
           <img src="/assets/icons/plus.png" alt="search" />
         </div>
       </div>
+      <hr />
       <ul className="channel__users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
           // .slice(0, 20) // There should be a better alternative

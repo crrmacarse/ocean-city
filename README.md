@@ -9,12 +9,12 @@ A modular messaging with slack integration project
 ## Configurations ##
 
 ```bash
-NODE_ENV=
-SLACK_TOKEN=
+NODE_ENV= 
+PORT=
 SLACK_CLIENT_ID=
 SLACK_CLIENT_SECRET=
-TEST_CHANNEL_ID=
-TEST_TOKEN=
+
+PUBLIC_URL= # for production use only
 ```
 
 ## Development ##

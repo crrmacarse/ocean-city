@@ -35,7 +35,6 @@ const prodConfig = {
       'process.env.PORT': JSON.stringify(process.env.PORT),
       'process.env.SLACK_CLIENT_ID': JSON.stringify(process.env.SLACK_CLIENT_ID),
       'process.env.SLACK_CLIENT_SECRET': JSON.stringify(process.env.SLACK_CLIENT_SECRET),
-      'process.env.TEST_TOKEN': JSON.stringify(process.env.TEST_TOKEN),
     }),
     ...plugins,
     // new GenerateSW({

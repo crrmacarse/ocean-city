@@ -1,9 +1,9 @@
 import React from 'react';
 // import { PUBLIC_SLACK_AUTH_HANDLER } from 'routes';
 
-const URL = process.env.PUBLIC_URL || 'http://localhost';
 const PORT = process.env.PORT || 8080;
-const REDIRECT_URL = `${URL}:${PORT}/slack/auth/redirect`;
+const URL = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
+const REDIRECT_URL = `${URL}/slack/auth/redirect`;
 
 const Authenticate = () => (
   <a href={`https://slack.com/oauth/authorize?client_id=${process.env.SLACK_CLIENT_ID}&scope=client read&redirect_uri=${REDIRECT_URL}`} style={{ margin: '1rem' }}>

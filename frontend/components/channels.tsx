@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
-import Search from 'components/search';
+// import Search from 'components/search';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
   ...auth,
@@ -32,25 +32,25 @@ const ChannelList = ({
     fetchMessages({ token, channelId: channel.id });
   };
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  // const [modalIsOpen, setIsOpen] = useState(false);
 
-  const handleShowSearch = () => {
-    setIsOpen(true);
-  };
+  // const handleShowSearch = () => {
+  //   setIsOpen(true);
+  // };
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  // function closeModal() {
+  //   setIsOpen(false);
+  // }
 
   return (
     <div className="channel">
-      <Search
+      {/* <Search
         closeModal={closeModal}
         openModal={handleShowSearch}
         modalIsOpen={modalIsOpen}
         users={list}
         handleSelectChannel={handleSelectChannel}
-      />
+      /> */}
       <Profile />
       <h3>Channels</h3>
       <hr />
@@ -78,9 +78,10 @@ const ChannelList = ({
         <div className="channel__user__details--info">
           <h3>Recent</h3>
         </div>
-        <div className="channel__user__details--actions" onClick={() => handleShowSearch()} onKeyDown={() => handleShowSearch()} role="presentation">
+        {/* <div className="channel__user__details--actions"
+        onClick={() => handleShowSearch()} onKeyDown={() => handleShowSearch()} role="presentation">
           <img src="/assets/icons/plus.png" alt="search" />
-        </div>
+        </div> */}
       </div>
       <hr />
       <ul className="channel__users">

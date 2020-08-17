@@ -22,7 +22,8 @@ export interface ownProps {
  * -reduce the number of recents that are displayed.
  * -how would I start a convo with someone not on my recents list?
  */
-const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ channel, auth }: RootState, ownState: ownProps) => ({
+  ...auth,
   ...channel,
   ...ownState,
 });
@@ -34,6 +35,7 @@ const mapDispatchToProps = {
 export type ChatProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Chat = ({
+  authId,
   users,
   channelId,
   channelName,
@@ -84,7 +86,7 @@ const Chat = ({
 
   const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
-    const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
+    const isCurrentUser = user === authId;
     const { text, files, ts } = message;
     const timestamp = new Date(ts * 1000).toLocaleString();
 

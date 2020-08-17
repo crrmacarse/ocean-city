@@ -15,10 +15,11 @@ export type ProfileProps = ReturnType<typeof mapStateToProps> & typeof mapDispat
 
 const Profile = ({
   fetchUserIdentity,
+  token,
   user,
 }: ProfileProps) => {
   useEffect(() => {
-    fetchUserIdentity();
+    fetchUserIdentity(token);
   }, []);
 
   const { name, avatar } = user;

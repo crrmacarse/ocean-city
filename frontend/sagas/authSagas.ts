@@ -6,11 +6,11 @@ import {
 import api from 'utils/api';
 import { handleFetchUserIdentityAsync } from 'actions/auth/actions';
 
-export function* getUserIdentity() {
+export function* getUserIdentity({ payload }: any) {
   try {
     const { data: response } = yield call(api.get, '/users.profile.get', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token: payload,
       },
     });
 

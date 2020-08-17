@@ -1,18 +1,24 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
+import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import api from 'utils/api';
 
 const SLACK_RTM_URL = 'https://slack.com/api/rtm.connect';
-const SLACK_TOKEN = process.env.TEST_TOKEN;
+
+const mapStateToProps = ({ auth }: RootState) => ({
+  ...auth,
+});
 
 const mapDispatchToProps = {
   ...channelActions,
 };
 
-export type SocketComponent = typeof mapDispatchToProps;
+export type SocketComponent = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const SocketComponent = ({
+  authenticated,
+  token,
   pushMessage,
 }: SocketComponent) => {
   const [socket, setSocket] = useState({ url: '' });
@@ -20,10 +26,9 @@ const SocketComponent = ({
   useEffect(() => {
     const initializeSocket = async () => {
       try {
-        // @TODO: Could get the USER ID HERE
         const { data } = await api.get(SLACK_RTM_URL, {
           params: {
-            token: SLACK_TOKEN,
+            token,
           },
         });
 
@@ -34,7 +39,7 @@ const SocketComponent = ({
     };
 
     initializeSocket();
-  }, []);
+  }, [authenticated]);
 
   useEffect(() => {
     if (!socket.url) { return; }
@@ -59,4 +64,4 @@ const SocketComponent = ({
   return <Fragment />;
 };
 
-export default connect(null, mapDispatchToProps)(SocketComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SocketComponent);

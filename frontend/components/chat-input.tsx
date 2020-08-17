@@ -8,7 +8,8 @@ export interface ownProps {
   channelId: string,
 }
 
-const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ auth, channel }: RootState, ownState: ownProps) => ({
+  ...auth,
   ...channel,
   ...ownState,
 });
@@ -18,6 +19,7 @@ const mapDispatchToProps = { ...channelActions };
 export type InputProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Input = ({
+  token,
   users,
   channelId,
   sendMessage,
@@ -25,7 +27,7 @@ const Input = ({
   const [value, setValue] = useState('');
 
   const handleSendMessage = () => {
-    sendMessage(channelId, value);
+    sendMessage(token, channelId, value);
     setValue('');
   };
 

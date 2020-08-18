@@ -1,6 +1,7 @@
 import { createReducer } from 'typesafe-actions';
 import {
-  handleFetchChannelsAsync, handleFetchMessagesAsync, ChannelProps, handleSendMessageAsync,
+  handleFetchChannelsAsync, handleFetchMessagesAsync,
+  ChannelProps, handleSendMessageAsync, handleFetchRecentAsync,
 } from 'actions/channels/actions';
 import * as channelTypes from 'actions/channels/types';
 
@@ -41,6 +42,35 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
       },
     }));
 
+const fetchRecentHandler = createReducer(INITIAL_STATE)
+  .handleAction(handleFetchRecentAsync.request,
+    (state) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {},
+        fetching: true,
+      },
+    }))
+  .handleAction(handleFetchRecentAsync.success,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: payload,
+        fetching: false,
+      },
+    }))
+  .handleAction(handleFetchRecentAsync.failure,
+    (state) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {},
+        fetching: false,
+      },
+    }));
+
 const fetchMessagesHandler = createReducer(INITIAL_STATE)
   .handleAction(handleFetchMessagesAsync.request,
     (state) => state)
@@ -70,6 +100,7 @@ export default createReducer(INITIAL_STATE, {
   ...fetchChannelHandler.handlers,
   ...fetchMessagesHandler.handlers,
   ...sendMessageHandler.handlers,
+  ...fetchRecentHandler.handlers,
 }).handleType(channelTypes.PUSH_MESSAGE,
   (state, { payload }) => ({
     ...state,

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
+import { fetchRecent } from 'actions/channels/actions';
+import { RootState } from 'reducers';
 import truncate from 'lodash/truncate';
 
 export interface ownProps {
@@ -7,6 +10,7 @@ export interface ownProps {
   modalIsOpen: boolean,
   users: any,
   handleSelectChannel: any,
+  handleFetchRecent?: any,
 }
 
 const customStyles = {
@@ -22,11 +26,23 @@ const customStyles = {
   },
 };
 
+const mapStateToProps = ({ channel }: RootState) => ({
+  ...channel,
+  recent: channel.channels.list,
+});
+
+const mapDispatchToProps = {
+  handleFetchRecent: fetchRecent,
+};
+
+export type SearchProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
 const Search = ({
   closeModal,
   modalIsOpen,
   users,
   handleSelectChannel,
+  handleFetchRecent,
 }: ownProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -38,12 +54,14 @@ const Search = ({
     handleSelectChannel(channel);
     closeModal();
   };
-
+  console.error('users>>', users);
   useEffect(() => {
     // eslint-disable-next-line max-len
     const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => (v.channelName && v.channelName.toLowerCase().includes(searchTerm)));
     setSearchResults(results);
   }, [searchTerm]);
+
+  useEffect(() => { handleFetchRecent(); }, []);
 
   const renderSearchResult = (searchResults.length !== 0 ? searchResults.map((channel) => (
     <div>
@@ -74,6 +92,7 @@ const Search = ({
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
+        ariaHideApp={false}
       >
         <div
           style={{
@@ -126,4 +145,4 @@ const Search = ({
     </div>
   );
 };
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -33,19 +33,22 @@ const ChannelList = ({
     setIsOpen(true);
   };
 
-  function closeModal() {
+  function closeSearch() {
     setIsOpen(false);
   }
 
+  console.error('list>>', list);
+
   return (
     <div className="channel">
-      <Search
-        closeModal={closeModal}
-        openModal={handleShowSearch}
-        modalIsOpen={modalIsOpen}
-        users={list}
-        handleSelectChannel={handleSelectChannel}
-      />
+      {modalIsOpen ? (
+        <Search
+          closeModal={closeSearch}
+          modalIsOpen={modalIsOpen}
+          users={list}
+          handleSelectChannel={handleSelectChannel}
+        />
+      ) : <div />}
       <Auth />
       <h3>Channels</h3>
       <hr />

@@ -44,6 +44,7 @@ npm run prod
 * https://medium.com/free-code-camp/how-to-build-a-chat-application-using-react-redux-redux-saga-and-web-sockets-47423e4bc21a
 * https://blog.logrocket.com/websockets-tutorial-how-to-go-real-time-with-node-and-react-8e4693fbf843/
 * https://api.slack.com/docs/presence-and-status#subcriptions
+* https://api.slack.com/authentication/best-practices
 
 Used Slack API(https://api.slack.com/methods):
 
@@ -58,6 +59,15 @@ Used Slack API(https://api.slack.com/methods):
 * conversation.list - List all conversations
 * chat.postMessage - Send a Message
 * user.getPresence - get user status
+
+## KNOWN ISSUES
+
+* XO_BOT's redirect OAuth requires to be changed when in development
+
+Production: https://fbzhjzwipk.herokuapp.com/slack/auth/redirect
+Development: http://localhost:8080/slack/auth/redirect
+
+Only the first value in the list of redirect urls is being read.
 
 ---
 

@@ -110,6 +110,14 @@ export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_FAILED,
 )<void, any, Error>();
 
+export const fetchRecent = () => action(TYPES.FETCH_RECENT_REQUEST);
+
+export const handleFetchRecentAsync = createAsyncAction(
+  TYPES.FETCH_RECENT_REQUEST,
+  TYPES.FETCH_RECENT_SUCCESS,
+  TYPES.FETCH_RECENT_FAILED,
+)<void, any, Error>();
+
 /**
  * This is an initial load of messages
  *

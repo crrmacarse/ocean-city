@@ -12,6 +12,12 @@ export type SlackMessageFileProps = {
   file: fileType,
 };
 
+/**
+ * Random files seems to be not loaded properly on
+ * their containers. Console errors states about CORB issues:
+ *
+ * https://www.chromestatus.com/feature/5629709824032768
+ */
 const SlackMessageFile = ({ file }: SlackMessageFileProps) => {
   if (['png', 'jpeg', 'jpg'].includes(file.filetype.toLocaleLowerCase())) {
     return (

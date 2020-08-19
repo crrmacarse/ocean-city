@@ -85,7 +85,7 @@ const ChannelList = ({
       </div>
       <hr />
       <ul className="channel__users">
-        {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
+        {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel && !v.user.is_bot)
           // .slice(0, 20) // There should be a better alternative
           .sort((a, b) => (
             // eslint-disable-next-line no-nested-ternary

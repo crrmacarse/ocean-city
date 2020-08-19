@@ -4,6 +4,7 @@ import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import ChatWrapper from 'components/chat-wrapper';
 import ChatInput from 'components/chat-input';
+import SlackMessageFile from 'components/slack/message-file';
 import truncate from 'lodash/truncate';
 
 export interface ownProps {
@@ -65,7 +66,7 @@ const Chat = ({
   type messageType = {
     ts: number,
     text: string,
-    files: { title:string, permalink: string }[],
+    files: [],
   }
 
   const searchUserValue = (match: string, found: string) => {
@@ -99,7 +100,7 @@ const Chat = ({
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
-          {files && files.map((f) => (<a download href={f.permalink}>{f.title}</a>))}
+          {files && files.map((f) => <SlackMessageFile file={f} />)}
         </div>
       </li>
     );

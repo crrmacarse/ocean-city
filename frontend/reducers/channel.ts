@@ -1,7 +1,7 @@
 import { createReducer } from 'typesafe-actions';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  ChannelProps, handleSendMessageAsync, handleFetchRecentAsync,
+  ChannelProps, handleSendMessageAsync, handleFetchMasterListAsync,
 } from 'actions/channels/actions';
 import * as channelTypes from 'actions/channels/types';
 
@@ -10,6 +10,7 @@ const INITIAL_STATE: ChannelProps = {
     list: {},
     fetching: false,
   },
+  masterList: [],
   users: {},
 };
 
@@ -42,33 +43,21 @@ const fetchChannelHandler = createReducer(INITIAL_STATE)
       },
     }));
 
-const fetchRecentHandler = createReducer(INITIAL_STATE)
-  .handleAction(handleFetchRecentAsync.request,
+const fetchMasterListHandler = createReducer(INITIAL_STATE)
+  .handleAction(handleFetchMasterListAsync.request,
     (state) => ({
       ...state,
-      channels: {
-        ...state.channels,
-        list: {},
-        fetching: true,
-      },
+      masterList: [],
     }))
-  .handleAction(handleFetchRecentAsync.success,
+  .handleAction(handleFetchMasterListAsync.success,
     (state, { payload }) => ({
       ...state,
-      channels: {
-        ...state.channels,
-        list: payload,
-        fetching: false,
-      },
+      masterList: payload,
     }))
-  .handleAction(handleFetchRecentAsync.failure,
+  .handleAction(handleFetchMasterListAsync.failure,
     (state) => ({
       ...state,
-      channels: {
-        ...state.channels,
-        list: {},
-        fetching: false,
-      },
+      masterList: [],
     }));
 
 const fetchMessagesHandler = createReducer(INITIAL_STATE)
@@ -100,7 +89,7 @@ export default createReducer(INITIAL_STATE, {
   ...fetchChannelHandler.handlers,
   ...fetchMessagesHandler.handlers,
   ...sendMessageHandler.handlers,
-  ...fetchRecentHandler.handlers,
+  ...fetchMasterListHandler.handlers,
 }).handleType(channelTypes.PUSH_MESSAGE,
   (state, { payload }) => ({
     ...state,
@@ -166,4 +155,17 @@ export default createReducer(INITIAL_STATE, {
     (state, { payload }) => ({
       ...state,
       users: payload,
+    }))
+  .handleType(channelTypes.PUSH_CHANNEL,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {
+          ...state.channels.list,
+          [payload]: {
+            ...state.channels.list[payload],
+          },
+        },
+      },
     }));

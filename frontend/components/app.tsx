@@ -29,6 +29,9 @@ const App = ({
           <li>
             Websocket connection is feeded through the console(starts with &quot;slack api:&quot;)
           </li>
+          <li>
+            Bot messages are filtered out
+          </li>
         </ul>
         <small>Read the README.MD in the root folder for more details</small>
       </div>

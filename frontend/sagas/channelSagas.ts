@@ -10,13 +10,36 @@ import {
   handleSendMessageAsync, setUserList, handleFetchThreadAsync,
 } from 'actions/channels/actions';
 
+/**
+ * @TODO: Re-design this approach
+ */
+const fetchUserPresences = async (token: string, userChannels: any) => {
+  const userChannelPresencePromise = userChannels.channels.map(async (uc) => {
+    const { data } = await api.get('https://slack.com/api/users.getPresence', {
+      params: {
+        token,
+        user: uc.user,
+      },
+    });
+
+    return {
+      user: uc.user,
+      presence: data.presence,
+    };
+  });
+
+  const results = await Promise.all(userChannelPresencePromise);
+
+  return results;
+};
+
 export function* getChannels({ payload }) {
   try {
     // fetch group types
     const { data: groupChannels } = yield call(api.get, '/users.conversations', {
       params: {
         token: payload.token,
-        types: 'public_channel,private_channel',
+        types: 'public_channel,private_channel,mpim',
         user: payload.authId,
       },
     });
@@ -25,7 +48,7 @@ export function* getChannels({ payload }) {
     const { data: userChannels } = yield call(api.get, '/users.conversations', {
       params: {
         token: payload.token,
-        types: 'mpim,im',
+        types: 'im',
         user: payload.authId,
       },
     });
@@ -36,6 +59,8 @@ export function* getChannels({ payload }) {
         types: 'public_channel,private_channel,mpim,im',
       },
     });
+
+    const userChannelPresence = yield fetchUserPresences(payload.token, userChannels);
 
     const users = userList.members.reduce((acc, curr) => {
       acc[curr.id] = {
@@ -70,12 +95,15 @@ export function* getChannels({ payload }) {
           user = users[curr.user];
         }
 
+        const [userPresence] = userChannelPresence.filter((ucp) => ucp.user === curr.user);
+
         acc[curr.id] = {
           ...curr,
           channelName: user.real_name || curr.name,
           isOpenedChannel: false,
           messages: [],
           user,
+          presence: userPresence.presence,
         };
 
         return acc;

@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as authActions from 'actions/auth/actions';
 
-const mapStateToProps = ({ auth }: RootState) => ({
+export interface ownProps {
+  handleSearch: any,
+}
+
+const mapStateToProps = ({ auth }: RootState, ownState: ownProps) => ({
   ...auth,
+  ...ownState,
 });
 
 const mapDispatchToProps = {
@@ -17,6 +22,7 @@ const Profile = ({
   fetchUserIdentity,
   token,
   user,
+  handleSearch,
 }: ProfileProps) => {
   useEffect(() => {
     fetchUserIdentity(token);
@@ -29,6 +35,9 @@ const Profile = ({
       <div className="channel__user__details--info">
         <img src={avatar} alt="avatar" />
         <p>{name}</p>
+      </div>
+      <div className="channel__user__details--actions" onClick={() => handleSearch()} onKeyDown={() => handleSearch()} role="presentation">
+        <img src="/assets/icons/message.png" alt="search" />
       </div>
       <div className="channel__user__details--actions">
         <img src="/assets/icons/more.png" alt="close" />

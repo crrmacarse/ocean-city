@@ -37,19 +37,16 @@ const ChannelList = ({
     setIsOpen(false);
   }
 
-  console.error('list>>', list);
-
   return (
     <div className="channel">
       {modalIsOpen ? (
         <Search
           closeModal={closeSearch}
           modalIsOpen={modalIsOpen}
-          users={list}
           handleSelectChannel={handleSelectChannel}
         />
       ) : <div />}
-      <Auth />
+      <Auth handleSearch={handleShowSearch} />
       <h3>Channels</h3>
       <hr />
       <ul className="channel__groups">
@@ -72,14 +69,7 @@ const ChannelList = ({
             </li>
           ))}
       </ul>
-      <div className="channel__user__details">
-        <div className="channel__user__details--info">
-          <h3>Recent</h3>
-        </div>
-        <div className="channel__user__details--actions" onClick={() => handleShowSearch()} onKeyDown={() => handleShowSearch()} role="presentation">
-          <img src="/assets/icons/plus.png" alt="search" />
-        </div>
-      </div>
+      <h3>Recent</h3>
       <hr />
       <ul className="channel__users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)

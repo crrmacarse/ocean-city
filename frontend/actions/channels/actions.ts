@@ -41,6 +41,7 @@ export type ChannelProps = DeepReadonly<{
     list: channelType,
     fetching: boolean,
   },
+  masterList: {}[],
   users: userType,
 }>
 
@@ -100,7 +101,7 @@ export const handleSendMessageAsync = createAsyncAction(
   TYPES.SEND_MESSAGE_REQUEST,
   TYPES.SEND_MESSAGE_SUCCESS,
   TYPES.SEND_MESSAGE_FAILED,
-)<{ channelId: string, message: string}, void, Error>();
+)<{ channelId: string, message: string }, void, Error>();
 
 export const fetchChannels = () => action(TYPES.FETCH_CHANNELS_REQUEST);
 
@@ -110,12 +111,12 @@ export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_FAILED,
 )<void, any, Error>();
 
-export const fetchRecent = () => action(TYPES.FETCH_RECENT_REQUEST);
+export const fetchMasterList = () => action(TYPES.FETCH_MASTER_LIST_REQUEST);
 
-export const handleFetchRecentAsync = createAsyncAction(
-  TYPES.FETCH_RECENT_REQUEST,
-  TYPES.FETCH_RECENT_SUCCESS,
-  TYPES.FETCH_RECENT_FAILED,
+export const handleFetchMasterListAsync = createAsyncAction(
+  TYPES.FETCH_MASTER_LIST_REQUEST,
+  TYPES.FETCH_MASTER_LIST_SUCCESS,
+  TYPES.FETCH_MASTER_LIST_FAILED,
 )<void, any, Error>();
 
 /**
@@ -137,3 +138,8 @@ export const handleFetchMessagesAsync = createAsyncAction(
  * @param list
  */
 export const setUserList = (list: userType) => action(TYPES.SET_USER_LIST, list);
+
+export const pushChannel = (channelId: string) => action(
+  TYPES.PUSH_CHANNEL,
+  channelId,
+);

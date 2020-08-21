@@ -25,7 +25,8 @@ const customStyles = {
   },
 };
 
-const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ auth, channel }: RootState, ownState: ownProps) => ({
+  ...auth,
   ...channel,
   ...ownState,
 });
@@ -38,18 +39,19 @@ const mapDispatchToProps = {
 export type SearchProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Search = ({
+  authId,
+  token,
   masterList,
   users,
   closeModal,
   modalIsOpen,
   handleSelectChannel,
   handleFetchMasterList,
-  // eslint-disable-next-line no-unused-vars
   handlePushChannel,
 }: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => { handleFetchMasterList(); }, []);
+  useEffect(() => { handleFetchMasterList({ authId, token }); }, []);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);

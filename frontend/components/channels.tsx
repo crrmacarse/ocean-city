@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import { setOpenedChannel, fetchMessages, channelType } from 'actions/channels/actions';
+import * as channelActions from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
-// import Search from 'components/search';
+import Search from 'components/search';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
   ...auth,
@@ -32,11 +32,11 @@ const ChannelList = ({
     fetchMessages({ token, channelId: channel.id });
   };
 
-  // const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  // const handleShowSearch = () => {
-  //   setIsOpen(true);
-  // };
+  const handleShowSearch = () => {
+    setIsOpen(true);
+  };
 
   function closeSearch() {
     setIsOpen(false);

@@ -123,11 +123,11 @@ export function* sendMessage({ payload: { token, channelId, message } }: any) {
   }
 }
 
-export function* getRecent() {
+export function* getMasterList({ payload }) {
   try {
     const { data: response } = yield call(api.get, '/conversations.list', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token: payload.token,
         types: 'public_channel,private_channel,mpim,im',
       },
     });
@@ -142,5 +142,5 @@ export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
   yield takeLatest(handleSendMessageAsync.request, sendMessage);
-  yield takeLatest(handleFetchMasterListAsync.request, getRecent);
+  yield takeLatest(handleFetchMasterListAsync.request, getMasterList);
 }

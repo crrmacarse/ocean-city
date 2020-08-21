@@ -114,7 +114,10 @@ export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_FAILED,
 )<void, any, Error>();
 
-export const fetchMasterList = () => action(TYPES.FETCH_MASTER_LIST_REQUEST);
+export const fetchMasterList = (payload: { token: string, authId: string }) => action(
+  TYPES.FETCH_MASTER_LIST_REQUEST,
+  payload,
+);
 
 export const handleFetchMasterListAsync = createAsyncAction(
   TYPES.FETCH_MASTER_LIST_REQUEST,

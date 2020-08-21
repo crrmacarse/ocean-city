@@ -51,6 +51,7 @@ Used Slack API(https://api.slack.com/methods):
 * oauth/authorize - To get autorization code to be used in oauth.access
 * oauth.access - To get a token to be used for authentication
 * rtm.connect - Initialize Websocket Connection
+* rtm.goodbye - Websocket Disconnected by Slack due to Inactivity
 * users.profile.get - Fetch Identity of the authenticated user
 * users.info - Fetch identity of user via id
 * users.conversations - Fetch all conversations history of the user

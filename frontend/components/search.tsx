@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { fetchRecent } from 'actions/channels/actions';
+import { fetchMasterList, pushChannel } from 'actions/channels/actions';
 import { RootState } from 'reducers';
-import truncate from 'lodash/truncate';
 
 export interface ownProps {
   closeModal: any,
   modalIsOpen: boolean,
-  users: any,
   handleSelectChannel: any,
   handleFetchRecent?: any,
 }
@@ -16,6 +14,7 @@ export interface ownProps {
 const customStyles = {
   content: {
     minWidth: '30rem',
+    maxWidth: '30rem',
     maxHeight: '50%',
     top: '50%',
     left: '50%',
@@ -26,101 +25,91 @@ const customStyles = {
   },
 };
 
-const mapStateToProps = ({ channel }: RootState) => ({
+const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
   ...channel,
-  recent: channel.channels.list,
+  ...ownState,
 });
 
 const mapDispatchToProps = {
-  handleFetchRecent: fetchRecent,
+  handleFetchMasterList: fetchMasterList,
+  handlePushChannel: pushChannel,
 };
 
 export type SearchProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Search = ({
+  masterList,
+  users,
   closeModal,
   modalIsOpen,
-  users,
   handleSelectChannel,
-  handleFetchRecent,
-}: ownProps) => {
+  handleFetchMasterList,
+  // eslint-disable-next-line no-unused-vars
+  handlePushChannel,
+}: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => { handleFetchMasterList(); }, []);
+
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   const handleSelectUser = (channel: any) => {
+    handlePushChannel(channel.id);
     handleSelectChannel(channel);
     closeModal();
   };
-  console.error('users>>', users);
-  useEffect(() => {
-    // eslint-disable-next-line max-len
-    const results = Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel).filter((v) => (v.channelName && v.channelName.toLowerCase().includes(searchTerm)));
-    setSearchResults(results);
-  }, [searchTerm]);
 
-  useEffect(() => { handleFetchRecent(); }, []);
+  const renderImage = (channel: any) => {
+    if (channel.is_im) {
+      return (<img src={users[channel.user].profile.image_48} alt="avatar" style={{ marginRight: 5 }} />);
+    }
 
-  const renderSearchResult = (searchResults.length !== 0 ? searchResults.map((channel) => (
-    <div>
-      <li
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          margin: 5,
-          overflow: 'auto',
-        }}
-        key={channel.id}
-        title={channel.channelName}
-        role="presentation"
-        onClick={() => handleSelectUser(channel)}
-        onKeyDown={() => handleSelectUser(channel)}
-      >
-        <img src={channel.user.profile.image_48} alt="avatar" style={{ marginRight: 5 }} />
-        {truncate(channel.channelName, { length: 24 })}
-        {channel.hasNewMessage && <span />}
-      </li>
-    </div>
+    if (channel.is_private) {
+      return (<img src="/assets/icons/lock.png" alt="avatar" style={{ marginRight: 5, width: '1rem' }} />);
+    }
 
-  )) : <p style={{ textAlign: 'center' }}>No result</p>);
+    return (<img src="/assets/icons/hashtag.png" alt="avatar" style={{ marginRight: 5, width: '1rem' }} />);
+  };
 
   return (
-    <div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+      ariaHideApp={false}
+    >
+      <div className="search">
         <div
           style={{
             display: 'flex',
-            float: 'right',
-            width: '1rem',
+            alignContent: 'start',
+            justifyContent: 'space-between',
           }}
-          onClick={closeModal}
-          onKeyDown={closeModal}
-          role="presentation"
         >
-          <img src="/assets/icons/close.png" style={{ width: '1rem' }} alt="close" />
-        </div>
-        <div>
           <h2>Direct Messages</h2>
+          <button type="button" onClick={closeModal}>
+            <img src="/assets/icons/close.png" alt="close" style={{ width: '0.8rem' }} />
+          </button>
         </div>
         <input
           style={{
             width: '100%',
           }}
           type="text"
-          placeholder="Search"
+          placeholder="Search for people or channel"
           value={searchTerm}
           onChange={handleChange}
         />
-        <h4>Recent</h4>
-        <ul style={{ padding: 0 }}>
-          {searchTerm === '' ? Object.values(users).filter((v) => v.is_im && !v.isOpenedChannel)
+        <ul className="channel__users" style={{ padding: 0 }}>
+          {masterList
+            .filter((v) => (v.is_im
+              ? (
+                !users[v.user].is_bot
+                && users[v.user].profile.real_name.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              : v.is_member && v.name.toLowerCase().includes(searchTerm.toLowerCase())))
             .map((channel) => (
               <li
                 style={{
@@ -130,19 +119,18 @@ const Search = ({
                   overflow: 'auto',
                 }}
                 key={channel.id}
-                title={channel.channelName}
+                title={channel.name}
                 role="presentation"
                 onClick={() => handleSelectUser(channel)}
                 onKeyDown={() => handleSelectUser(channel)}
               >
-                <img src={channel.user.profile.image_48} alt="avatar" style={{ marginRight: 5 }} />
-                {truncate(channel.channelName, { length: 24 })}
-                {channel.hasNewMessage && <span />}
+                {renderImage(channel)}
+                {channel.is_im ? users[channel.user].profile.real_name : channel.name}
               </li>
-            )) : renderSearchResult}
+            ))}
         </ul>
-      </Modal>
-    </div>
+      </div>
+    </Modal>
   );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

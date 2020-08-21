@@ -151,4 +151,28 @@ export default createReducer(INITIAL_STATE, {
           }
           : c)),
       },
+    }))
+  .handleType(channelTypes.PUSH_THREAD_MESSAGE,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {
+          ...state.channels.list,
+          [payload.channel]: {
+            ...state.channels.list[payload.channel],
+            messages: state.channels.list[payload.channel].messages.map((m) => {
+              if (m.ts === payload.thread_ts) {
+                return {
+                  ...m,
+                  reply_count: m.reply_count + 1,
+                };
+              }
+
+              return m;
+            }),
+            hasNewMessage: true,
+          },
+        },
+      },
     }));

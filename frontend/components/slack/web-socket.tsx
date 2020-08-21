@@ -16,14 +16,15 @@ const mapDispatchToProps = {
   ...authActions,
 };
 
-export type SocketComponent = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackWebsocketProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const SlackWebsocket = ({
   connected,
   token,
   websocketConnect,
   pushMessage,
-}: SlackWebsocket) => {
+  pushThreadMessage,
+}: SlackWebsocketProps) => {
   const [socket, setSocket] = useState({ url: '' });
 
   useEffect(() => {
@@ -63,7 +64,11 @@ const SlackWebsocket = ({
       console.log('slack api:', response);
 
       if (response.type === 'message') {
-        pushMessage(response.channel, response);
+        if (response.thread_ts) {
+          pushThreadMessage(response);
+        } else {
+          pushMessage(response.channel, response);
+        }
       }
 
       if (response.type === 'hello') {

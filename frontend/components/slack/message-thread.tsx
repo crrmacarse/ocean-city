@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import SlackMessageFile from 'components/slack/message-file';
@@ -26,7 +26,40 @@ const SlackMessageThread = ({
     fetching: false,
     list: [],
   });
+
+  const fetchThread = async () => {
+    try {
+      setThread({
+        fetching: true,
+        list: [],
+      });
+
+      const { data } = await api.get('https://slack.com/api/conversations.replies', {
+        params: {
+          token,
+          channel: channelId,
+          ts,
+        },
+      });
+
+      setThread({
+        fetching: false,
+        list: data.messages,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    fetchThread();
+  }, [replyCount, open]);
 
   type threadMessage = {
     client_msg_id: string,
@@ -61,42 +94,17 @@ const SlackMessageThread = ({
     <ul>
       {thread.fetching && <p>fetching...</p>}
       {thread.list
-        .slice(1)
+        .slice(1) // remove the first value as it is the parent message
         .map((thrdMsg) => renderThreadMessage(thrdMsg))}
       <button title="Close thread" type="button" onClick={() => setOpen(false)}>Close Thread</button>
     </ul>
   );
 
-  const handleOpenClick = async () => {
-    try {
-      setOpen(true);
-      setThread({
-        fetching: true,
-        list: [],
-      });
-
-      const { data } = await api.get('https://slack.com/api/conversations.replies', {
-        params: {
-          token,
-          channel: channelId,
-          ts,
-        },
-      });
-
-      setThread({
-        fetching: false,
-        list: data.messages,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const title = `${replyCount} ${replyCount > 1 ? 'replies' : 'reply'}`;
 
   return (
     <div className="chat__thread__toggle">
-      {open ? renderThread : <button type="button" onClick={handleOpenClick} title="View thread">{title}</button>}
+      {open ? renderThread : <button type="button" onClick={() => setOpen(true)} title="View thread">{title}</button>}
     </div>
   );
 };

@@ -16,6 +16,7 @@ export type messageType = {
   channel: string,
   suppressNotification: string,
   ts: string, // timestamp. [PK],
+  thread: [], // experimental
 }
 
 export type channelType = {
@@ -157,3 +158,8 @@ export const handleFetchThreadAsync = createAsyncAction(
   TYPES.FETCH_THREAD_SUCCESS,
   TYPES.FETCH_THREAD_FAILED,
 )<threadType, any, Error>();
+
+export const pushThreadMessage = (message: {}) => action(
+  TYPES.PUSH_THREAD_MESSAGE,
+  message,
+);

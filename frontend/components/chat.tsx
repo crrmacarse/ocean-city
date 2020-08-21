@@ -111,6 +111,11 @@ const Chat = ({
     );
   };
 
+  /**
+   * Messages not to be rendered
+   */
+  const MESSAGE_SUBTYPE_FILTER = ['bot_message', 'message_replied'];
+
   const renderChatMaximized = (
     <div className="chat__head">
       <div className="chat__head__top">
@@ -118,7 +123,9 @@ const Chat = ({
         <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
-        {messages.map((m) => renderMessage(m.user, m))}
+        {messages
+          .filter((m) => !MESSAGE_SUBTYPE_FILTER.includes(m.subtype))
+          .map((m) => renderMessage(m.user, m))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

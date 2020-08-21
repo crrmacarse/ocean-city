@@ -61,7 +61,7 @@ main {
 
       span.hasNewMessage {
         background: $status--hasNewMessage;
-        border: 1px solid $status--hasNewMessage;
+        font-weight: bold;
       }
 
       span.away {

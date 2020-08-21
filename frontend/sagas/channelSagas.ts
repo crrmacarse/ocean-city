@@ -7,7 +7,7 @@ import {
 import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  handleSendMessageAsync, setUserList, handleFetchRecentAsync,
+  handleSendMessageAsync, setUserList, handleFetchMasterListAsync,
 } from 'actions/channels/actions';
 
 export function* getChannels() {
@@ -128,11 +128,11 @@ export function* getRecent() {
     const { data: response } = yield call(api.get, '/conversations.list', {
       params: {
         token: process.env.TEST_TOKEN,
-        types: 'private_channel,mpim,im',
+        types: 'public_channel,private_channel,mpim,im',
       },
     });
-    console.error('ASD>>>', response);
-    yield put(handleFetchRecentAsync.success(response));
+
+    yield put(handleFetchMasterListAsync.success(response.channels));
   } catch (error) {
     console.error(error);
   }
@@ -142,5 +142,5 @@ export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
   yield takeLatest(handleSendMessageAsync.request, sendMessage);
-  yield takeLatest(handleFetchRecentAsync.request, getRecent);
+  yield takeLatest(handleFetchMasterListAsync.request, getRecent);
 }

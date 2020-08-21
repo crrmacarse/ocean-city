@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
@@ -5,6 +6,7 @@ import * as channelActions from 'actions/channels/actions';
 import ChatWrapper from 'components/chat-wrapper';
 import ChatInput from 'components/chat-input';
 import SlackMessageFile from 'components/slack/message-file';
+import SlackMessageThread from 'components/slack/message-thread';
 import truncate from 'lodash/truncate';
 
 export interface ownProps {
@@ -14,15 +16,6 @@ export interface ownProps {
   hasNewMessage: boolean,
 }
 
-/**
- * @TODO
- * -we need to display user status bubbles
- * -in channels, we need to format the group messages to reflect
- * how they display in the official Slack app
- * -when tagging, will need to display user name in text box rather than user id.
- * -reduce the number of recents that are displayed.
- * -how would I start a convo with someone not on my recents list?
- */
 const mapStateToProps = ({ channel, auth }: RootState, ownState: ownProps) => ({
   ...auth,
   ...channel,
@@ -64,8 +57,10 @@ const Chat = ({
   };
 
   type messageType = {
+    client_msg_id: string,
     ts: number,
     text: string,
+    reply_count: number,
     files: [],
   }
 
@@ -88,7 +83,9 @@ const Chat = ({
   const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
     const isCurrentUser = user === authId;
-    const { text, files, ts } = message;
+    const {
+      text, files, ts, reply_count, client_msg_id,
+    } = message;
     const timestamp = new Date(ts * 1000).toLocaleString();
 
     if (!isCurrentUser && users[user]) {
@@ -96,11 +93,19 @@ const Chat = ({
     }
 
     return (
-      <li key={ts} title={`Sent: ${timestamp}`}>
+      <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
           {files && files.map((f) => <SlackMessageFile file={f} />)}
+          {reply_count && (
+            <SlackMessageThread
+              key={ts}
+              channelId={channelId}
+              replyCount={reply_count}
+              ts={ts}
+            />
+          )}
         </div>
       </li>
     );

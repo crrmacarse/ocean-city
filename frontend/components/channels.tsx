@@ -4,6 +4,8 @@ import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
+import WebSocket from 'components/slack/web-socket';
+
 // import Search from 'components/search';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
@@ -44,6 +46,7 @@ const ChannelList = ({
 
   return (
     <div className="channel">
+      <WebSocket />
       {/* <Search
         closeModal={closeModal}
         openModal={handleShowSearch}
@@ -70,7 +73,7 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 40 })}
-              {channel.hasNewMessage && <span />}
+              {channel.hasNewMessage && <span className="hasNewMessage" />}
             </li>
           ))}
       </ul>
@@ -100,7 +103,7 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 24 })}
-              {channel.hasNewMessage && <span />}
+              <span className={`${channel.presence === 'away' && 'away'} ${channel.hasNewMessage && 'hasNewMessage'}`} />
             </li>
           ))}
       </ul>

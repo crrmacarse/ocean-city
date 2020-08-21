@@ -7,7 +7,7 @@ import {
 import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  handleSendMessageAsync, setUserList,
+  handleSendMessageAsync, setUserList, handleFetchThreadAsync,
 } from 'actions/channels/actions';
 
 export function* getChannels({ payload }) {
@@ -123,8 +123,45 @@ export function* sendMessage({ payload: { token, channelId, message } }: any) {
   }
 }
 
+/**
+ * Get user pressence
+ *
+ * https://api.slack.com/methods/users.getPresence
+ */
+export function* checkPresence({ payload }: any) {
+  try {
+    const { data } = yield call(api.get, 'https://slack.com/api/users.getPresence', {
+      params: {
+        token: payload.token,
+        user: payload.userId,
+      },
+    });
+
+    console.error(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function* getThread({ payload }: any) {
+  try {
+    const { data } = yield call(api.get, 'https://slack.com/api/conversations.replies', {
+      params: {
+        token: payload.token,
+        channel: payload.conversationId,
+        ts: payload.timestamp,
+      },
+    });
+
+    yield put(handleFetchThreadAsync.success(data.messages));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
   yield takeLatest(handleSendMessageAsync.request, sendMessage);
+  yield takeLatest(handleFetchThreadAsync.request, getThread);
 }

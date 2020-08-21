@@ -10,6 +10,8 @@ const INITIAL_STATE: ChannelProps = {
     fetching: false,
   },
   users: {},
+  activeChannel: [],
+  activeThread: [],
 };
 
 const fetchChannelHandler = createReducer(INITIAL_STATE)
@@ -87,20 +89,21 @@ export default createReducer(INITIAL_STATE, {
         },
       },
     },
-  })).handleType(channelTypes.SET_READ_MESSAGE,
-  (state, { payload }) => ({
-    ...state,
-    channels: {
-      ...state.channels,
-      list: {
-        ...state.channels.list,
-        [payload]: {
-          ...state.channels.list[payload],
-          hasNewMessage: false,
+  }))
+  .handleType(channelTypes.SET_READ_MESSAGE,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: {
+          ...state.channels.list,
+          [payload]: {
+            ...state.channels.list[payload],
+            hasNewMessage: false,
+          },
         },
       },
-    },
-  }))
+    }))
   .handleType(channelTypes.SET_OPENED_CHANNEL,
     (state, { payload }) => ({
       ...state,
@@ -135,4 +138,17 @@ export default createReducer(INITIAL_STATE, {
     (state, { payload }) => ({
       ...state,
       users: payload,
+    }))
+  .handleType(channelTypes.SET_USER_PRESENCE,
+    (state, { payload }) => ({
+      ...state,
+      channels: {
+        ...state.channels,
+        list: Object.values(state.channels.list).map((c) => (c.user.id === payload.userId
+          ? {
+            ...c,
+            presence: payload.presence,
+          }
+          : c)),
+      },
     }));

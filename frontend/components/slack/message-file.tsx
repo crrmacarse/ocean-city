@@ -1,4 +1,5 @@
 import React from 'react';
+import truncate from 'lodash/truncate';
 
 export type fileType = {
   title:string,
@@ -19,10 +20,12 @@ export type SlackMessageFileProps = {
  * https://www.chromestatus.com/feature/5629709824032768
  */
 const SlackMessageFile = ({ file }: SlackMessageFileProps) => {
+  const title = truncate(file.title, { length: 25 });
+
   if (['png', 'jpeg', 'jpg'].includes(file.filetype.toLocaleLowerCase())) {
     return (
       <a href={file.url_private} target="_blank" rel="noreferrer">
-        <img src={file.url_private} alt={file.title} width="100%" />
+        <img src={file.url_private} alt={title} width="100%" />
       </a>
     );
   }

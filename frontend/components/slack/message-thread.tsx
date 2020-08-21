@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
+import SlackMessageFile from 'components/slack/message-file';
 import api from 'utils/api';
 
 export type ownProps = {
@@ -32,11 +33,12 @@ const SlackMessageThread = ({
     user: string,
     text: string,
     ts: number,
+    files: [],
   }
 
   const renderThreadMessage = (threadMessage: threadMessage) => {
     const {
-      client_msg_id, user, text, ts: tmTs,
+      client_msg_id, user, text, ts: tmTs, files,
     } = threadMessage;
     let profile: any = {};
     const timestamp = new Date(tmTs * 1000).toLocaleString();
@@ -50,6 +52,7 @@ const SlackMessageThread = ({
         <small>{profile.real_name}</small>
         <br />
         {text}
+        {files && files.map((f) => <SlackMessageFile file={f} />)}
       </li>
     );
   };

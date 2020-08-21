@@ -3,7 +3,8 @@ import { DeepReadonly } from 'utility-types';
 import * as TYPES from './types';
 
 export type AuthProps = DeepReadonly<{
-  authenticated: false,
+  authenticated: boolean,
+  connected: boolean,
   token: string,
   authId: string,
   user: {
@@ -32,3 +33,8 @@ export const handleFetchUserIdentityAsync = createAsyncAction(
   TYPES.FETCH_USER_IDENTITY_SUCCESS,
   TYPES.FETCH_USER_IDENTITY_FAILED,
 )<void, any, Error>();
+
+export const websocketConnect = (connected: boolean) => action(
+  TYPES.WEBSOCKET_CONNECT,
+  connected,
+);

@@ -15,7 +15,8 @@ export type messageType = {
   text: string,
   channel: string,
   suppressNotification: string,
-  ts: string, // timestamp
+  ts: string, // timestamp. [PK],
+  thread: [], // experimental
 }
 
 export type channelType = {
@@ -25,6 +26,7 @@ export type channelType = {
     messages: messageType[],
     isOpenedChannel: boolean, // first load must all be false
     hasNewMessage: boolean,
+    presence: 'active' | 'away',
   }
 }
 
@@ -42,6 +44,8 @@ export type ChannelProps = DeepReadonly<{
     fetching: boolean,
   },
   users: userType,
+  activeChannel: {}[], // Resreved for restructure
+  activeThread: {}[],
 }>
 
 /**
@@ -135,3 +139,27 @@ export const handleFetchMessagesAsync = createAsyncAction(
  * @param list
  */
 export const setUserList = (list: userType) => action(TYPES.SET_USER_LIST, list);
+
+export const setPresence = (userId: string, presence: 'away' | 'active') => action(TYPES.SET_USER_PRESENCE, { userId, presence });
+
+export type threadType = {
+  token: string, conversationId: string, timestamp: string
+};
+
+export const fetchThread = (
+  payload: threadType,
+) => action(
+  TYPES.FETCH_THREAD_REQUEST,
+  payload,
+);
+
+export const handleFetchThreadAsync = createAsyncAction(
+  TYPES.FETCH_THREAD_REQUEST,
+  TYPES.FETCH_THREAD_SUCCESS,
+  TYPES.FETCH_THREAD_FAILED,
+)<threadType, any, Error>();
+
+export const pushThreadMessage = (message: {}) => action(
+  TYPES.PUSH_THREAD_MESSAGE,
+  message,
+);

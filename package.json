@@ -16,8 +16,11 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/xtendops-frontend/slack-messenger#readme",
   "dependencies": {
+    "@toast-ui/editor": "^2.3.1",
+    "@toast-ui/react-editor": "^2.3.1",
     "airbnb": "0.0.2",
     "axios": "^0.19.2",
+    "codemirror": "^5.56.0",
     "connect": "^3.7.0",
     "express": "^4.17.1",
     "lodash": "^4.17.19",

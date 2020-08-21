@@ -4,6 +4,7 @@ import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
+import WebSocket from 'components/slack/web-socket';
 import Search from 'components/search';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
@@ -44,6 +45,7 @@ const ChannelList = ({
 
   return (
     <div className="channel">
+      <WebSocket />
       {modalIsOpen ? (
         <Search
           closeModal={closeSearch}
@@ -70,14 +72,14 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 40 })}
-              {channel.hasNewMessage && <span />}
+              {channel.hasNewMessage && <span className="hasNewMessage" />}
             </li>
           ))}
       </ul>
       <h3>Recent</h3>
       <hr />
       <ul className="channel__users">
-        {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel)
+        {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel && !v.user.is_bot)
           // .slice(0, 20) // There should be a better alternative
           .sort((a, b) => (
             // eslint-disable-next-line no-nested-ternary
@@ -92,7 +94,7 @@ const ChannelList = ({
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 24 })}
-              {channel.hasNewMessage && <span />}
+              <span className={`${channel.presence === 'away' && 'away'} ${channel.hasNewMessage && 'hasNewMessage'}`} />
             </li>
           ))}
       </ul>

@@ -17,6 +17,11 @@ const AuthHandler = ({
   const history = useHistory();
   const { search } = useLocation();
 
+  /**
+   * This is only a temporary approach. A proper implementation
+   * requires a receiving backend to do this. Currently it exposes
+   * the keys to the client on network request.
+   */
   useEffect(() => {
     const getAuthToken = async () => {
       const query = new URLSearchParams(search);

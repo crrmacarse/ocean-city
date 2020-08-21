@@ -1,15 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from 'routes';
-import WebSocket from './web-socket';
 
 const Providers = () => (
-  <Fragment>
-    <WebSocket />
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
-  </Fragment>
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>
 );
 
 export default Providers;

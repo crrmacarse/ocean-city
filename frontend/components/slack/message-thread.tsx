@@ -31,19 +31,23 @@ const SlackMessageThread = ({
     client_msg_id: string,
     user: string,
     text: string,
+    ts: number,
   }
 
   const renderThreadMessage = (threadMessage: threadMessage) => {
-    const { client_msg_id, user, text } = threadMessage;
+    const {
+      client_msg_id, user, text, ts: tmTs,
+    } = threadMessage;
     let profile: any = {};
+    const timestamp = new Date(tmTs * 1000).toLocaleString();
 
     if (users[user]) {
       profile = users[user];
     }
 
     return (
-      <li key={client_msg_id}>
-        <small title={profile.real_name}>{profile.real_name}</small>
+      <li key={client_msg_id} title={`Sent: ${timestamp}`}>
+        <small>{profile.real_name}</small>
         <br />
         {text}
       </li>

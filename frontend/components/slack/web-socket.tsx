@@ -2,6 +2,7 @@ import React, { useEffect, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
+import * as authActions from 'actions/auth/actions';
 import api from 'utils/api';
 
 const SLACK_RTM_URL = 'https://slack.com/api/rtm.connect';
@@ -12,18 +13,24 @@ const mapStateToProps = ({ auth }: RootState) => ({
 
 const mapDispatchToProps = {
   ...channelActions,
+  ...authActions,
 };
 
 export type SocketComponent = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const SocketComponent = ({
-  authenticated,
+const SlackWebsocket = ({
+  connected,
   token,
+  websocketConnect,
   pushMessage,
-}: SocketComponent) => {
+}: SlackWebsocket) => {
   const [socket, setSocket] = useState({ url: '' });
 
   useEffect(() => {
+    if (connected) {
+      return;
+    }
+
     const initializeSocket = async () => {
       try {
         const { data } = await api.get(SLACK_RTM_URL, {
@@ -39,7 +46,7 @@ const SocketComponent = ({
     };
 
     initializeSocket();
-  }, [authenticated]);
+  }, [connected]);
 
   useEffect(() => {
     if (!socket.url) { return; }
@@ -58,10 +65,24 @@ const SocketComponent = ({
       if (response.type === 'message') {
         pushMessage(response.channel, response);
       }
+
+      if (response.type === 'hello') {
+        websocketConnect(true);
+      }
+
+      if (response.type === 'goodbye') {
+        websocketConnect(false);
+      }
+    };
+
+    client.onerror = (e) => {
+      console.error('Websocket Connection Error:', e);
+
+      websocketConnect(false);
     };
   }, [socket]);
 
   return <Fragment />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SocketComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackWebsocket);

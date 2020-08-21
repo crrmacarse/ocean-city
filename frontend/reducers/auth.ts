@@ -4,6 +4,7 @@ import * as authTypes from 'actions/auth/types';
 
 const INITIAL_STATE: AuthProps = {
   authenticated: false,
+  connected: false,
   authId: '',
   token: '',
   user: {
@@ -56,4 +57,9 @@ export default createReducer(INITIAL_STATE, {
       authenticated: true,
       authId: payload.authId,
       token: payload.token,
+    }))
+  .handleType(authTypes.WEBSOCKET_CONNECT,
+    (state, { payload }) => ({
+      ...state,
+      connected: payload,
     }));

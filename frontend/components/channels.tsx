@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import { setOpenedChannel, fetchMessages, channelType } from 'actions/channels/actions';
-import Auth from 'components/auth';
+import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
 import Search from 'components/search';
 
@@ -46,7 +46,7 @@ const ChannelList = ({
           handleSelectChannel={handleSelectChannel}
         />
       ) : <div />}
-      <Auth handleSearch={handleShowSearch} />
+      <Profile handleSearch={handleShowSearch} />
       <h3>Channels</h3>
       <hr />
       <ul className="channel__groups">

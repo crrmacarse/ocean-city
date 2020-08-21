@@ -92,9 +92,9 @@ export const setReadMessage = (channelId: string) => action(
  *
  * @param message
  */
-export const sendMessage = (channelId: string, message: string) => action(
+export const sendMessage = (token: string, channelId: string, message: string) => action(
   TYPES.SEND_MESSAGE_REQUEST,
-  { channelId, message },
+  { token, channelId, message },
 );
 
 export const handleSendMessageAsync = createAsyncAction(
@@ -103,7 +103,10 @@ export const handleSendMessageAsync = createAsyncAction(
   TYPES.SEND_MESSAGE_FAILED,
 )<{ channelId: string, message: string }, void, Error>();
 
-export const fetchChannels = () => action(TYPES.FETCH_CHANNELS_REQUEST);
+export const fetchChannels = (payload: { token: string, authId: string }) => action(
+  TYPES.FETCH_CHANNELS_REQUEST,
+  payload,
+);
 
 export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_REQUEST,
@@ -124,7 +127,10 @@ export const handleFetchMasterListAsync = createAsyncAction(
  *
  * @param channelId
  */
-export const fetchMessages = (channelId: string) => action(TYPES.FETCH_MESSAGES_REQUEST, channelId);
+export const fetchMessages = (payload: { token: string, channelId: string }) => action(
+  TYPES.FETCH_MESSAGES_REQUEST,
+  payload,
+);
 
 export const handleFetchMessagesAsync = createAsyncAction(
   TYPES.FETCH_MESSAGES_REQUEST,

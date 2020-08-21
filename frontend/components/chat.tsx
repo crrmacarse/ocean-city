@@ -22,7 +22,8 @@ export interface ownProps {
  * -reduce the number of recents that are displayed.
  * -how would I start a convo with someone not on my recents list?
  */
-const mapStateToProps = ({ channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ channel, auth }: RootState, ownState: ownProps) => ({
+  ...auth,
   ...channel,
   ...ownState,
 });
@@ -34,6 +35,7 @@ const mapDispatchToProps = {
 export type ChatProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const Chat = ({
+  authId,
   users,
   channelId,
   channelName,
@@ -61,6 +63,7 @@ const Chat = ({
   };
 
   type messageType = {
+    ts: number,
     text: string,
     files: { title:string, permalink: string }[],
   }
@@ -81,17 +84,18 @@ const Chat = ({
     return text.replace(regex, searchUserValue);
   };
 
-  const renderMessage = (user: string, message: messageType, i: number) => {
+  const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
-    const isCurrentUser = user === process.env.TEST_CHANNEL_ID;
-    const { text, files } = message;
+    const isCurrentUser = user === authId;
+    const { text, files, ts } = message;
+    const timestamp = new Date(ts * 1000).toLocaleString();
 
     if (!isCurrentUser && users[user]) {
       profile = users[user];
     }
 
     return (
-      <li key={i} title="Time Sent:">
+      <li key={ts} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           {formatText(text)}
@@ -108,7 +112,7 @@ const Chat = ({
         <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
       <ul>
-        {messages.map((m, i) => renderMessage(m.user, m, i))}
+        {messages.map((m) => renderMessage(m.user, m))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

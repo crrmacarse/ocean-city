@@ -2,9 +2,10 @@ import { action, createAsyncAction } from 'typesafe-actions';
 import { DeepReadonly } from 'utility-types';
 import * as TYPES from './types';
 
-// @TODO auth login / logout
 export type AuthProps = DeepReadonly<{
+  authenticated: false,
   token: string,
+  authId: string,
   user: {
     name: string,
     email: string,
@@ -13,7 +14,18 @@ export type AuthProps = DeepReadonly<{
   },
 }>
 
-export const fetchUserIdentity = () => action(TYPES.FETCH_USER_IDENTITY_REQUEST);
+/**
+ * This sets the desired credentials of the currently logged user
+ */
+export const setToken = (payload: { token: string, authId: string }) => action(
+  TYPES.SET_TOKEN,
+  payload,
+);
+
+export const fetchUserIdentity = (token: string) => action(
+  TYPES.FETCH_USER_IDENTITY_REQUEST,
+  token,
+);
 
 export const handleFetchUserIdentityAsync = createAsyncAction(
   TYPES.FETCH_USER_IDENTITY_REQUEST,

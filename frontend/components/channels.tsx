@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import { setOpenedChannel, fetchMessages, channelType } from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
-import Search from 'components/search';
+// import Search from 'components/search';
 
-const mapStateToProps = ({ channel }: RootState) => ({
+const mapStateToProps = ({ auth, channel }: RootState) => ({
+  ...auth,
   ...channel,
 });
 
 const mapDispatchToProps = {
-  handleSetOpenedChannel: setOpenedChannel,
-  handleFetchMessages: fetchMessages,
+  ...channelActions,
 };
 
 export type ChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const ChannelList = ({
+  authId,
+  token,
   channels: { list },
-  handleSetOpenedChannel,
-  handleFetchMessages,
+  setOpenedChannel,
+  fetchMessages,
+  fetchChannels,
 }: ChannelListProps) => {
-  const handleSelectChannel = (channel: channelType) => {
-    handleSetOpenedChannel(channel.id);
-    handleFetchMessages(channel.id);
+  useEffect(() => { fetchChannels({ authId, token }); }, [token]);
+
+  const handleSelectChannel = (channel: channelActions.channelType) => {
+    setOpenedChannel(channel.id);
+    fetchMessages({ token, channelId: channel.id });
   };
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  // const [modalIsOpen, setIsOpen] = useState(false);
 
-  const handleShowSearch = () => {
-    setIsOpen(true);
-  };
+  // const handleShowSearch = () => {
+  //   setIsOpen(true);
+  // };
 
   function closeSearch() {
     setIsOpen(false);

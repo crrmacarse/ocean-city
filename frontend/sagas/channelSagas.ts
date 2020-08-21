@@ -10,29 +10,29 @@ import {
   handleSendMessageAsync, setUserList, handleFetchMasterListAsync,
 } from 'actions/channels/actions';
 
-export function* getChannels() {
+export function* getChannels({ payload }) {
   try {
     // fetch group types
     const { data: groupChannels } = yield call(api.get, '/users.conversations', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token: payload.token,
         types: 'public_channel,private_channel',
-        user: process.env.TEST_CHANNEL_ID,
+        user: payload.authId,
       },
     });
 
     // fetch user types
     const { data: userChannels } = yield call(api.get, '/users.conversations', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token: payload.token,
         types: 'mpim,im',
-        user: process.env.TEST_CHANNEL_ID,
+        user: payload.authId,
       },
     });
 
     const { data: userList } = yield call(api.get, '/users.list', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token: payload.token,
         types: 'public_channel,private_channel,mpim,im',
       },
     });
@@ -91,11 +91,11 @@ export function* getChannels() {
   }
 }
 
-export function* getMessages({ payload: channelId }: any) {
+export function* getMessages({ payload: { token, channelId } }: any) {
   try {
     const { data: response } = yield call(api.get, '/conversations.history', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token,
         channel: channelId,
       },
     });
@@ -106,11 +106,11 @@ export function* getMessages({ payload: channelId }: any) {
   }
 }
 
-export function* sendMessage({ payload: { channelId, message } }: any) {
+export function* sendMessage({ payload: { token, channelId, message } }: any) {
   try {
     yield call(api.get, '/chat.postMessage', {
       params: {
-        token: process.env.TEST_TOKEN,
+        token,
         channel: channelId,
         text: message,
         as_user: true,

@@ -1,7 +1,10 @@
 import { createReducer } from 'typesafe-actions';
 import { handleFetchUserIdentityAsync, AuthProps } from 'actions/auth/actions';
+import * as authTypes from 'actions/auth/types';
 
 const INITIAL_STATE: AuthProps = {
+  authenticated: false,
+  authId: '',
   token: '',
   user: {
     email: '',
@@ -46,4 +49,11 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
 
 export default createReducer(INITIAL_STATE, {
   ...fetchUserIdentityHandler.handlers,
-});
+})
+  .handleType(authTypes.SET_TOKEN,
+    (state, { payload }) => ({
+      ...state,
+      authenticated: true,
+      authId: payload.authId,
+      token: payload.token,
+    }));

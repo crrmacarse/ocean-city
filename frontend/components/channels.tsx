@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
 import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
 import WebSocket from 'components/slack/web-socket';
-
-// import Search from 'components/search';
+import Search from 'components/search';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
   ...auth,
@@ -34,27 +33,27 @@ const ChannelList = ({
     fetchMessages({ token, channelId: channel.id });
   };
 
-  // const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  // const handleShowSearch = () => {
-  //   setIsOpen(true);
-  // };
+  const handleShowSearch = () => {
+    setIsOpen(true);
+  };
 
-  // function closeModal() {
-  //   setIsOpen(false);
-  // }
+  function closeSearch() {
+    setIsOpen(false);
+  }
 
   return (
     <div className="channel">
       <WebSocket />
-      {/* <Search
-        closeModal={closeModal}
-        openModal={handleShowSearch}
-        modalIsOpen={modalIsOpen}
-        users={list}
-        handleSelectChannel={handleSelectChannel}
-      /> */}
-      <Profile />
+      {modalIsOpen ? (
+        <Search
+          closeModal={closeSearch}
+          modalIsOpen={modalIsOpen}
+          handleSelectChannel={handleSelectChannel}
+        />
+      ) : <div />}
+      <Profile handleSearch={handleShowSearch} />
       <h3>Channels</h3>
       <hr />
       <ul className="channel__groups">
@@ -77,15 +76,7 @@ const ChannelList = ({
             </li>
           ))}
       </ul>
-      <div className="channel__user__details">
-        <div className="channel__user__details--info">
-          <h3>Recent</h3>
-        </div>
-        {/* <div className="channel__user__details--actions"
-        onClick={() => handleShowSearch()} onKeyDown={() => handleShowSearch()} role="presentation">
-          <img src="/assets/icons/plus.png" alt="search" />
-        </div> */}
-      </div>
+      <h3>Recent</h3>
       <hr />
       <ul className="channel__users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel && !v.user.is_bot)
@@ -98,12 +89,13 @@ const ChannelList = ({
             <li
               key={channel.id}
               title={channel.channelName}
+              className={channel.hasNewMessage && 'hasNewMessage'}
               role="presentation"
               onClick={() => handleSelectChannel(channel)}
               onKeyDown={() => handleSelectChannel(channel)}
             >
               {truncate(channel.channelName, { length: 24 })}
-              <span className={`${channel.presence === 'away' && 'away'} ${channel.hasNewMessage && 'hasNewMessage'}`} />
+              <span className={`${channel.hasNewMessage && 'hasNewMessage'} ${channel.presence === 'away' && 'away'}`} />
             </li>
           ))}
       </ul>

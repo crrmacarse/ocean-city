@@ -43,6 +43,7 @@ export type ChannelProps = DeepReadonly<{
     list: channelType,
     fetching: boolean,
   },
+  masterList: {}[],
   users: userType,
   activeChannel: {}[], // Resreved for restructure
   activeThread: {}[],
@@ -104,7 +105,7 @@ export const handleSendMessageAsync = createAsyncAction(
   TYPES.SEND_MESSAGE_REQUEST,
   TYPES.SEND_MESSAGE_SUCCESS,
   TYPES.SEND_MESSAGE_FAILED,
-)<{ channelId: string, message: string}, void, Error>();
+)<{ channelId: string, message: string }, void, Error>();
 
 export const fetchChannels = (payload: { token: string, authId: string }) => action(
   TYPES.FETCH_CHANNELS_REQUEST,
@@ -115,6 +116,17 @@ export const handleFetchChannelsAsync = createAsyncAction(
   TYPES.FETCH_CHANNELS_REQUEST,
   TYPES.FETCH_CHANNELS_SUCCESS,
   TYPES.FETCH_CHANNELS_FAILED,
+)<void, any, Error>();
+
+export const fetchMasterList = (payload: { token: string, authId: string }) => action(
+  TYPES.FETCH_MASTER_LIST_REQUEST,
+  payload,
+);
+
+export const handleFetchMasterListAsync = createAsyncAction(
+  TYPES.FETCH_MASTER_LIST_REQUEST,
+  TYPES.FETCH_MASTER_LIST_SUCCESS,
+  TYPES.FETCH_MASTER_LIST_FAILED,
 )<void, any, Error>();
 
 /**
@@ -162,4 +174,9 @@ export const handleFetchThreadAsync = createAsyncAction(
 export const pushThreadMessage = (message: {}) => action(
   TYPES.PUSH_THREAD_MESSAGE,
   message,
+);
+
+export const pushChannel = (channelId: string) => action(
+  TYPES.PUSH_CHANNEL,
+  channelId,
 );

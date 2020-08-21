@@ -7,7 +7,7 @@ import {
 import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  handleSendMessageAsync, setUserList, handleFetchThreadAsync,
+  handleSendMessageAsync, setUserList, handleFetchThreadAsync, handleFetchMasterListAsync,
 } from 'actions/channels/actions';
 
 /**
@@ -187,9 +187,25 @@ export function* getThread({ payload }: any) {
   }
 }
 
+export function* getMasterList({ payload }) {
+  try {
+    const { data: response } = yield call(api.get, '/conversations.list', {
+      params: {
+        token: payload.token,
+        types: 'public_channel,private_channel,mpim,im',
+      },
+    });
+
+    yield put(handleFetchMasterListAsync.success(response.channels));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default function* channelSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
   yield takeLatest(handleSendMessageAsync.request, sendMessage);
+  yield takeLatest(handleFetchMasterListAsync.request, getMasterList);
   yield takeLatest(handleFetchThreadAsync.request, getThread);
 }

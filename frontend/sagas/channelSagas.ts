@@ -41,6 +41,7 @@ export function* getChannels({ payload }) {
         token: payload.token,
         types: 'public_channel,private_channel,mpim',
         user: payload.authId,
+        exclude_archived: true,
       },
     });
 
@@ -50,6 +51,8 @@ export function* getChannels({ payload }) {
         token: payload.token,
         types: 'im',
         user: payload.authId,
+        exclude_archived: true,
+        limit: 40,
       },
     });
 

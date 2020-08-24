@@ -1,0 +1,33 @@
+@import "./variables.scss";
+
+body, html {
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+// parent container
+main {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+
+  .main__right {
+    flex-grow: 1;
+    position: relative;
+
+    > div:first-child {
+      margin: 1rem;
+    }
+  }
+}
+
+// Bottom parent that handles the chat heads
+.bottom__panel {
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

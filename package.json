@@ -1,6 +1,6 @@
 {
   "name": "slack-messenger",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "A modular messaging with slack integratrion project",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "passport-local": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-emoji-render": "^1.2.4",
     "react-mentions": "^4.0.1",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",

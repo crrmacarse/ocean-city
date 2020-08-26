@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
+import Emoji from 'react-emoji-render';
 import ChatWrapper from 'components/chat-wrapper';
 import ChatInput from 'components/chat-input';
 import SlackMessageFile from 'components/slack/message-file';
@@ -96,7 +97,7 @@ const Chat = ({
       <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
-          {formatText(text)}
+          <Emoji text={formatText(text)} />
           {files && files.map((f) => <SlackMessageFile file={f} />)}
           {reply_count && (
             <SlackMessageThread

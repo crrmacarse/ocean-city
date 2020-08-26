@@ -65,14 +65,14 @@ const Search = ({
 
   const renderImage = (channel: any) => {
     if (channel.is_im) {
-      return (<img src={users[channel.user].profile.image_48} alt="avatar" style={{ marginRight: 5 }} />);
+      return (<img src={users[channel.user].profile.image_48} alt="avatar" style={{ marginRight: 5, width: '1.5rem' }} />);
     }
 
     if (channel.is_private) {
-      return (<img src="/assets/icons/lock.png" alt="avatar" style={{ marginRight: 5, width: '1rem' }} />);
+      return (<img src="/assets/icons/lock.png" alt="avatar" style={{ marginRight: 5, width: '1.5rem' }} />);
     }
 
-    return (<img src="/assets/icons/hashtag.png" alt="avatar" style={{ marginRight: 5, width: '1rem' }} />);
+    return (<img src="/assets/icons/hashtag.png" alt="avatar" style={{ marginRight: 5, width: '1.5rem' }} />);
   };
 
   return (

@@ -93,7 +93,7 @@ const ChannelList = ({
               onClick={() => handleSelectChannel(channel)}
               onKeyDown={() => handleSelectChannel(channel)}
             >
-              <span className={`${channel.hasNewMessage && 'hasNewMessage'} ${channel.presence === 'away' && 'away'}`} />
+              <span className={`${channel.presence === 'away' && 'away'}`} />
               {truncate(channel.channelName, { length: 24 })}
             </li>
           ))}

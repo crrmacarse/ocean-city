@@ -29,11 +29,6 @@
         margin-right: 0.5rem;
       }
 
-      span.hasNewMessage {
-        background: $status--hasNewMessage;
-        font-weight: bold;
-      }
-
       span.away {
         background: $status--away !important;
         border: 1px solid gray;

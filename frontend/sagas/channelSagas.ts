@@ -33,6 +33,12 @@ const fetchUserPresences = async (token: string, userChannels: any) => {
   return results;
 };
 
+const formatMPIMName = (name: string) => {
+  const removedMpdm = name.replace(/mpdm-/, '');
+
+  return removedMpdm.replace(/-{2}/g, ', ');
+};
+
 export function* getChannels({ payload }) {
   try {
     // fetch group types
@@ -82,9 +88,11 @@ export function* getChannels({ payload }) {
      */
     const channels: {} = {
       ...groupChannels.channels.reduce((acc, curr) => {
+        const channelName = curr.is_mpim ? formatMPIMName(curr.name) : curr.name;
+
         acc[curr.id] = {
           ...curr,
-          channelName: curr.name,
+          channelName,
           isOpenedChannel: false,
           messages: [],
         };

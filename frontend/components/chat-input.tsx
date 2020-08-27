@@ -36,7 +36,6 @@ const Input = ({
       <MentionsInput
         value={value}
         type="text"
-        singleLine
         placeholder="Aa"
         allowSpaceInQuery
         onChange={(v, newValue) => setValue(newValue)}

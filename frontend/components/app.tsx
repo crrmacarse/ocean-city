@@ -30,6 +30,9 @@ const App = ({
             Websocket connection is feeded through the console(starts with &quot;slack api:&quot;)
           </li>
           <li>
+            Messages have no support for pagination yet
+          </li>
+          <li>
             Bot messages are filtered out
           </li>
         </ul>

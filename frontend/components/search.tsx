@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { fetchMasterList, pushChannel } from 'actions/channels/actions';
 import { RootState } from 'reducers';
+import size from 'lodash/size';
 
 export interface ownProps {
   closeModal: any,
@@ -96,6 +97,7 @@ const Search = ({
           </button>
         </div>
         <input
+          disabled={size(masterList) <= 0}
           style={{
             width: '100%',
           }}

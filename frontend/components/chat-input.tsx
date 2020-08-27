@@ -39,9 +39,14 @@ const Input = ({
         placeholder="Aa"
         allowSpaceInQuery
         onChange={(v, newValue) => setValue(newValue)}
+        // eslint-disable-next-line consistent-return
         onKeyDown={(e) => {
           if (e.keyCode === 13) {
             handleSendMessage();
+
+            // https://stackoverflow.com/questions/31245808/clear-textarea-input-after-enter-key-press
+            if (e.preventDefault) e.preventDefault();
+            return false;
           }
         }}
       >

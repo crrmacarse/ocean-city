@@ -6,6 +6,7 @@ import Profile from 'components/profile';
 import truncate from 'lodash/truncate';
 import WebSocket from 'components/slack/web-socket';
 import Search from 'components/search';
+import size from 'lodash/size';
 
 const mapStateToProps = ({ auth, channel }: RootState) => ({
   ...auth,
@@ -36,7 +37,9 @@ const ChannelList = ({
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const handleShowSearch = () => {
-    setIsOpen(true);
+    if (size(list) > 0) {
+      setIsOpen(true);
+    }
   };
 
   function closeSearch() {

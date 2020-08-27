@@ -164,9 +164,8 @@
   margin: 0.5rem;
 
   // Trying to target the react-mention
-  >div:first-child {
+  > div:first-child {
     width: 100%;
-    overflow: auto;
 
     > div:nth-child(1) {
 
@@ -177,12 +176,14 @@
       }
     }
 
+    // The list of mentions
     > div:nth-child(2) {
       top: auto !important;
       bottom: 0;
       background-color: $background-color !important;
       min-width: 10vw !important;
       border-color: gray;
+      margin-bottom: 2rem;
 
       ul {
         padding: 0.75rem !important;
@@ -191,8 +192,8 @@
   }
 
 
-  input {
-    padding: 0 0.5rem;
+  textarea {
+    padding: 0.5rem;
     outline: none;
     height: 100%;
     border: none;

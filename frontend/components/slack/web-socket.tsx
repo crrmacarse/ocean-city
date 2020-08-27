@@ -59,12 +59,17 @@ const SlackWebsocket = ({
     };
 
     client.onmessage = ({ data }) => {
+      const BLOCKED_SUBTYPES = ['message_changed', 'message_deleted']; // @TODO
       const response = JSON.parse(data);
+
       // eslint-disable-next-line no-console
       console.log('slack api:', response);
 
-      if (response.type === 'message') {
+      if (response.type === 'message' && !BLOCKED_SUBTYPES.includes(response.subtype)) {
         if (response.thread_ts) {
+          // @BUG: When thread is initialize while chat window is opened. It doesn't
+          // create a thread. message_replied subtype could be the ideal for this
+          // as it could just be swapped at runtime
           pushThreadMessage(response);
         } else {
           pushMessage(response.channel, response);

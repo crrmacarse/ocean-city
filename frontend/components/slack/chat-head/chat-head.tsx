@@ -120,9 +120,7 @@ const SlackChatHead = ({
     <div
       className={`chat__head__minimized ${hasNewMessage && !open && 'has__new__message'}`}
     >
-      <div onClick={handleMinimizedOpen} onKeyDown={handleMinimizedOpen} role="presentation">
-        <button type="button">{trimmedName}</button>
-      </div>
+      <button onClick={handleMinimizedOpen} type="button">{trimmedName}</button>
       <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
     </div>
   );

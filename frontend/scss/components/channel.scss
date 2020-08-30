@@ -70,12 +70,6 @@
   display: flex;
 
   button {
-    border-radius: 0px;
-    border: 0;
-    background: none;
-    outline: none;
-    cursor: pointer;
-
     img {
       width: 1rem;
     }
@@ -136,10 +130,7 @@
   button {
     background: $background-color;
     margin-top: 5vh;
-    border: 0;
     border-radius: 1rem 0rem 0 1rem;
-    outline: none;
-    cursor: pointer;
     display: flex;
     align-items: center;
     font-weight: bold;

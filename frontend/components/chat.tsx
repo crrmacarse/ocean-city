@@ -114,7 +114,7 @@ const Chat = ({
       <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
-          <ReactMarkdown source={parseEmojis(formatText(text))} />
+          <ReactMarkdown linkTarget="_blank" source={parseEmojis(formatText(text))} />
           {files && files.map((f) => <SlackMessageFile file={f} />)}
           {reply_count && (
             <SlackMessageThread

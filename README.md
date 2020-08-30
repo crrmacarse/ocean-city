@@ -9,7 +9,7 @@ A modular messaging with slack integration project
 ## Configurations ##
 
 ```bash
-NODE_ENV= 
+NODE_ENV=
 PORT=
 SLACK_CLIENT_ID=
 SLACK_CLIENT_SECRET=
@@ -24,6 +24,8 @@ Run development:
 ```bash
 npm run hot
 ```
+
+> DM @crrmacarse for the testing credentials
 
 Build Production:
 
@@ -60,15 +62,6 @@ Used Slack API(https://api.slack.com/methods):
 * conversation.list - List all conversations
 * chat.postMessage - Send a Message
 * user.getPresence - get user status
-
-## KNOWN ISSUES
-
-* XO_BOT's redirect OAuth requires to be changed when in development
-
-Production: https://fbzhjzwipk.herokuapp.com/slack/auth/redirect
-Development: http://localhost:8080/slack/auth/redirect
-
-Only the first value in the list of redirect urls is being read.
 
 ---
 

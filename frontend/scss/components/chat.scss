@@ -88,6 +88,10 @@
     flex-direction: column-reverse;
     display: flex;
 
+    p {
+      margin: 0;
+    }
+
     li {
       margin-bottom: .5rem;
 
@@ -101,12 +105,6 @@
         padding: 0.5rem;
         border-radius: 1rem;
         font-size: small;
-
-        a {
-          text-decoration: none;
-          display: block;
-          margin-top: 0.5rem;
-        }
       }
 
       div.sent {

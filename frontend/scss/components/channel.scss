@@ -1,10 +1,20 @@
-.channel {
-  min-width: 18vw;
+.channel__container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: $z_drawer;
   border-left: #d8d8d8 solid 1px;
-  padding: 1rem;
   -webkit-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
   box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+.channel {
+  min-width: 18vw;
+  margin: 1rem;
 }
 
 .channel__list {
@@ -126,17 +136,24 @@
 }
 
 .channel__open__channel {
+  background: $primary-color;
+  margin-top: 3vh;
+  border-radius: 1rem 0rem 0 1rem;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  position: fixed;
+  right: 0;
+  top: 0;
 
-  button {
-    background: $background-color;
-    margin-top: 5vh;
-    border-radius: 1rem 0rem 0 1rem;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
+  img {
+    width: 3rem;
+  }
 
-    img {
-      width: 3rem;
+  @media (max-width: $breakpoint-md) {
+
+    span {
+      display: none;
     }
   }
 }

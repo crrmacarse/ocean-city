@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as authActions from 'actions/auth/actions';
 import Channels from 'components/slack/channel/channel-list';
-import Bottom from 'components/slack/chat-head/chat-head-container';
 import Authenticate from 'components/slack/authenticate';
 
 const mapStateToProps = ({ auth }: RootState) => ({
@@ -29,7 +28,7 @@ const Slack = ({
   });
 
   const renderNotes = (
-    <div>
+    <div className="slack__notes">
       <h1>Slack Messenger Demo</h1>
       <p>This is only a demo that intends to showcase Slack API integration</p>
       <h2>Notes</h2>
@@ -62,10 +61,7 @@ const Slack = ({
 
   return (
     <main className="main">
-      <div className="main__right">
-        {renderNotes}
-        <Bottom />
-      </div>
+      {renderNotes}
       {authenticated ? <Channels /> : <Authenticate />}
     </main>
   );

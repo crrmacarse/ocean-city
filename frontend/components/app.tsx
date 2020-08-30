@@ -10,6 +10,8 @@ import Slack from 'components/slack';
  * - Loading Indicator
  * - Handle edit and delete of messages
  * - User Presence remake
+ * - Getting hasNewMessage even though the chat is
+ * coming from you
  * - Testing
  */
 const App = () => <Slack />;

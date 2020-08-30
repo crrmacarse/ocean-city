@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
-import Emoji from 'react-emoji-render';
+import ReactMarkdown from 'react-markdown';
+import { toArray } from 'react-emoji-render';
 import ChatWrapper from 'components/chat-wrapper';
 import ChatInput from 'components/chat-input';
 import SlackMessageFile from 'components/slack/message-file';
@@ -93,11 +94,27 @@ const Chat = ({
       profile = users[user];
     }
 
+    // https://www.npmjs.com/package/react-emoji-render
+    const parseEmojis = (value: any): string => {
+      const emojisArray = toArray(value);
+
+      // toArray outputs React elements for emojis and strings for other
+      const newValue: any = emojisArray.reduce((previous, current) => {
+        if (typeof current === 'string') {
+          return previous + current;
+        }
+
+        return previous + current.props.children;
+      }, '');
+
+      return newValue;
+    };
+
     return (
       <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
-          <Emoji text={formatText(text)} />
+          <ReactMarkdown linkTarget="_blank" source={parseEmojis(formatText(text))} />
           {files && files.map((f) => <SlackMessageFile file={f} />)}
           {reply_count && (
             <SlackMessageThread

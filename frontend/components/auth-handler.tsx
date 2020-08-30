@@ -36,10 +36,14 @@ const AuthHandler = ({
           },
         });
 
-        setToken({
+        const auth = {
           authId: response.user_id,
           token: response.access_token,
-        });
+        };
+
+        sessionStorage.setItem('slack_tok', JSON.stringify(auth));
+
+        setToken(auth);
 
         history.push(PUBLIC_HOME);
       } catch (error) {

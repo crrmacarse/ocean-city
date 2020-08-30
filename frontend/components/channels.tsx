@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as channelActions from 'actions/channels/actions';
@@ -27,6 +27,7 @@ const ChannelList = ({
   fetchMessages,
   fetchChannels,
 }: ChannelListProps) => {
+  const [open, setOpen] = useState(true);
   useEffect(() => { fetchChannels({ authId, token }); }, [token]);
 
   const handleSelectChannel = (channel: channelActions.channelType) => {
@@ -46,7 +47,7 @@ const ChannelList = ({
     setIsOpen(false);
   }
 
-  return (
+  const renderChannel = (
     <div className="channel">
       <WebSocket />
       {modalIsOpen ? (
@@ -56,7 +57,7 @@ const ChannelList = ({
           handleSelectChannel={handleSelectChannel}
         />
       ) : <div />}
-      <Profile handleSearch={handleShowSearch} />
+      <Profile handleSearch={handleShowSearch} setCloseChannel={() => setOpen(false)} />
       <h3>Channels</h3>
       <hr />
       <ul className="channel__groups">
@@ -102,6 +103,21 @@ const ChannelList = ({
           ))}
       </ul>
     </div>
+  );
+
+  const renderOpenChannelButton = (
+    <div className="channel__open__channel">
+      <button type="button" onClick={() => setOpen(true)}>
+        <img src="/assets/icons/slack.png" alt="Open Slack" />
+        Open Slack
+      </button>
+    </div>
+  );
+
+  return (
+    <Fragment>
+      {open ? renderChannel : renderOpenChannelButton}
+    </Fragment>
   );
 };
 

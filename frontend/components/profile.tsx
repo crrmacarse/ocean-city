@@ -5,6 +5,7 @@ import * as authActions from 'actions/auth/actions';
 
 export interface ownProps {
   handleSearch: any,
+  setCloseChannel: () => void,
 }
 
 const mapStateToProps = ({ auth }: RootState, ownState: ownProps) => ({
@@ -23,12 +24,15 @@ const Profile = ({
   token,
   user,
   handleSearch,
+  setCloseChannel,
 }: ProfileProps) => {
-  useEffect(() => {
-    fetchUserIdentity(token);
-  }, []);
+  const { name, avatar, fetched } = user;
 
-  const { name, avatar } = user;
+  useEffect(() => {
+    if (!fetched) {
+      fetchUserIdentity(token);
+    }
+  }, []);
 
   return (
     <div className="channel__user__details">
@@ -36,11 +40,16 @@ const Profile = ({
         <img src={avatar} alt="avatar" />
         <p>{name}</p>
       </div>
-      <div className="channel__user__details--actions" onClick={() => handleSearch()} onKeyDown={() => handleSearch()} role="presentation">
-        <img src="/assets/icons/message.png" alt="search" />
-      </div>
       <div className="channel__user__details--actions">
-        <img src="/assets/icons/more.png" alt="close" />
+        <button type="button" onClick={() => handleSearch()} title="Direct Message">
+          <img src="/assets/icons/message.png" alt="Direct Message" />
+        </button>
+        <button type="button" title="More Actions">
+          <img src="/assets/icons/more.png" alt="More" />
+        </button>
+        <button type="button" onClick={setCloseChannel} title="Close Slack">
+          <img src="/assets/icons/close.png" alt="Close Slack" />
+        </button>
       </div>
     </div>
   );

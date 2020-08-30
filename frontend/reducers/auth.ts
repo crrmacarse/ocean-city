@@ -11,7 +11,7 @@ const INITIAL_STATE: AuthProps = {
     email: '',
     name: '',
     avatar: '',
-    fetching: false,
+    fetched: false,
   },
 };
 
@@ -24,7 +24,7 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
         email: '',
         name: '',
         avatar: '',
-        fetching: true,
+        fetched: false,
       },
     }))
   .handleAction(handleFetchUserIdentityAsync.success,
@@ -33,7 +33,7 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
       user: {
         ...state.user,
         ...payload,
-        fetching: false,
+        fetched: true,
       },
     }))
   .handleAction(handleFetchUserIdentityAsync.failure,
@@ -44,7 +44,7 @@ const fetchUserIdentityHandler = createReducer(INITIAL_STATE)
         email: '',
         name: '',
         avatar: '',
-        fetching: false,
+        fetched: false,
       },
     }));
 

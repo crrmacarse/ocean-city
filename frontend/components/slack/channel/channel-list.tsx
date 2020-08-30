@@ -1,41 +1,41 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import * as channelActions from 'actions/channels/actions';
-import Profile from 'components/profile';
-import truncate from 'lodash/truncate';
+import * as chatActions from 'actions/chat/actions';
+import SlackChannelProfile from 'components/slack/channel/channel-profile';
+import SlackChannelDirectMessage from 'components/slack/channel/channel-direct-message';
 import WebSocket from 'components/slack/web-socket';
-import Search from 'components/search';
+import truncate from 'lodash/truncate';
 import size from 'lodash/size';
 
-const mapStateToProps = ({ auth, channel }: RootState) => ({
+const mapStateToProps = ({ auth, chat }: RootState) => ({
   ...auth,
-  ...channel,
+  ...chat,
 });
 
 const mapDispatchToProps = {
-  ...channelActions,
+  ...chatActions,
 };
 
-export type ChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChannelListProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const ChannelList = ({
+const SlackChannelList = ({
   authId,
   token,
   channels: { list },
   setOpenedChannel,
   fetchMessages,
   fetchChannels,
-}: ChannelListProps) => {
+}: SlackChannelListProps) => {
   const [open, setOpen] = useState(true);
+  const [modalIsOpen, setIsOpen] = useState(false);
+
   useEffect(() => { fetchChannels({ authId, token }); }, [token]);
 
-  const handleSelectChannel = (channel: channelActions.channelType) => {
+  const handleSelectChannel = (channel: chatActions.channelType) => {
     setOpenedChannel(channel.id);
     fetchMessages({ token, channelId: channel.id });
   };
-
-  const [modalIsOpen, setIsOpen] = useState(false);
 
   const handleShowSearch = () => {
     if (size(list) > 0) {
@@ -43,21 +43,17 @@ const ChannelList = ({
     }
   };
 
-  function closeSearch() {
-    setIsOpen(false);
-  }
-
   const renderChannel = (
     <div className="channel">
       <WebSocket />
       {modalIsOpen ? (
-        <Search
-          closeModal={closeSearch}
+        <SlackChannelDirectMessage
+          closeModal={() => setIsOpen(false)}
           modalIsOpen={modalIsOpen}
           handleSelectChannel={handleSelectChannel}
         />
       ) : <div />}
-      <Profile handleSearch={handleShowSearch} setCloseChannel={() => setOpen(false)} />
+      <SlackChannelProfile handleSearch={handleShowSearch} setCloseChannel={() => setOpen(false)} />
       <h3>Channels</h3>
       <hr />
       <ul className="channel__groups">
@@ -114,11 +110,7 @@ const ChannelList = ({
     </div>
   );
 
-  return (
-    <Fragment>
-      {open ? renderChannel : renderOpenChannelButton}
-    </Fragment>
-  );
+  return open ? renderChannel : renderOpenChannelButton;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChannelList);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChannelList);

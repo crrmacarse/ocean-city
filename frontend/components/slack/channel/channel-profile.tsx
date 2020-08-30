@@ -17,15 +17,16 @@ const mapDispatchToProps = {
   ...authActions,
 };
 
-export type ProfileProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChannelProfileProps = ReturnType<typeof mapStateToProps>
+  & typeof mapDispatchToProps;
 
-const Profile = ({
+const SlackChannelProfile = ({
   fetchUserIdentity,
   token,
   user,
   handleSearch,
   setCloseChannel,
-}: ProfileProps) => {
+}: SlackChannelProfileProps) => {
   const { name, avatar, fetched } = user;
 
   useEffect(() => {
@@ -55,4 +56,4 @@ const Profile = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChannelProfile);

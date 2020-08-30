@@ -1,10 +1,10 @@
 import { all } from 'redux-saga/effects';
 import authSagas from './authSagas';
-import channelSagas from './channelSagas';
+import chatSagas from './chatSagas';
 
 export default function* rootSagas() {
   yield all([
     authSagas(),
-    channelSagas(),
+    chatSagas(),
   ]);
 }

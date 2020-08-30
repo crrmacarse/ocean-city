@@ -8,7 +8,7 @@ import api from 'utils/api';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
   handleSendMessageAsync, setUserList, handleFetchThreadAsync, handleFetchMasterListAsync,
-} from 'actions/channels/actions';
+} from 'actions/chat/actions';
 
 /**
  * @TODO: Re-design this approach
@@ -213,7 +213,7 @@ export function* getMasterList({ payload }) {
   }
 }
 
-export default function* channelSagas() {
+export default function* chatSagas() {
   yield takeLatest(handleFetchChannelsAsync.request, getChannels);
   yield takeLatest(handleFetchMessagesAsync.request, getMessages);
   yield takeLatest(handleSendMessageAsync.request, sendMessage);

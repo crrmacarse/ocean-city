@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { StateType } from 'typesafe-actions';
 import authReducer from './auth';
-import channelReducer from './channel';
+import chatReducer from './chat';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  channel: channelReducer,
+  chat: chatReducer,
 });
 
 export default rootReducer;

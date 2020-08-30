@@ -2,13 +2,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import * as channelActions from 'actions/channels/actions';
-import ReactMarkdown from 'react-markdown';
-import { toArray } from 'react-emoji-render';
-import ChatWrapper from 'components/chat-wrapper';
-import ChatInput from 'components/chat-input';
-import SlackMessageFile from 'components/slack/message-file';
-import SlackMessageThread from 'components/slack/message-thread';
+import * as chatActions from 'actions/chat/actions';
+import ChatWrapper from 'components/slack/chat-head/chat-head-wrapper';
+import ChatInput from 'components/slack/chat-head/chat-head-input-field';
+import SlackMessageText from 'components/slack/chat-head/message/message-text';
+import SlackMessageFile from 'components/slack/chat-head/message/message-file';
+import SlackMessageThread from 'components/slack/chat-head/message/message-thread';
 import truncate from 'lodash/truncate';
 
 export interface ownProps {
@@ -18,19 +17,19 @@ export interface ownProps {
   hasNewMessage: boolean,
 }
 
-const mapStateToProps = ({ channel, auth }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ chat, auth }: RootState, ownState: ownProps) => ({
   ...auth,
-  ...channel,
+  ...chat,
   ...ownState,
 });
 
 const mapDispatchToProps = {
-  ...channelActions,
+  ...chatActions,
 };
 
-export type ChatProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChatHeadProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const Chat = ({
+const SlackChatHead = ({
   authId,
   users,
   channelId,
@@ -39,7 +38,7 @@ const Chat = ({
   hasNewMessage,
   closeChannel,
   setReadMessage,
-}: ChatProps) => {
+}: SlackChatHeadProps) => {
   const [open, setOpen] = useState(true);
   const trimmedName = truncate(channelName, { length: 25 });
 
@@ -66,22 +65,6 @@ const Chat = ({
     files: [],
   }
 
-  const searchUserValue = (match: string, found: string) => {
-    if (users[found]) {
-      return `@${users[found].display}`;
-    }
-
-    return `@${found}`;
-  };
-
-  const formatText = (text: string) => {
-    const regex = /<[@|!]([a-z\d_]+)>/ig;
-
-    if (!regex.test(text)) { return text; }
-
-    return text.replace(regex, searchUserValue);
-  };
-
   const renderMessage = (user: string, message: messageType) => {
     let profile: any = {};
     const isCurrentUser = user === authId;
@@ -94,27 +77,11 @@ const Chat = ({
       profile = users[user];
     }
 
-    // https://www.npmjs.com/package/react-emoji-render
-    const parseEmojis = (value: any): string => {
-      const emojisArray = toArray(value);
-
-      // toArray outputs React elements for emojis and strings for other
-      const newValue: any = emojisArray.reduce((previous, current) => {
-        if (typeof current === 'string') {
-          return previous + current;
-        }
-
-        return previous + current.props.children;
-      }, '');
-
-      return newValue;
-    };
-
     return (
       <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
-          <ReactMarkdown linkTarget="_blank" source={parseEmojis(formatText(text))} />
+          <SlackMessageText text={text} />
           {files && files.map((f) => <SlackMessageFile file={f} />)}
           {reply_count && (
             <SlackMessageThread
@@ -135,12 +102,12 @@ const Chat = ({
   const MESSAGE_SUBTYPE_FILTER = ['bot_message', 'message_replied'];
 
   const renderChatMaximized = (
-    <div className="chat__head">
-      <div className="chat__head__top">
-        <button type="button" onClick={handleMaximizedClose} title={channelName}>{trimmedName}</button>
-        <button type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
+    <div className="chat__head__maximized">
+      <div className="chat__head__maximized__top">
+        <button className="chat__head__maximized__top--title" type="button" onClick={handleMaximizedClose} title={channelName}>{trimmedName}</button>
+        <button className="chat__head__maximized__top--close" type="button" onClick={handleClose}><img src="/assets/icons/close.png" alt="close" /></button>
       </div>
-      <ul>
+      <ul className="chat__head__maximized__list">
         {messages
           .filter((m) => !MESSAGE_SUBTYPE_FILTER.includes(m.subtype))
           .map((m) => renderMessage(m.user, m))}
@@ -151,7 +118,7 @@ const Chat = ({
 
   const renderChatMinimized = (
     <div
-      className={`chat ${hasNewMessage && !open && 'has__new__message'}`}
+      className={`chat__head__minimized ${hasNewMessage && !open && 'has__new__message'}`}
     >
       <div onClick={handleMinimizedOpen} onKeyDown={handleMinimizedOpen} role="presentation">
         <button type="button">{trimmedName}</button>
@@ -167,4 +134,4 @@ const Chat = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChatHead);

@@ -6,9 +6,11 @@ const URL = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
 const REDIRECT_URL = `${URL}/slack/auth/redirect`;
 
 const SlackAuthenticate = () => (
-  <a href={`https://slack.com/oauth/authorize?client_id=${process.env.SLACK_CLIENT_ID}&scope=client read&redirect_uri=${REDIRECT_URL}`} style={{ margin: '1rem' }}>
-    <img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcSet="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" />
-  </a>
+  <div className="slack__auth">
+    <a href={`https://slack.com/oauth/authorize?client_id=${process.env.SLACK_CLIENT_ID}&scope=client read&redirect_uri=${REDIRECT_URL}`}>
+      <img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack.png" srcSet="https://platform.slack-edge.com/img/sign_in_with_slack.png 1x, https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x" />
+    </a>
+  </div>
 );
 
 export default SlackAuthenticate;

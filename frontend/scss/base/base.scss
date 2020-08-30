@@ -5,6 +5,11 @@ body, html {
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+// @TMP
+.slack__notes, .slack__auth {
+  margin: 1rem;
+}
+
 button {
   cursor: pointer;
   background: none;

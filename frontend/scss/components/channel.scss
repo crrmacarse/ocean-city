@@ -10,11 +10,14 @@
   -moz-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
   box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.1);
   background-color: white;
+
+  @media (min-width: $breakpoint-md) {
+    width: $channel-open-width;
+  }
 }
 
 .channel {
-  min-width: 18vw;
-  margin: 1rem;
+  padding-left: 1rem;
 }
 
 .channel__list {

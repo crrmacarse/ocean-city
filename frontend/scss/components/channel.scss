@@ -5,53 +5,53 @@
   -webkit-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
   box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.1);
+}
 
-  ul {
-    overflow: auto;
-    height: 35vh;
-    list-style: none;
-    padding: 0;
+.channel__list {
+  overflow: auto;
+  height: 35vh;
+  list-style: none;
+  padding: 0;
 
-    li {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      margin-bottom: 2px;
+  li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
 
-      span {
-        background: $status--active;
-        border-radius: 50%;
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        display: inline-block;
-        border: 1px solid $status--active;
-        margin-right: 0.5rem;
-      }
-
-      span.away {
-        background: $status--away !important;
-        border: 1px solid gray;
-      }
+    span {
+      background: $status--active;
+      border-radius: 50%;
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid $status--active;
+      margin-right: 0.5rem;
     }
 
-    li.hasNewMessage {
-      font-weight: bold;
+    span.away {
+      background: $status--away !important;
+      border: 1px solid gray;
     }
+  }
 
-    li:hover {
-      color: gray;
-    }
+  li.hasNewMessage {
+    font-weight: bold;
+  }
+
+  li:hover {
+    color: gray;
   }
 }
 
-.channel__user__details {
+.channel__user__profile {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.channel__user__details--info {
+.channel__user__profile--info {
   display: flex;
   align-items: center;
 
@@ -66,7 +66,7 @@
   }
 }
 
-.channel__user__details--actions {
+.channel__user__profile--actions {
   display: flex;
 
   button {
@@ -79,6 +79,55 @@
     img {
       width: 1rem;
     }
+  }
+}
+
+.channel__direct__message {
+  input {
+    display: flex;
+    background: $background-color;
+    padding: 1rem;
+    border: none;
+    border-radius: 25px;
+    margin-right: 2rem;
+    max-width: 28rem;
+    font-size: small;
+    outline: none;
+    width: 100%;
+  }
+}
+
+.channel__direct__message__header {
+  display: flex;
+  align-content: flex-start;
+  justify-content: space-between;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  button {
+
+    img {
+      width: 0.8rem;
+    }
+  }
+}
+
+.channel__direct__message__list {
+  overflow: auto;
+  height: 30vh;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: "center";
+    margin: 5px;
+    overflow: auto;
+  }
+
+  li:hover {
+    color: gray;
   }
 }
 

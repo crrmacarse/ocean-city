@@ -84,30 +84,21 @@ const SlackChannelDirectMessage = ({
       style={customStyles}
       ariaHideApp={false}
     >
-      <div className="search">
-        <div
-          style={{
-            display: 'flex',
-            alignContent: 'start',
-            justifyContent: 'space-between',
-          }}
-        >
+      <div className="channel__direct__message">
+        <div className="channel__direct__message__header">
           <h2>Direct Messages</h2>
           <button type="button" onClick={closeModal}>
-            <img src="/assets/icons/close.png" alt="close" style={{ width: '0.8rem' }} />
+            <img src="/assets/icons/close.png" alt="close" />
           </button>
         </div>
         <input
           disabled={size(masterList) <= 0}
-          style={{
-            width: '100%',
-          }}
           type="text"
           placeholder="Search for people or channel"
           value={searchTerm}
           onChange={handleChange}
         />
-        <ul className="channel__users" style={{ padding: 0 }}>
+        <ul className="channel__direct__message__list">
           {masterList
             .filter((v) => (v.is_im
               ? (
@@ -117,12 +108,6 @@ const SlackChannelDirectMessage = ({
               : v.is_member && v.name.toLowerCase().includes(searchTerm.toLowerCase())))
             .map((channel) => (
               <li
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  margin: 5,
-                  overflow: 'auto',
-                }}
                 key={channel.id}
                 title={channel.name}
                 role="presentation"

@@ -56,7 +56,7 @@ const SlackChannelList = ({
       <SlackChannelProfile handleSearch={handleShowSearch} setCloseChannel={() => setOpen(false)} />
       <h3>Channels</h3>
       <hr />
-      <ul className="channel__groups">
+      <ul className="channel__list groups">
         {Object.values(list).filter((v) => (v.is_channel || v.is_group) && !v.isOpenedChannel)
           .sort((a, b) => (
             // eslint-disable-next-line no-nested-ternary
@@ -77,7 +77,7 @@ const SlackChannelList = ({
       </ul>
       <h3>Recent</h3>
       <hr />
-      <ul className="channel__users">
+      <ul className="channel__list users">
         {Object.values(list).filter((v) => v.is_im && !v.isOpenedChannel && !v.user.is_bot)
           // .slice(0, 20) // There should be a better alternative
           .sort((a, b) => (

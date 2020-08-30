@@ -1,0 +1,223 @@
+.chat__head__minimized {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  img {
+    width: 1.5rem;
+  }
+
+  small {
+    margin-left: 0.5rem;
+  }
+
+  div:first-child {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    cursor: pointer;
+  }
+
+  button {
+    border-radius: 0px;
+    border: 0;
+    background: none;
+    outline: none;
+    cursor: pointer;
+
+    img {
+      width: 0.75rem;
+    }
+  }
+}
+
+.chat.has__new__message {
+  background-color: $message-sent-color;
+
+  * {
+    color: white;
+  }
+}
+
+.chat__head__input {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: $background-color;
+  margin: 0.5rem;
+
+  // Trying to target the react-mention
+  > div:first-child {
+    width: 100%;
+
+    > div:nth-child(1) {
+
+      div {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        background-color: $primary-color !important;
+      }
+    }
+
+    // The list of mentions
+    > div:nth-child(2) {
+      top: auto !important;
+      bottom: 0;
+      background-color: $background-color !important;
+      min-width: 10vw !important;
+      border-color: gray;
+      margin-bottom: 2rem;
+
+      ul {
+        padding: 0.75rem !important;
+      }
+    }
+  }
+
+  textarea {
+    padding: 0.5rem;
+    outline: none;
+    height: 100%;
+    border: none;
+  }
+
+  button {
+    cursor: pointer;
+    outline: none;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  img {
+    width: 1rem;
+  }
+}
+
+
+// New
+
+.chat__head__container {
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.chat__head__wrapper {
+  position: relative;
+  min-width: 13vw;
+  background: $background-color;
+  margin-right: .5rem;
+}
+
+.chat__head__maximized {
+  position: absolute;
+  width: 100%;
+  background: $background-color;
+  bottom: 0;
+  right: 0;
+  border-radius: 5px;
+}
+
+.chat__head__maximized__list {
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  height: 30vh;
+  margin: 0;
+  padding: 0.8rem;
+  list-style: none;
+  flex-direction: column-reverse;
+  display: flex;
+
+  li {
+    margin-bottom: .5rem;
+
+    > small {
+      font-size: x-small;
+      color: #9e9e9e;
+      cursor: default;
+    }
+
+    div.message {
+      padding: 0.5rem;
+      border-radius: 1rem;
+      font-size: small;
+      white-space: pre-wrap;
+    }
+
+    div.sent {
+      background-color: $message-sent-color;
+      color: white;
+    }
+
+    div.received {
+      background-color: $message-receive-color;
+    }
+  }
+}
+
+.chat__head__maximized__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  background: $primary-color;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 0.5rem;
+}
+
+.chat__head__maximized__top--title {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.chat__head__maximized__top--close {
+
+  img {
+    width: 0.75rem;
+  }
+}
+
+.chat__head__thread__list {
+  margin-top: 0.5rem;
+  list-style: none;
+  overflow-wrap: break-word;
+  padding-left: 0.5rem;
+  border-left: 1px solid white;
+}
+
+.chat__head__thread {
+  margin-top: 0.5rem;
+
+  button {
+    font-size: x-small;
+    padding: 0;
+    color: inherit;
+  }
+}
+
+.chat__head__message__text {
+  pre {
+    white-space: pre-wrap;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+// @TODO: Not triggering
+.chat__head__message__file {
+  margin-top: 1rem;
+}

@@ -21,13 +21,9 @@ main {
   }
 }
 
-// Bottom parent that handles the chat heads
-.bottom__panel {
-  position: absolute;
-  display: flex;
-  flex-direction: row-reverse;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
 }

@@ -72,7 +72,7 @@ const SlackChannelList = ({
                 key={channel.id}
                 title={channel.channelName}
                 role="presentation"
-                className={`${channel.hasNewMessage && 'hasNewMessage'}`}
+                className={channel.hasNewMessage ? 'hasNewMessage' : undefined}
                 onClick={() => handleSelectChannel(channel)}
                 onKeyDown={() => handleSelectChannel(channel)}
               >
@@ -93,7 +93,7 @@ const SlackChannelList = ({
               <li
                 key={channel.id}
                 title={channel.channelName}
-                className={channel.hasNewMessage && 'hasNewMessage'}
+                className={channel.hasNewMessage ? 'hasNewMessage' : undefined}
                 role="presentation"
                 onClick={() => handleSelectChannel(channel)}
                 onKeyDown={() => handleSelectChannel(channel)}

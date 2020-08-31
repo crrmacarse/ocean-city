@@ -58,18 +58,17 @@ const SlackChatHead = ({
   };
 
   type messageType = {
-    client_msg_id: string,
     ts: number,
     text: string,
     reply_count: number,
     files: [],
   }
 
-  const renderMessage = (user: string, message: messageType) => {
+  const renderMessage = (user: string, message: messageType, i) => {
     let profile: any = {};
     const isCurrentUser = user === authId;
     const {
-      text, files, ts, reply_count, client_msg_id,
+      text, files, ts, reply_count,
     } = message;
     const timestamp = new Date(ts * 1000).toLocaleString();
 
@@ -78,11 +77,11 @@ const SlackChatHead = ({
     }
 
     return (
-      <li key={client_msg_id} title={`Sent: ${timestamp}`}>
+      <li key={i} title={`Sent: ${timestamp}`}>
         <small title={profile.real_name}>{profile.real_name}</small>
         <div className={`message ${isCurrentUser ? 'sent' : 'received'}`}>
           <SlackMessageText text={text} />
-          {files && files.map((f) => <SlackMessageFile file={f} />)}
+          {files && files.map((f, fI) => <SlackMessageFile file={f} key={fI} />)}
           {reply_count && (
             <SlackMessageThread
               key={ts}
@@ -110,7 +109,7 @@ const SlackChatHead = ({
       <ul className="chat__head__maximized__list">
         {messages
           .filter((m) => !MESSAGE_SUBTYPE_FILTER.includes(m.subtype))
-          .map((m) => renderMessage(m.user, m))}
+          .map((m, i) => renderMessage(m.user, m, i))}
       </ul>
       <ChatInput channelId={channelId} />
     </div>

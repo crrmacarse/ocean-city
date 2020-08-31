@@ -12,12 +12,13 @@
   background-color: white;
 
   @media (min-width: $breakpoint-md) {
-    width: $channel-open-width;
+    // width: $channel-open-width;
   }
 }
 
 .channel {
   padding-left: 1rem;
+  min-width: $channel-open-width;
 }
 
 .channel__list {

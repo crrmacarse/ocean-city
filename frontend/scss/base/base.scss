@@ -7,7 +7,12 @@ body, html {
 
 // @TMP
 .slack__notes, .slack__auth {
-  margin: 1rem;
+  padding: 1rem;
+}
+
+.slack__container {
+  position: relative;
+  min-height: 100vh;
 }
 
 button {

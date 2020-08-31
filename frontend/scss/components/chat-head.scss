@@ -1,5 +1,5 @@
 .chat__head__container {
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   top: 0;
   bottom: 0;
@@ -13,10 +13,6 @@
     right: 0;
     top: auto;
   }
-}
-
-.chat__head__container.open {
-  width: calc(100% - #{$channel-open-width});
 }
 
 .chat__head__wrapper {

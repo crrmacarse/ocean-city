@@ -1,10 +1,10 @@
 import { ActionType } from 'typesafe-actions';
 import * as authActions from './auth/actions';
-import * as channelActions from './channels/actions';
+import * as chatActions from './chat/actions';
 
 const actions = {
   auth: authActions,
-  channel: channelActions,
+  chat: chatActions,
 };
 
 export default actions;

@@ -24,7 +24,7 @@ const SlackMessageFile = ({ file }: SlackMessageFileProps) => {
 
   if (['png', 'jpeg', 'jpg'].includes(file.filetype.toLocaleLowerCase())) {
     return (
-      <a href={file.url_private} target="_blank" rel="noreferrer">
+      <a className="chat__head__message__file" href={file.url_private} target="_blank" rel="noreferrer">
         <img
           src={file.url_private}
           alt={title}
@@ -40,7 +40,7 @@ const SlackMessageFile = ({ file }: SlackMessageFileProps) => {
   if (['webm', 'mp4'].includes(file.filetype.toLocaleLowerCase())) {
     return (
       // eslint-disable-next-line jsx-a11y/media-has-caption
-      <video width="100%" controls>
+      <video className="chat__head__message__file" width="100%" controls>
         <source
           src={file.url_private}
           type="video/mp4"
@@ -53,7 +53,8 @@ const SlackMessageFile = ({ file }: SlackMessageFileProps) => {
       </video>
     );
   }
-  return <a download href={file.permalink}>{file.title}</a>;
+
+  return <a className="chat__head__message__file" download href={file.permalink}>{file.title}</a>;
 };
 
 export default SlackMessageFile;

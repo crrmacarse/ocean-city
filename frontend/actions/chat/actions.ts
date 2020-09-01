@@ -38,7 +38,7 @@ export type userType = {
   }
 }
 
-export type ChannelProps = DeepReadonly<{
+export type ChatProps = DeepReadonly<{
   channels: {
     list: channelType,
     fetching: boolean,
@@ -77,7 +77,7 @@ export const addToActiveChannel = (channel: channelType) => action(
  * @param message
  * */
 export const pushMessage = (channelId: string, message: messageType) => action(
-  TYPES.PUSH_MESSAGE,
+  TYPES.PUSH_NEW_MESSAGE,
   { channelId, message },
 );
 

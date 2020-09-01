@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as authActions from 'actions/auth/actions';
 import SlackChannels from 'components/slack/channel/channel-list';
-import SlackChatHeaderContainer from 'components/slack/chat-head/chat-head-container';
 import Authenticate from 'components/slack/authenticate';
 
 const mapStateToProps = ({ auth }: RootState) => ({
@@ -64,7 +63,6 @@ const Slack = ({
     <main className="slack__container">
       {renderNotes}
       {authenticated ? <SlackChannels /> : <Authenticate />}
-      <SlackChatHeaderContainer />
     </main>
   );
 };

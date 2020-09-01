@@ -4,6 +4,7 @@
   top: 0;
   bottom: 0;
   left: 0;
+  margin-right: 1rem;
 
   @media (min-width: $breakpoint-md) {
     display: flex;
@@ -15,11 +16,15 @@
   }
 }
 
+.chat__head__container.open {
+  width: calc(100vw - #{$channel-open-width});
+}
+
 .chat__head__wrapper {
   position: relative;
   min-width: $chat-head-wrapper-width;
   background: $background-color;
-  margin-right: .5rem;
+  margin-right: 0.75rem;
 }
 
 .chat__head__minimized {

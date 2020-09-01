@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import * as chatActions from 'actions/chat/actions';
 import SlackChannelProfile from 'components/slack/channel/channel-profile';
 import SlackChannelDirectMessage from 'components/slack/channel/channel-direct-message';
+import SlackChatHeaderContainer from 'components/slack/chat-head/chat-head-container';
 import WebSocket from 'components/slack/web-socket';
 import truncate from 'lodash/truncate';
 import size from 'lodash/size';
@@ -113,7 +114,12 @@ const SlackChannelList = ({
     </button>
   );
 
-  return open ? renderChannel : renderOpenChannelButton;
+  return (
+    <Fragment>
+      {open ? renderChannel : renderOpenChannelButton}
+      <SlackChatHeaderContainer className={`${open ? 'open' : 'close'}`} />
+    </Fragment>
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SlackChannelList);

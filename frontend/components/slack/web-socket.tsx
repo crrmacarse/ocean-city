@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import * as channelActions from 'actions/channels/actions';
+import * as chatActions from 'actions/chat/actions';
 import * as authActions from 'actions/auth/actions';
 import api from 'utils/api';
 
@@ -12,7 +12,7 @@ const mapStateToProps = ({ auth }: RootState) => ({
 });
 
 const mapDispatchToProps = {
-  ...channelActions,
+  ...chatActions,
   ...authActions,
 };
 

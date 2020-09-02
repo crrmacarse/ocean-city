@@ -1,11 +1,11 @@
 import { createReducer } from 'typesafe-actions';
 import {
   handleFetchChannelsAsync, handleFetchMessagesAsync,
-  ChannelProps, handleSendMessageAsync, handleFetchMasterListAsync,
-} from 'actions/channels/actions';
-import * as channelTypes from 'actions/channels/types';
+  ChatProps, handleSendMessageAsync, handleFetchMasterListAsync,
+} from 'actions/chat/actions';
+import * as chatTypes from 'actions/chat/types';
 
-const INITIAL_STATE: ChannelProps = {
+const INITIAL_STATE: ChatProps = {
   channels: {
     list: {},
     fetching: false,
@@ -92,7 +92,7 @@ export default createReducer(INITIAL_STATE, {
   ...fetchMessagesHandler.handlers,
   ...sendMessageHandler.handlers,
   ...fetchMasterListHandler.handlers,
-}).handleType(channelTypes.PUSH_MESSAGE,
+}).handleType(chatTypes.PUSH_NEW_MESSAGE,
   (state, { payload }) => ({
     ...state,
     channels: {
@@ -110,7 +110,7 @@ export default createReducer(INITIAL_STATE, {
       },
     },
   }))
-  .handleType(channelTypes.SET_READ_MESSAGE,
+  .handleType(chatTypes.SET_READ_MESSAGE,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -124,7 +124,7 @@ export default createReducer(INITIAL_STATE, {
         },
       },
     }))
-  .handleType(channelTypes.SET_OPENED_CHANNEL,
+  .handleType(chatTypes.SET_OPENED_CHANNEL,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -139,7 +139,7 @@ export default createReducer(INITIAL_STATE, {
         },
       },
     }))
-  .handleType(channelTypes.CLOSE_CHANNEL,
+  .handleType(chatTypes.CLOSE_CHANNEL,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -154,12 +154,12 @@ export default createReducer(INITIAL_STATE, {
         },
       },
     }))
-  .handleType(channelTypes.SET_USER_LIST,
+  .handleType(chatTypes.SET_USER_LIST,
     (state, { payload }) => ({
       ...state,
       users: payload,
     }))
-  .handleType(channelTypes.SET_USER_PRESENCE,
+  .handleType(chatTypes.SET_USER_PRESENCE,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -172,7 +172,7 @@ export default createReducer(INITIAL_STATE, {
           : c)),
       },
     }))
-  .handleType(channelTypes.PUSH_THREAD_MESSAGE,
+  .handleType(chatTypes.PUSH_THREAD_MESSAGE,
     (state, { payload }) => ({
       ...state,
       channels: {
@@ -196,7 +196,7 @@ export default createReducer(INITIAL_STATE, {
         },
       },
     }))
-  .handleType(channelTypes.PUSH_CHANNEL,
+  .handleType(chatTypes.PUSH_CHANNEL,
     (state, { payload }) => ({
       ...state,
       channels: {

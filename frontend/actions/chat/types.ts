@@ -21,7 +21,7 @@ export const FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS';
 export const FETCH_MESSAGES_FAILED = 'FETCH_MESSAGES_FAILED';
 
 // pushes a message to a channel object
-export const PUSH_MESSAGE = 'PUSH_MESSAGE';
+export const PUSH_NEW_MESSAGE = 'PUSH_NEW_MESSAGE';
 
 // read a message
 export const SET_READ_MESSAGE = 'SET_READ_MESSAGE';

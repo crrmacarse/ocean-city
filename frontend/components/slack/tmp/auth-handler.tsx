@@ -9,11 +9,11 @@ const mapDispatchToProps = {
   ...authActions,
 };
 
-export type AuthHandlerProps = typeof mapDispatchToProps;
+export type SlackAuthHandlerProps = typeof mapDispatchToProps;
 
-const AuthHandler = ({
+const SlackAuthHandler = ({
   setToken,
-}: AuthHandlerProps) => {
+}: SlackAuthHandlerProps) => {
   const history = useHistory();
   const { search } = useLocation();
 
@@ -57,4 +57,4 @@ const AuthHandler = ({
   return <Fragment />;
 };
 
-export default connect(null, mapDispatchToProps)(AuthHandler);
+export default connect(null, mapDispatchToProps)(SlackAuthHandler);

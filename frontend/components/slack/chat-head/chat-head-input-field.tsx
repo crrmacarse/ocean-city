@@ -2,28 +2,29 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
 import { MentionsInput, Mention } from 'react-mentions';
-import * as channelActions from 'actions/channels/actions';
+import * as chatActions from 'actions/chat/actions';
 
 export interface ownProps {
   channelId: string,
 }
 
-const mapStateToProps = ({ auth, channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ auth, chat }: RootState, ownState: ownProps) => ({
   ...auth,
-  ...channel,
+  ...chat,
   ...ownState,
 });
 
-const mapDispatchToProps = { ...channelActions };
+const mapDispatchToProps = { ...chatActions };
 
-export type InputProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChatHeadInputFieldProps = ReturnType<typeof mapStateToProps>
+  & typeof mapDispatchToProps;
 
-const Input = ({
+const SlackChatHeadInputField = ({
   token,
   users,
   channelId,
   sendMessage,
-}: InputProps) => {
+}: SlackChatHeadInputFieldProps) => {
   const [value, setValue] = useState('');
 
   const handleSendMessage = () => {
@@ -31,24 +32,27 @@ const Input = ({
     setValue('');
   };
 
+  // eslint-disable-next-line consistent-return
+  const handleOnKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSendMessage();
+
+      // https://stackoverflow.com/questions/31245808/clear-textarea-input-after-enter-key-press
+      if (e.preventDefault) e.preventDefault();
+      return false;
+    }
+  };
+
   return (
-    <div className="chat__input">
+    <div className="chat__head__input">
       <MentionsInput
+        className="chat__head__input--mentions"
         value={value}
         type="text"
         placeholder="Aa"
         allowSpaceInQuery
         onChange={(v, newValue) => setValue(newValue)}
-        // eslint-disable-next-line consistent-return
-        onKeyDown={(e) => {
-          if (e.keyCode === 13) {
-            handleSendMessage();
-
-            // https://stackoverflow.com/questions/31245808/clear-textarea-input-after-enter-key-press
-            if (e.preventDefault) e.preventDefault();
-            return false;
-          }
-        }}
+        onKeyDown={handleOnKeyDown}
       >
         <Mention
           trigger="@"
@@ -61,4 +65,4 @@ const Input = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChatHeadInputField);

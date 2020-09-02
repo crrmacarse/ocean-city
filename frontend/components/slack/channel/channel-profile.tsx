@@ -17,15 +17,16 @@ const mapDispatchToProps = {
   ...authActions,
 };
 
-export type ProfileProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChannelProfileProps = ReturnType<typeof mapStateToProps>
+  & typeof mapDispatchToProps;
 
-const Profile = ({
+const SlackChannelProfile = ({
   fetchUserIdentity,
   token,
   user,
   handleSearch,
   setCloseChannel,
-}: ProfileProps) => {
+}: SlackChannelProfileProps) => {
   const { name, avatar, fetched } = user;
 
   useEffect(() => {
@@ -35,12 +36,12 @@ const Profile = ({
   }, []);
 
   return (
-    <div className="channel__user__details">
-      <div className="channel__user__details--info">
+    <div className="channel__user__profile">
+      <div className="channel__user__profile--info">
         <img src={avatar} alt="avatar" />
         <p>{name}</p>
       </div>
-      <div className="channel__user__details--actions">
+      <div className="channel__user__profile--actions">
         <button type="button" onClick={() => handleSearch()} title="Direct Message">
           <img src="/assets/icons/message.png" alt="Direct Message" />
         </button>
@@ -55,4 +56,4 @@ const Profile = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChannelProfile);

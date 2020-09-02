@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'reducers';
-import SlackMessageFile from 'components/slack/message-file';
+import SlackMessageText from 'components/slack/chat-head/message/message-text';
+import SlackMessageFile from 'components/slack/chat-head/message/message-file';
 import api from 'utils/api';
 
 export type ownProps = {
@@ -11,9 +12,9 @@ export type ownProps = {
   replyCount: number,
 }
 
-const mapStateToProps = ({ auth, channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ auth, chat }: RootState, ownState: ownProps) => ({
   ...auth,
-  users: channel.users,
+  users: chat.users,
   ...ownState,
 });
 
@@ -84,14 +85,14 @@ const SlackMessageThread = ({
       <li key={client_msg_id} title={`Sent: ${timestamp}`}>
         <small>{profile.real_name}</small>
         <br />
-        {text}
+        <SlackMessageText text={text} />
         {files && files.map((f) => <SlackMessageFile file={f} />)}
       </li>
     );
   };
 
   const renderThread = (
-    <ul>
+    <ul className="chat__head__thread__list">
       {thread.fetching && <p>fetching...</p>}
       {thread.list
         .slice(1) // remove the first value as it is the parent message
@@ -103,7 +104,7 @@ const SlackMessageThread = ({
   const title = `${replyCount} ${replyCount > 1 ? 'replies' : 'reply'}`;
 
   return (
-    <div className="chat__thread__toggle">
+    <div className="chat__head__thread">
       {open ? renderThread : <button type="button" onClick={() => setOpen(true)} title="View thread">{title}</button>}
     </div>
   );

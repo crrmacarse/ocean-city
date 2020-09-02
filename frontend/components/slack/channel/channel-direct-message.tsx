@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import { fetchMasterList, pushChannel } from 'actions/channels/actions';
+import { fetchMasterList, pushChannel } from 'actions/chat/actions';
 import { RootState } from 'reducers';
 import size from 'lodash/size';
 
@@ -26,9 +26,9 @@ const customStyles = {
   },
 };
 
-const mapStateToProps = ({ auth, channel }: RootState, ownState: ownProps) => ({
+const mapStateToProps = ({ auth, chat }: RootState, ownState: ownProps) => ({
   ...auth,
-  ...channel,
+  ...chat,
   ...ownState,
 });
 
@@ -37,9 +37,10 @@ const mapDispatchToProps = {
   handlePushChannel: pushChannel,
 };
 
-export type SearchProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+export type SlackChannelDirectMessageProps = ReturnType<typeof mapStateToProps>
+  & typeof mapDispatchToProps;
 
-const Search = ({
+const SlackChannelDirectMessage = ({
   authId,
   token,
   masterList,
@@ -49,7 +50,7 @@ const Search = ({
   handleSelectChannel,
   handleFetchMasterList,
   handlePushChannel,
-}: SearchProps) => {
+}: SlackChannelDirectMessageProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => { handleFetchMasterList({ authId, token }); }, []);
@@ -83,30 +84,21 @@ const Search = ({
       style={customStyles}
       ariaHideApp={false}
     >
-      <div className="search">
-        <div
-          style={{
-            display: 'flex',
-            alignContent: 'start',
-            justifyContent: 'space-between',
-          }}
-        >
+      <div className="channel__direct__message">
+        <div className="channel__direct__message__header">
           <h2>Direct Messages</h2>
           <button type="button" onClick={closeModal}>
-            <img src="/assets/icons/close.png" alt="close" style={{ width: '0.8rem' }} />
+            <img src="/assets/icons/close.png" alt="close" />
           </button>
         </div>
         <input
           disabled={size(masterList) <= 0}
-          style={{
-            width: '100%',
-          }}
           type="text"
           placeholder="Search for people or channel"
           value={searchTerm}
           onChange={handleChange}
         />
-        <ul className="channel__users" style={{ padding: 0 }}>
+        <ul className="channel__direct__message__list">
           {masterList
             .filter((v) => (v.is_im
               ? (
@@ -116,12 +108,6 @@ const Search = ({
               : v.is_member && v.name.toLowerCase().includes(searchTerm.toLowerCase())))
             .map((channel) => (
               <li
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  margin: 5,
-                  overflow: 'auto',
-                }}
                 key={channel.id}
                 title={channel.name}
                 role="presentation"
@@ -137,4 +123,4 @@ const Search = ({
     </Modal>
   );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(SlackChannelDirectMessage);

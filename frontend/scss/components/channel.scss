@@ -4,6 +4,7 @@
   top: 0;
   bottom: 0;
   height: 100vh;
+  //height: -webkit-fill-available;
   z-index: $z_drawer;
   border-left: #d8d8d8 solid 1px;
   -webkit-box-shadow: -1px 5px 5px 0px rgba(0,0,0,0.1);
@@ -17,7 +18,7 @@
 }
 
 .channel {
-  padding: 1rem;
+  padding: 1rem 1rem 0;
   min-width: $channel-open-width;
 }
 
@@ -90,6 +91,16 @@
   }
 }
 
+.ReactModal__Overlay {
+  z-index: 9999;
+
+  .ReactModal__Content{
+    @media (max-width: $breakpoint-sm) {
+    min-width: 18rem!important;
+    }
+  }
+}
+
 .channel__direct__message {
   input {
     display: flex;
@@ -102,6 +113,10 @@
     font-size: small;
     outline: none;
     width: 100%;
+
+    @media (max-width: $breakpoint-sm) {
+      max-width: 15rem;
+    }
   }
 }
 

@@ -39,11 +39,23 @@
     &:first-child {
       margin-right: 4.5rem;
     }
+
+    @-moz-document url-prefix() {
+      &:first-child {
+        margin-right: 6.5rem;
+      }
+    }
   }
 
   @media (max-width: $breakpoint-md) {
     &:first-child {
       margin-right: 7.7rem;
+    }
+
+    @-moz-document url-prefix() {
+      &:first-child {
+        margin-right: 8.4rem;
+      }
     }
   }
 }
@@ -131,7 +143,7 @@
 
   @media (max-width: $breakpoint-sm) {
     //height: -webkit-fill-available;
-    height: 100vh;
+    height: 82vh;
   }
 }
 

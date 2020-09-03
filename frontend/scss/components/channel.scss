@@ -92,7 +92,7 @@
 }
 
 .ReactModal__Overlay {
-  z-index: 9999;
+  z-index: $z_top;
 
   .ReactModal__Content{
     @media (max-width: $breakpoint-sm) {

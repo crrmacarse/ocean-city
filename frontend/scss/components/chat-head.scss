@@ -29,7 +29,7 @@
   min-width: $chat-head-wrapper-width;
   background: $background-color;
   margin-right: 0.25rem;
-  z-index: 3000;
+  z-index: $_ztooltip;
 
   &:first-child {
     margin-right: 2.25rem;
@@ -96,8 +96,6 @@
 
   @media (max-width: $breakpoint-sm) {
     position: fixed;
-    margin: 0 .5rem;
-    width: 96%;
   }
 }
 
@@ -108,10 +106,6 @@
   margin: 0;
   padding: 0.8rem;
   list-style: none;
-  /*display: -webkit-flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;*/
   display: flex;
   flex-direction: column-reverse;
 
